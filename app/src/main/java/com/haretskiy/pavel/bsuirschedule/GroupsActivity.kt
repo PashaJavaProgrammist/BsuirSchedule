@@ -21,7 +21,6 @@ class GroupsActivity : AppCompatActivity() {
 
         restApi.allGroupsList.enqueue(object : BaseCallBack<List<Group>> {
             override fun onSuccess(response: List<Group>?) {
-
             }
 
             override fun onError(code: Int?, errorBody: ResponseBody?) {
