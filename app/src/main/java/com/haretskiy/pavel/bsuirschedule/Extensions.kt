@@ -1,9 +1,10 @@
 package com.haretskiy.pavel.bsuirschedule
 
-import android.app.Activity
-import com.haretskiy.pavel.bsuirschedule.di.components.AppComponent
+//import android.app.Activity
+//import com.haretskiy.pavel.bsuirschedule.di.components.AppComponent
 
-val Activity.daggerComponent: AppComponent
-    get() {
-        return (applicationContext as App).daggerComponent
-    }
+//this doesn't need because used android injector
+//val Activity.daggerComponent: AppComponent
+//    get() {
+//        return (applicationContext as App).daggerComponent
+//    }
