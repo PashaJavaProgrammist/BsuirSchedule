@@ -11,7 +11,7 @@ import javax.inject.Inject
 class GroupsActivity : AppCompatActivity() {
 
     @Inject
-    private lateinit var restApi: RestApi
+    lateinit var restApi: RestApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
