@@ -2,6 +2,7 @@ package com.haretskiy.pavel.bsuirschedule.di
 
 import android.app.Application
 import com.haretskiy.pavel.bsuirschedule.App
+import com.haretskiy.pavel.bsuirschedule.GroupsActivity
 import com.haretskiy.pavel.bsuirschedule.di.modules.AppModule
 import com.haretskiy.pavel.bsuirschedule.di.modules.MainModule
 import dagger.BindsInstance
@@ -22,4 +23,6 @@ interface AppComponent {
     }
 
     fun inject(app: App)
+    fun inject(activity: GroupsActivity)
+
 }
