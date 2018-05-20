@@ -10,7 +10,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilder {
 
     @ActivityScope
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector//you can add modules in braces only for this activity
     abstract fun providesMainActivityInjector(): GroupsActivity
 
 }
