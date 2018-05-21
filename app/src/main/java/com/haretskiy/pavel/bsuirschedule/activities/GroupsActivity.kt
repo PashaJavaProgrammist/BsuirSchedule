@@ -4,21 +4,29 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
+import com.haretskiy.pavel.bsuirschedule.App
+import com.haretskiy.pavel.bsuirschedule.GroupsAdapter
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
+import com.haretskiy.pavel.bsuirschedule.viewModels.factories.GroupsViewModelFactory
+import com.haretskiy.pavel.bsuirschedule.views.GroupView
 import kotlinx.android.synthetic.main.activity_groups.*
 
-class GroupsActivity : BaseActivity() {
+class GroupsActivity : BaseActivity(), GroupView {
+
+    val adapter: GroupsAdapter by lazy {
+        GroupsAdapter(emptyList(), this)
+    }
 
     override fun getResLayout() = R.layout.activity_groups
 
-    val groupsViewModel: GroupsViewModel by lazy {
-        ViewModelProviders.of(this).get(GroupsViewModel::class.java)
-    }
+    private lateinit var groupsViewModel: GroupsViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        groupsViewModel = ViewModelProviders.of(this, GroupsViewModelFactory(application as App)).get(GroupsViewModel::class.java)
 
         setSupportActionBar(toolbar_search)
 
@@ -29,13 +37,20 @@ class GroupsActivity : BaseActivity() {
 
     private fun setRecyclerView() {
         rv_groups.layoutManager = LinearLayoutManager(this)
-        rv_groups.adapter
+        rv_groups.adapter = adapter
     }
 
     private fun getGroupsLiveDataAndSubscribe() {
         groupsViewModel.groupsLiveData.observe(this, Observer {
-            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            if (it != null) {
+                adapter.listOfGroups = it
+                adapter.notifyDataSetChanged()
+            }
         })
         groupsViewModel.loadGroupsList()
+    }
+
+    override fun onClickGroup(name: String) {
+        //TODO: To change body of created functions use File | Settings | File Templates.
     }
 }
