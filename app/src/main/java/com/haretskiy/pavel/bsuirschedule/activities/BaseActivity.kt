@@ -1,7 +1,8 @@
-package com.haretskiy.pavel.bsuirschedule
+package com.haretskiy.pavel.bsuirschedule.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.haretskiy.pavel.bsuirschedule.R
 import dagger.android.AndroidInjection
 
 abstract class BaseActivity : AppCompatActivity() {

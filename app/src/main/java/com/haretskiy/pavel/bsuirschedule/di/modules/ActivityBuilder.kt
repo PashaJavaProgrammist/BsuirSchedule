@@ -1,6 +1,6 @@
 package com.haretskiy.pavel.bsuirschedule.di.modules
 
-import com.haretskiy.pavel.bsuirschedule.GroupsActivity
+import com.haretskiy.pavel.bsuirschedule.activities.GroupsActivity
 import com.haretskiy.pavel.bsuirschedule.di.scopes.ActivityScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -10,7 +10,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilder {
 
     @ActivityScope
-    @ContributesAndroidInjector//you can add modules in braces only for this activity
+    @ContributesAndroidInjector(modules = [(GroupsActivityModule::class)])
     abstract fun providesMainActivityInjector(): GroupsActivity
 
 }
