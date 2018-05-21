@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.haretskiy.pavel.bsuirschedule.models.Group
 import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
+import kotlinx.android.synthetic.main.activity_groups.*
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
@@ -17,6 +18,8 @@ class GroupsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setSupportActionBar(toolbar_search)
 
         restApi.allGroupsList.enqueue(object : BaseCallBack<List<Group>> {
             override fun onSuccess(response: List<Group>?) {
