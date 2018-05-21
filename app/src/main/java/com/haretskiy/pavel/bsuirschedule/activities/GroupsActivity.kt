@@ -1,20 +1,21 @@
 package com.haretskiy.pavel.bsuirschedule.activities
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import kotlinx.android.synthetic.main.activity_groups.*
-import javax.inject.Inject
 
 class GroupsActivity : BaseActivity() {
 
     override fun getResLayout() = R.layout.activity_groups
 
-    @Inject
-    lateinit var groupsViewModel: GroupsViewModel
+    val groupsViewModel: GroupsViewModel by lazy {
+        ViewModelProviders.of(this).get(GroupsViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
