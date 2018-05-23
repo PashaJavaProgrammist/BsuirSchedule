@@ -1,15 +1,12 @@
 package com.haretskiy.pavel.bsuirschedule.activities
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.GroupsAdapter
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
-import com.haretskiy.pavel.bsuirschedule.viewModels.factories.GroupsViewModelFactory
 import com.haretskiy.pavel.bsuirschedule.views.GroupView
 import kotlinx.android.synthetic.main.activity_groups.*
 import javax.inject.Inject
@@ -23,15 +20,12 @@ class GroupsActivity : BaseActivity(), GroupView {
     @Inject
     lateinit var router: Router
 
-    override fun getResLayout() = R.layout.activity_groups
-
-    private lateinit var groupsViewModel: GroupsViewModel
+    @Inject
+    lateinit var groupsViewModel: GroupsViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        groupsViewModel = ViewModelProviders.of(this, GroupsViewModelFactory(application as App)).get(GroupsViewModel::class.java)
 
         setSupportActionBar(toolbar_search)
 
@@ -39,6 +33,8 @@ class GroupsActivity : BaseActivity(), GroupView {
 
         getGroupsLiveDataAndSubscribe()
     }
+
+    override fun getResLayout() = R.layout.activity_groups
 
     private fun setRecyclerView() {
         rv_groups.layoutManager = LinearLayoutManager(this)
