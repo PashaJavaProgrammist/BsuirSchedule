@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class GroupsActivity : BaseActivity(), GroupView {
 
-    val adapter: GroupsAdapter by lazy {
+    private val adapter: GroupsAdapter by lazy {
         GroupsAdapter(emptyList(), this)
     }
 
