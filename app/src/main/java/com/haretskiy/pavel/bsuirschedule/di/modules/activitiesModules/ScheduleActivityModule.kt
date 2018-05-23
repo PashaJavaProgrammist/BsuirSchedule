@@ -1,4 +1,4 @@
-package com.haretskiy.pavel.bsuirschedule.di.modules
+package com.haretskiy.pavel.bsuirschedule.di.modules.activitiesModules
 
 import com.haretskiy.pavel.bsuirschedule.activities.GroupsActivity
 import com.haretskiy.pavel.bsuirschedule.utils.Router

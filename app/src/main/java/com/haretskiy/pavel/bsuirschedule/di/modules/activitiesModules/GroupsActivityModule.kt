@@ -1,4 +1,4 @@
-package com.haretskiy.pavel.bsuirschedule.di.modules
+package com.haretskiy.pavel.bsuirschedule.di.modules.activitiesModules
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
