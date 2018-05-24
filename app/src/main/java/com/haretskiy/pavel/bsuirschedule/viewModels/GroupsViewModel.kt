@@ -32,6 +32,8 @@ class GroupsViewModel @Inject constructor(
                     if (response != null) {
                         listOfGroups = response
                         groupsLiveData.postValue(response)
+                    } else {
+                        groupsLiveData.postValue(emptyList())
                     }
                 }
 
@@ -44,5 +46,10 @@ class GroupsViewModel @Inject constructor(
 
     fun startScheduleActivity(name: String) {
         router.startScheduleActivity(name)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        listOfGroups = emptyList()
     }
 }
