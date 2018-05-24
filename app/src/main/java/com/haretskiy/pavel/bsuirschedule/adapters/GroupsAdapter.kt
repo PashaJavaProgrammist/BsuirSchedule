@@ -1,8 +1,9 @@
-package com.haretskiy.pavel.bsuirschedule
+package com.haretskiy.pavel.bsuirschedule.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.models.Group
 import com.haretskiy.pavel.bsuirschedule.views.GroupHolder
 import com.haretskiy.pavel.bsuirschedule.views.GroupView

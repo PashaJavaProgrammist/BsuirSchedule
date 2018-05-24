@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
-import com.haretskiy.pavel.bsuirschedule.GroupsAdapter
 import com.haretskiy.pavel.bsuirschedule.R
+import com.haretskiy.pavel.bsuirschedule.adapters.GroupsAdapter
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import com.haretskiy.pavel.bsuirschedule.views.GroupView
 import kotlinx.android.synthetic.main.activity_groups.*
@@ -17,6 +17,9 @@ class GroupsActivity : BaseActivity(), GroupView {
     private val adapter: GroupsAdapter by lazy {
         GroupsAdapter(emptyList(), this)
     }
+
+    //todo: swipe to refresh
+    //todo: serchview
 
     @Inject
     lateinit var groupsViewModel: GroupsViewModel
