@@ -4,7 +4,7 @@ import com.haretskiy.pavel.bsuirschedule.models.Group
 
 class GroupStoreImpl : GroupStore {
 
-    var listOfGroups: List<Group> = emptyList()
+    private var listOfGroups: List<Group> = emptyList()
 
     override fun getListSize() = listOfGroups.size
 
