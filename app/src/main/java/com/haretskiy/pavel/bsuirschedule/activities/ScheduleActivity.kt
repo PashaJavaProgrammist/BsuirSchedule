@@ -29,7 +29,7 @@ class ScheduleActivity : BaseActivity() {
 
         scheduleViewModel.scheduleLiveData.observe(this, Observer {
             if (it != null) {
-                Toast.makeText(this@ScheduleActivity, "" + it, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ScheduleActivity, "" + it, Toast.LENGTH_LONG).show()
             }
         })
 
