@@ -18,19 +18,30 @@ class GroupsViewModel(application: App) : AndroidViewModel(application) {
     @Inject
     lateinit var restApi: RestApi
 
+    var listOfGroups: List<Group> = emptyList()
+
     val groupsLiveData = MutableLiveData<List<Group>>()
 
     fun loadGroupsList() {
-        restApi.allGroupsList.enqueue(object : BaseCallBack<List<Group>> {
-            override fun onError(code: Int?, errorBody: ResponseBody?) {
-            }
+        if (listOfGroups.isNotEmpty()) {
+            groupsLiveData.postValue(listOfGroups)
+        } else {
+            restApi.allGroupsList.enqueue(object : BaseCallBack<List<Group>> {
+                override fun onError(code: Int?, errorBody: ResponseBody?) {
+                    groupsLiveData.postValue(emptyList())
+                }
 
-            override fun onSuccess(response: List<Group>?) {
-                if (response != null) groupsLiveData.postValue(response)
-            }
+                override fun onSuccess(response: List<Group>?) {
+                    if (response != null) {
+                        listOfGroups = response
+                        groupsLiveData.postValue(response)
+                    }
+                }
 
-            override fun onFailure(t: Throwable) {
-            }
-        })
+                override fun onFailure(t: Throwable) {
+                    groupsLiveData.postValue(emptyList())
+                }
+            })
+        }
     }
 }

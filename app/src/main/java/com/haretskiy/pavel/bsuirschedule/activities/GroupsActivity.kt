@@ -3,6 +3,8 @@ package com.haretskiy.pavel.bsuirschedule.activities
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import android.widget.Toast
 import com.haretskiy.pavel.bsuirschedule.GroupsAdapter
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.utils.Router
@@ -42,11 +44,17 @@ class GroupsActivity : BaseActivity(), GroupView {
     }
 
     private fun getGroupsLiveDataAndSubscribe() {
+        progress.visibility = View.VISIBLE
         groupsViewModel.groupsLiveData.observe(this, Observer {
             if (it != null) {
-                adapter.listOfGroups = it
-                adapter.notifyDataSetChanged()
+                if (it.isNotEmpty()) {
+                    adapter.listOfGroups = it
+                    adapter.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(this@GroupsActivity, getString(R.string.no_groups), Toast.LENGTH_SHORT).show()
+                }
             }
+            progress.visibility = View.GONE
         })
         groupsViewModel.loadGroupsList()
     }

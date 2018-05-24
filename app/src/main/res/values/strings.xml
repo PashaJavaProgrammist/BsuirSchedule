@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BsuirSchedule</string>
     <string name="number_of_group">number of group</string>
+    <string name="no_groups">Error. There are no groups</string>
 </resources>
