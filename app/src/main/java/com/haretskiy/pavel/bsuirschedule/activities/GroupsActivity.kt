@@ -1,11 +1,13 @@
 package com.haretskiy.pavel.bsuirschedule.activities
 
 import android.arch.lifecycle.Observer
+import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.appcompat.R.id.search_src_text
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.View
-import android.widget.Toast
+import android.widget.TextView
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.adapters.GroupsAdapter
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
@@ -13,6 +15,7 @@ import com.haretskiy.pavel.bsuirschedule.views.GroupView
 import kotlinx.android.synthetic.main.activity_groups.*
 import kotlinx.android.synthetic.main.search_toobar.*
 import javax.inject.Inject
+
 
 class GroupsActivity : BaseActivity(), GroupView {
 
@@ -49,12 +52,8 @@ class GroupsActivity : BaseActivity(), GroupView {
         progress.visibility = View.VISIBLE
         groupsViewModel.groupsLiveData.observe(this, Observer {
             if (it != null) {
-                if (it.isNotEmpty()) {
-                    adapter.listOfGroups = it
-                    adapter.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(this@GroupsActivity, getString(R.string.no_groups), Toast.LENGTH_SHORT).show()
-                }
+                adapter.listOfGroups = it
+                adapter.notifyDataSetChanged()
             }
             progress.visibility = View.GONE
             swipeAnimFinish()
@@ -79,6 +78,11 @@ class GroupsActivity : BaseActivity(), GroupView {
     }
 
     private fun initSearchView() {
+
+        val textView = search_view.findViewById(search_src_text) as TextView
+        textView.setTextColor(Color.WHITE)
+        textView.setHintTextColor(Color.WHITE)
+
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String?) = true
