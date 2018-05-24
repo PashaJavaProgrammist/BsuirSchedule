@@ -17,11 +17,13 @@ import dagger.Provides
 class GroupsActivityModule {
 
     @Provides
-    fun provideViewModel(activity: GroupsActivity, factory: GroupsViewModelFactory): GroupsViewModel = ViewModelProviders.of(activity, factory).get(GroupsViewModel::class.java)
+    fun provideViewModel(activity: GroupsActivity, factory: GroupsViewModelFactory): GroupsViewModel =
+            ViewModelProviders.of(activity, factory).get(GroupsViewModel::class.java)
 
     @Provides
     fun provideRouter(activity: GroupsActivity): Router = RouterImpl(activity)
 
     @Provides
-    fun provideFactory(context: Context, groupStore: GroupStore, router: Router, restApi: RestApi): GroupsViewModelFactory = GroupsViewModelFactory(context as App, groupStore, router, restApi)
+    fun provideFactory(context: Context, groupStore: GroupStore, router: Router, restApi: RestApi): GroupsViewModelFactory =
+            GroupsViewModelFactory(context as App, groupStore, router, restApi)
 }
