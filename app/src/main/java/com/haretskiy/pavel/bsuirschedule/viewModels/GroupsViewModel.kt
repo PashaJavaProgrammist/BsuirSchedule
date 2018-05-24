@@ -3,20 +3,17 @@ package com.haretskiy.pavel.bsuirschedule.viewModels
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import com.haretskiy.pavel.bsuirschedule.App
-import com.haretskiy.pavel.bsuirschedule.daggerComponent
 import com.haretskiy.pavel.bsuirschedule.models.Group
 import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
+import com.haretskiy.pavel.bsuirschedule.utils.Router
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
-class GroupsViewModel(application: App) : AndroidViewModel(application) {
-    init {
-        daggerComponent.inject(this)
-    }
-
-    @Inject
-    lateinit var restApi: RestApi
+class GroupsViewModel @Inject constructor(
+        application: App,
+        private var router: Router,
+        private var restApi: RestApi) : AndroidViewModel(application) {
 
     var listOfGroups: List<Group> = emptyList()
 
@@ -43,5 +40,9 @@ class GroupsViewModel(application: App) : AndroidViewModel(application) {
                 }
             })
         }
+    }
+
+    fun startScheduleActivity(name: String) {
+        router.startScheduleActivity(name)
     }
 }

@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import com.haretskiy.pavel.bsuirschedule.GroupsAdapter
 import com.haretskiy.pavel.bsuirschedule.R
-import com.haretskiy.pavel.bsuirschedule.utils.Router
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import com.haretskiy.pavel.bsuirschedule.views.GroupView
 import kotlinx.android.synthetic.main.activity_groups.*
@@ -18,9 +17,6 @@ class GroupsActivity : BaseActivity(), GroupView {
     private val adapter: GroupsAdapter by lazy {
         GroupsAdapter(emptyList(), this)
     }
-
-    @Inject
-    lateinit var router: Router
 
     @Inject
     lateinit var groupsViewModel: GroupsViewModel
@@ -60,6 +56,6 @@ class GroupsActivity : BaseActivity(), GroupView {
     }
 
     override fun onClickGroup(name: String) {
-        router.startScheduleActivity(name)
+        groupsViewModel.startScheduleActivity(name)
     }
 }
