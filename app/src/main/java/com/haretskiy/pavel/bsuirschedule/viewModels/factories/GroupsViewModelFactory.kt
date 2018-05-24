@@ -9,7 +9,10 @@ import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import javax.inject.Inject
 
 
-class GroupsViewModelFactory @Inject constructor(var context: App, var router: Router, var restApi: RestApi) : ViewModelProvider.NewInstanceFactory() {
+class GroupsViewModelFactory @Inject constructor(
+        private var context: App,
+        private var router: Router,
+        private var restApi: RestApi) : ViewModelProvider.NewInstanceFactory() {
 
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
