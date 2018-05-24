@@ -19,8 +19,8 @@ class GroupsViewModel @Inject constructor(
 
     val groupsLiveData = MutableLiveData<List<Group>>()
 
-    fun loadGroupsList() {
-        if (groupStore.getListSize() != 0) {
+    fun loadGroupsList(bySwipe: Boolean) {
+        if (groupStore.getListSize() != 0 && !bySwipe) {
             groupsLiveData.postValue(groupStore.getList())
         } else {
             restApi.allGroupsList.enqueue(object : BaseCallBack<List<Group>> {

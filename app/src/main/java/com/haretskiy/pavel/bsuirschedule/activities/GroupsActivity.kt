@@ -18,7 +18,6 @@ class GroupsActivity : BaseActivity(), GroupView {
         GroupsAdapter(emptyList(), this)
     }
 
-    //todo: swipe to refresh
     //todo: serchview
 
     @Inject
@@ -33,6 +32,8 @@ class GroupsActivity : BaseActivity(), GroupView {
         setRecyclerView()
 
         getGroupsLiveDataAndSubscribe()
+
+        initSwipeToRefresh()
     }
 
     override fun getResLayout() = R.layout.activity_groups
@@ -54,8 +55,25 @@ class GroupsActivity : BaseActivity(), GroupView {
                 }
             }
             progress.visibility = View.GONE
+            swipeAnimFinish()
         })
-        groupsViewModel.loadGroupsList()
+        groupsViewModel.loadGroupsList(false)
+    }
+
+    private fun initSwipeToRefresh() {
+        swipe_to_refresh.setOnRefreshListener({ onSwipeToRefresh() })
+        swipe_to_refresh.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light)
+    }
+
+    private fun onSwipeToRefresh() {
+        groupsViewModel.loadGroupsList(true)
+    }
+
+    private fun swipeAnimFinish() {
+        swipe_to_refresh.isRefreshing = false
     }
 
     override fun onClickGroup(name: String) {
