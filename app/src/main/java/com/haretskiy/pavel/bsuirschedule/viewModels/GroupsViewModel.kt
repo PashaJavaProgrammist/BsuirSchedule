@@ -6,22 +6,22 @@ import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.models.Group
 import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
+import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class GroupsViewModel @Inject constructor(
         application: App,
+        private var groupStore: GroupStore,
         private var router: Router,
         private var restApi: RestApi) : AndroidViewModel(application) {
-
-    var listOfGroups: List<Group> = emptyList()
 
     val groupsLiveData = MutableLiveData<List<Group>>()
 
     fun loadGroupsList() {
-        if (listOfGroups.isNotEmpty()) {
-            groupsLiveData.postValue(listOfGroups)
+        if (groupStore.getListSize() != 0) {
+            groupsLiveData.postValue(groupStore.getList())
         } else {
             restApi.allGroupsList.enqueue(object : BaseCallBack<List<Group>> {
                 override fun onError(code: Int?, errorBody: ResponseBody?) {
@@ -30,7 +30,7 @@ class GroupsViewModel @Inject constructor(
 
                 override fun onSuccess(response: List<Group>?) {
                     if (response != null) {
-                        listOfGroups = response
+                        groupStore.saveList(response)
                         groupsLiveData.postValue(response)
                     } else {
                         groupsLiveData.postValue(emptyList())
@@ -50,6 +50,6 @@ class GroupsViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        listOfGroups = emptyList()
+        groupStore.clearList()
     }
 }

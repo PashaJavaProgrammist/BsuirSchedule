@@ -3,6 +3,8 @@ package com.haretskiy.pavel.bsuirschedule.di.modules
 import com.google.gson.GsonBuilder
 import com.haretskiy.pavel.bsuirschedule.BASE_URL
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
+import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
+import com.haretskiy.pavel.bsuirschedule.utils.GroupStoreImpl
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -22,5 +24,9 @@ class MainModule {
                 .build()
         return retrofit.create(RestApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideGroupStore(): GroupStore = GroupStoreImpl()
 
 }
