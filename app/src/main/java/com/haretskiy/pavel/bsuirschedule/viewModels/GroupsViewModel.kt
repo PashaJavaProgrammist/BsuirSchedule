@@ -52,4 +52,16 @@ class GroupsViewModel @Inject constructor(
         super.onCleared()
         groupStore.clearList()
     }
+
+    fun search(searchText: String) {
+        val list = arrayListOf<Group>()
+
+        for (group in groupStore.getList()) {
+            if (group.name.contains(searchText)) {
+                list.add(group)
+            }
+        }
+
+        groupsLiveData.postValue(list)
+    }
 }

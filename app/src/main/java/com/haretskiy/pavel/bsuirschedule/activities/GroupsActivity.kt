@@ -3,6 +3,7 @@ package com.haretskiy.pavel.bsuirschedule.activities
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.view.View
 import android.widget.Toast
 import com.haretskiy.pavel.bsuirschedule.R
@@ -10,6 +11,7 @@ import com.haretskiy.pavel.bsuirschedule.adapters.GroupsAdapter
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import com.haretskiy.pavel.bsuirschedule.views.GroupView
 import kotlinx.android.synthetic.main.activity_groups.*
+import kotlinx.android.synthetic.main.search_toobar.*
 import javax.inject.Inject
 
 class GroupsActivity : BaseActivity(), GroupView {
@@ -17,8 +19,6 @@ class GroupsActivity : BaseActivity(), GroupView {
     private val adapter: GroupsAdapter by lazy {
         GroupsAdapter(emptyList(), this)
     }
-
-    //todo: serchview
 
     @Inject
     lateinit var groupsViewModel: GroupsViewModel
@@ -34,6 +34,8 @@ class GroupsActivity : BaseActivity(), GroupView {
         getGroupsLiveDataAndSubscribe()
 
         initSwipeToRefresh()
+
+        initSearchView()
     }
 
     override fun getResLayout() = R.layout.activity_groups
@@ -75,6 +77,23 @@ class GroupsActivity : BaseActivity(), GroupView {
     private fun swipeAnimFinish() {
         swipe_to_refresh.isRefreshing = false
     }
+
+    private fun initSearchView() {
+        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?) = true
+
+            override fun onQueryTextChange(searchText: String?): Boolean {
+
+                if (searchText != null) {
+                    groupsViewModel.search(searchText)
+                }
+
+                return true
+            }
+        })
+    }
+
 
     override fun onClickGroup(name: String) {
         groupsViewModel.startScheduleActivity(name)
