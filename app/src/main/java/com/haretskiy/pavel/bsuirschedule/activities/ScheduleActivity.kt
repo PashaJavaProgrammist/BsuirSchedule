@@ -2,6 +2,7 @@ package com.haretskiy.pavel.bsuirschedule.activities
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.view.View
 import com.haretskiy.pavel.bsuirschedule.BUNDLE_KEY_NUMBER_GROUP
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.adapters.ScheduleTabFragmentAdapter
@@ -30,6 +31,8 @@ class ScheduleActivity : BaseActivity() {
         initViewPager()
 
         getGroupsLiveDataAndSubscribe(numberOfGroup, true)
+
+        progress_schedule.visibility = View.VISIBLE
     }
 
     private fun getGroupsLiveDataAndSubscribe(nameOfGroup: String, exam: Boolean) {
@@ -38,6 +41,7 @@ class ScheduleActivity : BaseActivity() {
         scheduleViewModel.scheduleLiveData.observe(this, Observer {
             if (it != null) {
                 fillViewPagerAdapter(it)
+                progress_schedule.visibility = View.GONE
             }
         })
 
