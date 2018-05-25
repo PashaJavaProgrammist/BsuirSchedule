@@ -40,14 +40,19 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         view.type_lesson.text = scheduleUnit.lessonType
 
-        view.note.text = scheduleUnit.note
-
         if (!scheduleUnit.numSubgroup.equals(0)) {
             view.subgroup.text = scheduleUnit.numSubgroup.toString()
         }
 
         if (scheduleUnit.weekNumber.isNotEmpty()) {
-            view.note.text = scheduleUnit.weekNumber.toString()
+            view.week_number.text = scheduleUnit.weekNumber.toString()
+        }
+
+        if (scheduleUnit.note.isNotEmpty()) {
+            view.note.text = scheduleUnit.note
+            view.note.visibility = View.VISIBLE
+        } else {
+            view.note.visibility = View.GONE
         }
 
         view.subject.text = scheduleUnit.subject
