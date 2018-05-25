@@ -90,7 +90,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subgroup" />
+            app:layout_constraintTop_toBottomOf="@+id/type_lesson" />
 
         <TextView
             android:id="@+id/week_number"

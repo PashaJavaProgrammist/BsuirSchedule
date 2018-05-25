@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.haretskiy.pavel.bsuirschedule.EMPTY_STRING
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
+import com.haretskiy.pavel.bsuirschedule.toPrettyFormat
 import kotlinx.android.synthetic.main.item_schedule.view.*
 
 class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -20,9 +21,17 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             view.auditory.text = audStr
         }
         var empStr = EMPTY_STRING
-        for (emp in scheduleUnit.employee) {
-            val employee = "$emp,\n"
-            empStr += employee
+        if (scheduleUnit.employee.size > 1) {
+            for (emp in scheduleUnit.employee) {
+                val employee = "${emp.toPrettyFormat()}\n"
+                empStr += employee
+            }
+            view.employee.visibility = View.VISIBLE
+        } else if (scheduleUnit.employee.size == 1) {
+            view.employee.visibility = View.VISIBLE
+            empStr = scheduleUnit.employee[0].toPrettyFormat()
+        } else {
+            view.employee.visibility = View.GONE
         }
         view.employee.text = empStr
 
@@ -40,6 +49,7 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         if (scheduleUnit.weekNumber.isNotEmpty()) {
             view.note.text = scheduleUnit.weekNumber.toString()
         }
+
         view.subject.text = scheduleUnit.subject
 
     }
