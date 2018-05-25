@@ -30,6 +30,8 @@ class ScheduleActivity : BaseActivity() {
 
         initViewPager()
 
+        initFab()
+
         getGroupsLiveDataAndSubscribe(numberOfGroup, true)
 
         progress_schedule.visibility = View.VISIBLE
@@ -59,5 +61,11 @@ class ScheduleActivity : BaseActivity() {
     private fun initViewPager() {
         pager.adapter = adapter
         tabs.setupWithViewPager(pager)
+    }
+
+    private fun initFab() {
+        fab.setOnClickListener {
+            scheduleViewModel.startGroupsActivity()
+        }
     }
 }

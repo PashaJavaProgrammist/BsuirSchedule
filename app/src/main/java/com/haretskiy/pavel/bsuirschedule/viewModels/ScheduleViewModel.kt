@@ -41,4 +41,8 @@ class ScheduleViewModel @Inject constructor(
         })
     }
 
+    fun startGroupsActivity() {
+        router.startGroupsActivity()
+    }
+
 }
