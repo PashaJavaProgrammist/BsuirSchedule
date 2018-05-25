@@ -36,5 +36,5 @@ class ScheduleFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
-
+//todo: need to save List<ScheduleUnit>
 }
