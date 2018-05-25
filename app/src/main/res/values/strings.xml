@@ -2,5 +2,15 @@
     <string name="app_name">BsuirSchedule</string>
     <string name="number_of_group">number of group</string>
     <string name="no_groups">Error. There are no groups</string>
+    <string name="subject">Subject</string>
+    <string name="auditory">auditory</string>
+    <string name="start">start</string>
+    <string name="end">end</string>
+    <string name="lesson_time">lesson time</string>
+    <string name="type">type</string>
+    <string name="employee">employee</string>
+    <string name="sub">sub</string>
+    <string name="week">week</string>
+    <string name="note">note</string>
 
 </resources>
