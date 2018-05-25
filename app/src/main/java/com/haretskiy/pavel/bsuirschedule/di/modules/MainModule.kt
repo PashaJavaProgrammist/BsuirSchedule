@@ -1,10 +1,12 @@
 package com.haretskiy.pavel.bsuirschedule.di.modules
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.haretskiy.pavel.bsuirschedule.BASE_URL
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
 import com.haretskiy.pavel.bsuirschedule.utils.GroupStoreImpl
+import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -28,5 +30,9 @@ class MainModule {
     @Provides
     @Singleton
     fun provideGroupStore(): GroupStore = GroupStoreImpl()
+
+    @Provides
+    @Singleton
+    fun providePrefs(context: Context): Prefs = Prefs(context)
 
 }

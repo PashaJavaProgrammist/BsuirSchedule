@@ -1,4 +1,4 @@
-package com.haretskiy.pavel.bsuirschedule.activities
+package com.haretskiy.pavel.bsuirschedule.ui.activities
 
 import android.arch.lifecycle.Observer
 import android.graphics.Color
@@ -10,8 +10,9 @@ import android.view.View
 import android.widget.TextView
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.adapters.GroupsAdapter
+import com.haretskiy.pavel.bsuirschedule.ui.dialogs.GroupDefaultDialog
+import com.haretskiy.pavel.bsuirschedule.ui.views.GroupView
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
-import com.haretskiy.pavel.bsuirschedule.views.GroupView
 import kotlinx.android.synthetic.main.activity_groups.*
 import kotlinx.android.synthetic.main.search_toobar.*
 import javax.inject.Inject
@@ -100,6 +101,16 @@ class GroupsActivity : BaseActivity(), GroupView {
 
 
     override fun onClickGroup(name: String) {
-        groupsViewModel.startScheduleActivity(name)
+        GroupDefaultDialog().show(supportFragmentManager, object : GroupDefaultDialog.DefaultGroupListener {
+            override fun onClickSave() {
+                groupsViewModel.saveGroupAsDefault(name)
+            }
+
+            override fun onClickDismiss() {}
+
+            override fun onDismiss() {
+                groupsViewModel.startScheduleActivity(name)
+            }
+        })
     }
 }

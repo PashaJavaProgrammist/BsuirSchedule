@@ -5,9 +5,10 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.haretskiy.pavel.bsuirschedule.BUNDLE_DEFAULT_GROUP
 import com.haretskiy.pavel.bsuirschedule.EMPTY_STRING
+import javax.inject.Inject
 
 
-class Prefs(context: Context) {
+class Prefs @Inject constructor(context: Context) {
 
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     private val editor: SharedPreferences.Editor = preferences.edit()

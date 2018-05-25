@@ -1,4 +1,4 @@
-package com.haretskiy.pavel.bsuirschedule.activities
+package com.haretskiy.pavel.bsuirschedule.ui.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

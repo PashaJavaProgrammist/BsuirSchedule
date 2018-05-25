@@ -3,8 +3,8 @@ package com.haretskiy.pavel.bsuirschedule.di.modules.activitiesModules
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import com.haretskiy.pavel.bsuirschedule.App
-import com.haretskiy.pavel.bsuirschedule.activities.ScheduleActivity
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
+import com.haretskiy.pavel.bsuirschedule.ui.activities.ScheduleActivity
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import com.haretskiy.pavel.bsuirschedule.utils.RouterImpl
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel

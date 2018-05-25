@@ -1,4 +1,4 @@
-package com.haretskiy.pavel.bsuirschedule.fragments
+package com.haretskiy.pavel.bsuirschedule.ui.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_light"
-    tools:context=".fragments.ScheduleFragment">
+    tools:context=".ui.fragments.ScheduleFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_schedule"

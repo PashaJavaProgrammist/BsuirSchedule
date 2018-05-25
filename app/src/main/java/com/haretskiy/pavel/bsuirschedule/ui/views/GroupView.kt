@@ -1,4 +1,4 @@
-package com.haretskiy.pavel.bsuirschedule.views
+package com.haretskiy.pavel.bsuirschedule.ui.views
 
 interface GroupView {
 

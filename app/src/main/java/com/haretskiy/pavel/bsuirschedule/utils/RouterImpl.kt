@@ -3,7 +3,7 @@ package com.haretskiy.pavel.bsuirschedule.utils
 import android.content.Context
 import android.content.Intent
 import com.haretskiy.pavel.bsuirschedule.BUNDLE_KEY_NUMBER_GROUP
-import com.haretskiy.pavel.bsuirschedule.activities.ScheduleActivity
+import com.haretskiy.pavel.bsuirschedule.ui.activities.ScheduleActivity
 
 class RouterImpl(val context: Context) : Router {
 

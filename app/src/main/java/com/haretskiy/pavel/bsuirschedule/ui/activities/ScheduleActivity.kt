@@ -1,4 +1,4 @@
-package com.haretskiy.pavel.bsuirschedule.activities
+package com.haretskiy.pavel.bsuirschedule.ui.activities
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
@@ -6,8 +6,8 @@ import android.view.View
 import com.haretskiy.pavel.bsuirschedule.BUNDLE_KEY_NUMBER_GROUP
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.adapters.ScheduleTabFragmentAdapter
-import com.haretskiy.pavel.bsuirschedule.fragments.ScheduleFragment
 import com.haretskiy.pavel.bsuirschedule.models.Schedule
+import com.haretskiy.pavel.bsuirschedule.ui.fragments.ScheduleFragment
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import kotlinx.android.synthetic.main.activity_schedule.*
 import javax.inject.Inject

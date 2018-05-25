@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.models.Group
-import com.haretskiy.pavel.bsuirschedule.views.GroupHolder
-import com.haretskiy.pavel.bsuirschedule.views.GroupView
+import com.haretskiy.pavel.bsuirschedule.ui.views.GroupHolder
+import com.haretskiy.pavel.bsuirschedule.ui.views.GroupView
 
 class GroupsAdapter(var listOfGroups: List<Group>,
                     private val groupView: GroupView) : RecyclerView.Adapter<GroupHolder>() {

@@ -12,5 +12,8 @@
     <string name="sub">sub</string>
     <string name="week">week</string>
     <string name="note">note</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="default_group">Save this group as default?</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.haretskiy.pavel.bsuirschedule.views
+package com.haretskiy.pavel.bsuirschedule.ui.views
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

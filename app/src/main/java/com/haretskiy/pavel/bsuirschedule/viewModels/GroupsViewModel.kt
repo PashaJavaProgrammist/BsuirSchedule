@@ -7,6 +7,7 @@ import com.haretskiy.pavel.bsuirschedule.models.Group
 import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
+import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import okhttp3.ResponseBody
 import javax.inject.Inject
@@ -14,6 +15,7 @@ import javax.inject.Inject
 class GroupsViewModel @Inject constructor(
         application: App,
         private var groupStore: GroupStore,
+        private var prefs: Prefs,
         private var router: Router,
         private var restApi: RestApi) : AndroidViewModel(application) {
 
@@ -64,4 +66,9 @@ class GroupsViewModel @Inject constructor(
 
         groupsLiveData.postValue(list)
     }
+
+    fun saveGroupAsDefault(name: String) {
+        prefs.saveDefaultGroup(name)
+    }
+
 }
