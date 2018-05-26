@@ -17,5 +17,7 @@
     <string name="default_group">Save this group as default?</string>
     <string name="bsuir">BSUIR</string>
     <string name="schedule">SCHEDULE</string>
+    <string name="there_are_no_lessons">There are no lessons</string>
+    <string name="exam">Exam</string>
 
 </resources>

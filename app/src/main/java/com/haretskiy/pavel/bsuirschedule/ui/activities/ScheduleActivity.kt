@@ -27,6 +27,8 @@ class ScheduleActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        info.visibility = View.GONE
+
         val numberOfGroup = intent.getStringExtra(BUNDLE_KEY_NUMBER_GROUP)
 
         initViewPager()
@@ -46,9 +48,12 @@ class ScheduleActivity : BaseActivity() {
         scheduleViewModel.loadSchedule(nameOfGroup, exam)
 
         scheduleViewModel.scheduleLiveData.observe(this, Observer {
-            if (it != null) {
+            if (it != null && it.isNotEmpty()) {
                 fillViewPagerAdapter(it)
                 progress_schedule.visibility = View.GONE
+                info.visibility = View.GONE
+            } else {
+                info.visibility = View.VISIBLE
             }
         })
 
