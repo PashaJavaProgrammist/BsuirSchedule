@@ -58,6 +58,7 @@ class ScheduleActivity : BaseActivity() {
                 progress_schedule.visibility = View.GONE
                 info.visibility = View.GONE
             } else {
+                progress_schedule.visibility = View.GONE
                 info.visibility = View.VISIBLE
             }
         })
@@ -85,9 +86,9 @@ class ScheduleActivity : BaseActivity() {
     }
 
     private fun initExamSwitch() {
-        exam_switch.isSelected = scheduleViewModel.getExam()
-        exam_switch.setOnClickListener {
-            scheduleViewModel.setExam(exam_switch.isSelected)
+        exam_switch.isChecked = scheduleViewModel.getExam()
+        exam_switch.setOnCheckedChangeListener { _, isChecked ->
+            scheduleViewModel.setExam(isChecked)
             recreate()
         }
     }
