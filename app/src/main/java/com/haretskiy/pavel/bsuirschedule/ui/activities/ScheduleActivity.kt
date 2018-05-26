@@ -10,6 +10,7 @@ import com.haretskiy.pavel.bsuirschedule.models.Schedule
 import com.haretskiy.pavel.bsuirschedule.ui.fragments.ScheduleFragment
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import kotlinx.android.synthetic.main.activity_schedule.*
+import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class ScheduleActivity : BaseActivity() {
@@ -31,6 +32,10 @@ class ScheduleActivity : BaseActivity() {
         initViewPager()
 
         initFab()
+
+        setSupportActionBar(toolbar)
+
+        toolbar_schedule.text = numberOfGroup
 
         getGroupsLiveDataAndSubscribe(numberOfGroup, true)
 
