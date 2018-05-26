@@ -44,12 +44,12 @@ class ScheduleActivity : BaseActivity() {
 
         toolbar_schedule.text = numberOfGroup
 
-        getGroupsLiveDataAndSubscribe(numberOfGroup, true)
+        getGroupsLiveDataAndSubscribe(numberOfGroup)
 
         progress_schedule.visibility = View.VISIBLE
     }
 
-    private fun getGroupsLiveDataAndSubscribe(nameOfGroup: String, exam: Boolean) {
+    private fun getGroupsLiveDataAndSubscribe(nameOfGroup: String) {
         scheduleViewModel.loadSchedule(nameOfGroup)
 
         scheduleViewModel.scheduleLiveData.observe(this, Observer {
