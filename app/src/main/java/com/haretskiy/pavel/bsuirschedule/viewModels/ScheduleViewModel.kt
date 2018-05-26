@@ -53,4 +53,8 @@ class ScheduleViewModel @Inject constructor(
 
     fun getExam() = prefs.getExam()
 
+    fun startScheduleActivity(name: String) {
+        router.startScheduleActivity(name)
+    }
+
 }

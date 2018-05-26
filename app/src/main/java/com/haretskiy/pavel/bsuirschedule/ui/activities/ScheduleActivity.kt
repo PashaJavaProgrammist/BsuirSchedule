@@ -89,7 +89,7 @@ class ScheduleActivity : BaseActivity() {
         exam_switch.isChecked = scheduleViewModel.getExam()
         exam_switch.setOnCheckedChangeListener { _, isChecked ->
             scheduleViewModel.setExam(isChecked)
-            recreate()
+            scheduleViewModel.startScheduleActivity(numberOfGroup)
         }
     }
 }
