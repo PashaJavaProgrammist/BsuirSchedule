@@ -1,8 +1,10 @@
 package com.haretskiy.pavel.bsuirschedule.ui.fragments
 
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +29,9 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initListOfSubjects()
+        initTabHiding()
     }
 
     private fun initListOfSubjects() {
@@ -41,4 +45,19 @@ class ScheduleFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
+    fun initTabHiding() {
+        rv_schedule.addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
+                        if (fab != null)
+                            if (dy > 0 && fab.visibility == View.VISIBLE) {
+                                fab.hide()
+                            } else if (dy < 0 && fab.visibility != View.VISIBLE) {
+                                fab.show()
+                            }
+                    }
+                })
+    }
 }
