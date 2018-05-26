@@ -13,5 +13,9 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(getResLayout())
     }
 
+    override fun onBackPressed() {
+        finishAffinity()
+    }
+
     abstract fun getResLayout(): Int
 }

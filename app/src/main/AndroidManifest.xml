@@ -13,15 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.haretskiy.pavel.bsuirschedule.ui.activities.GroupsActivity"
-            android:theme="@style/AppTheme">
+            android:name=".ui.activities.GroupsActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.activities.ScheduleActivity" />
+        <activity android:name=".ui.activities.SplashActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name="com.haretskiy.pavel.bsuirschedule.ui.activities.ScheduleActivity"></activity>
     </application>
 
 </manifest>

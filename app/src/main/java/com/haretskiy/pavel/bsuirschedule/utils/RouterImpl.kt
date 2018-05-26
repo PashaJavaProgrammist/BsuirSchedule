@@ -16,7 +16,6 @@ class RouterImpl(val context: Context) : Router {
 
     override fun startGroupsActivity() {
         val intent = Intent(context, GroupsActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         context.startActivity(intent)
     }
 }
