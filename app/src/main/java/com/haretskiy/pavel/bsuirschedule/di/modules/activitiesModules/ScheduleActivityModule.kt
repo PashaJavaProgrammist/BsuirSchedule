@@ -5,6 +5,7 @@ import android.content.Context
 import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.ui.activities.ScheduleActivity
+import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import com.haretskiy.pavel.bsuirschedule.utils.RouterImpl
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
@@ -23,6 +24,6 @@ class ScheduleActivityModule {
             ViewModelProviders.of(activity, factory).get(ScheduleViewModel::class.java)
 
     @Provides
-    fun provideFactory(context: Context, router: Router, restApi: RestApi): ScheduleViewModelFactory =
-            ScheduleViewModelFactory(context as App, router, restApi)
+    fun provideFactory(context: Context, prefs: Prefs, router: Router, restApi: RestApi): ScheduleViewModelFactory =
+            ScheduleViewModelFactory(context as App, prefs, router, restApi)
 }

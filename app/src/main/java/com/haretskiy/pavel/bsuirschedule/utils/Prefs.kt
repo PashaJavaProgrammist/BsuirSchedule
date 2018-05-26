@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.haretskiy.pavel.bsuirschedule.BUNDLE_DEFAULT_GROUP
+import com.haretskiy.pavel.bsuirschedule.BUNDLE_KEY_EXAM
 import com.haretskiy.pavel.bsuirschedule.EMPTY_STRING
 import javax.inject.Inject
 
@@ -18,6 +19,12 @@ class Prefs @Inject constructor(context: Context) {
     }
 
     fun getDefaultGroup() = getString(BUNDLE_DEFAULT_GROUP, EMPTY_STRING)
+
+    fun getExam() = getBoolean(BUNDLE_KEY_EXAM, true)
+
+    fun setExam(exam: Boolean) {
+        save(BUNDLE_KEY_EXAM, exam)
+    }
 
     //Prefs methods
     private fun save(key: String, value: Boolean) {

@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.view.View
 import com.haretskiy.pavel.bsuirschedule.BUNDLE_KEY_NUMBER_GROUP
+import com.haretskiy.pavel.bsuirschedule.EMPTY_STRING
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.adapters.ScheduleTabFragmentAdapter
 import com.haretskiy.pavel.bsuirschedule.models.Schedule
@@ -17,10 +18,12 @@ class ScheduleActivity : BaseActivity() {
 
     override fun getResLayout() = R.layout.activity_schedule
 
+    private var numberOfGroup = EMPTY_STRING
+
     @Inject
     lateinit var scheduleViewModel: ScheduleViewModel
 
-    val adapter: ScheduleTabFragmentAdapter by lazy {
+    private val adapter: ScheduleTabFragmentAdapter by lazy {
         ScheduleTabFragmentAdapter(supportFragmentManager)
     }
 
@@ -29,11 +32,13 @@ class ScheduleActivity : BaseActivity() {
 
         info.visibility = View.GONE
 
-        val numberOfGroup = intent.getStringExtra(BUNDLE_KEY_NUMBER_GROUP)
+        numberOfGroup = intent.getStringExtra(BUNDLE_KEY_NUMBER_GROUP)
 
         initViewPager()
 
         initFab()
+
+        initExamSwitch()
 
         setSupportActionBar(toolbar)
 
@@ -45,7 +50,7 @@ class ScheduleActivity : BaseActivity() {
     }
 
     private fun getGroupsLiveDataAndSubscribe(nameOfGroup: String, exam: Boolean) {
-        scheduleViewModel.loadSchedule(nameOfGroup, exam)
+        scheduleViewModel.loadSchedule(nameOfGroup)
 
         scheduleViewModel.scheduleLiveData.observe(this, Observer {
             if (it != null && it.isNotEmpty()) {
@@ -76,6 +81,14 @@ class ScheduleActivity : BaseActivity() {
     private fun initFab() {
         fab.setOnClickListener {
             scheduleViewModel.startGroupsActivity()
+        }
+    }
+
+    private fun initExamSwitch() {
+        exam_switch.isSelected = scheduleViewModel.getExam()
+        exam_switch.setOnClickListener {
+            scheduleViewModel.setExam(exam_switch.isSelected)
+            recreate()
         }
     }
 }
