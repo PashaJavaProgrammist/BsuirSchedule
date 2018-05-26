@@ -15,5 +15,7 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="default_group">Save this group as default?</string>
+    <string name="bsuir">BSUIR</string>
+    <string name="schedule">SCHEDULE</string>
 
 </resources>

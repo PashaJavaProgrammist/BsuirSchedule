@@ -6,12 +6,32 @@
     android:background="@color/colorPrimary"
     tools:context=".ui.activities.SplashActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="100dp"
+        android:text="@string/bsuir"
+        android:textColor="@android:color/white"
+        android:textSize="48sp"
+        android:textStyle="bold|italic" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_university" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:text="@string/schedule"
+        android:textColor="@android:color/white"
+        android:textSize="36sp"
+        android:textStyle="bold|italic" />
 
     <View
         android:layout_width="match_parent"
