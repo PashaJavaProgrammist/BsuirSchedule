@@ -12,6 +12,8 @@ import com.haretskiy.pavel.bsuirschedule.ui.fragments.ScheduleFragment
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import kotlinx.android.synthetic.main.activity_schedule.*
 import kotlinx.android.synthetic.main.toolbar.*
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class ScheduleActivity : BaseActivity() {
@@ -19,6 +21,8 @@ class ScheduleActivity : BaseActivity() {
     override fun getResLayout() = R.layout.activity_schedule
 
     private var numberOfGroup = EMPTY_STRING
+
+    private var currentPosition = 0
 
     @Inject
     lateinit var scheduleViewModel: ScheduleViewModel
@@ -66,12 +70,46 @@ class ScheduleActivity : BaseActivity() {
     }
 
     private fun fillViewPagerAdapter(list: List<Schedule>) {
-        for (schedule in list) {
+
+        for ((i, schedule) in list.withIndex()) {
             val fragment = ScheduleFragment()
             fragment.setSchedule(schedule.schedule)
             adapter.addFragment(fragment, schedule.weekDay)
+            selectCurrentDay(schedule.weekDay, i, list.size)
         }
         adapter.notifyDataSetChanged()
+        pager.currentItem = currentPosition
+    }
+
+    val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+    val sdfDay = SimpleDateFormat("EEEE", Locale.getDefault())
+    val currentDate = Date(System.currentTimeMillis())
+
+
+    private fun selectCurrentDay(weekDay: String, position: Int, listSize: Int) {
+
+        try {
+            val scheduleDate = sdf.parse(weekDay)
+            if (scheduleDate < currentDate) {
+                if (position + 1 <= listSize) {
+                    currentPosition = position + 1
+                } else {
+                    currentPosition = position
+                }
+            } else if (scheduleDate == currentDate) {
+                currentPosition = position
+            }
+        } catch (ex: Exception) {
+            //sdf error
+        }
+
+
+        try {
+            val scheduleDate = sdfDay.parse(weekDay)
+
+        } catch (ex: Exception) {
+            //sdf error
+        }
     }
 
     private fun initViewPager() {
