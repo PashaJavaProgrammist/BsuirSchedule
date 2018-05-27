@@ -2,6 +2,8 @@ package com.haretskiy.pavel.bsuirschedule
 
 import android.app.Activity
 import android.arch.lifecycle.AndroidViewModel
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
 import com.haretskiy.pavel.bsuirschedule.di.components.AppComponent
 import com.haretskiy.pavel.bsuirschedule.models.Employee
 import java.text.SimpleDateFormat
@@ -64,4 +66,17 @@ fun Date.getM(): Int {
     val calendar = Calendar.getInstance()
     calendar.time = this
     return calendar.get(Calendar.MINUTE)
+}
+
+fun String.toPrettyFormat(): String {
+    return try {
+        val parser = JsonParser()
+        val json = parser.parse(this).asJsonObject
+
+        val gson = GsonBuilder().setPrettyPrinting().create()
+
+        gson.toJson(json)
+    } catch (ex: Exception) {
+        this
+    }
 }

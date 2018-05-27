@@ -13,3 +13,6 @@ const val DIALOG_DEFAULT = "DIALOG_DEFAULT"
 const val DATE_FORMAT = "dd.MM.yyyy"
 const val TIME_FORMAT = "hh:mm"
 
+const val START = "START ->"
+const val END = "END <-"
+const val RESPONSE = "RESPONSE"
