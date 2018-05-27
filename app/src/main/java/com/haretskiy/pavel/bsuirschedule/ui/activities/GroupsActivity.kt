@@ -135,7 +135,7 @@ class GroupsActivity : BaseActivity(), GroupView {
                             if (dy > 0 && fab_groups.visibility == View.VISIBLE) {
                                 fab_groups.hide()
                             } else if (dy < 0 && fab_groups.visibility != View.VISIBLE) {
-                                fab_groups.show()
+                                if (groupsViewModel.isDefaultGroupExist()) fab_groups.show()
                             }
                     }
                 })
