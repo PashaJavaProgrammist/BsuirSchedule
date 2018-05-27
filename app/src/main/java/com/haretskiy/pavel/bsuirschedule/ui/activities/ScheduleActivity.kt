@@ -18,7 +18,6 @@ class ScheduleActivity : BaseActivity() {
 
     private val sdfDate = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
     private val calendar = Calendar.getInstance()
-    private val currentDate = Date(System.currentTimeMillis())
 
     override fun getResLayout() = R.layout.activity_schedule
 
@@ -88,12 +87,12 @@ class ScheduleActivity : BaseActivity() {
         try {
             val scheduleDate = sdfDate.parse(weekDay)
             when {
-                scheduleDate < currentDate -> currentPosition = if (position + 1 <= listSize) {
+                scheduleDate < calendar.time -> currentPosition = if (position + 1 <= listSize) {
                     position + 1
                 } else {
                     position
                 }
-                scheduleDate == currentDate -> currentPosition = position
+                scheduleDate == calendar.time -> currentPosition = position
             }
         } catch (ex: Exception) {
             try {
