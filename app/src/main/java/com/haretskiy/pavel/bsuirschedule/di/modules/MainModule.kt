@@ -8,6 +8,7 @@ import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
 import com.haretskiy.pavel.bsuirschedule.utils.GroupStoreImpl
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
+import com.haretskiy.pavel.bsuirschedule.viewModels.factories.ViewModelStore
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -39,5 +40,10 @@ class MainModule {
     @Provides
     @Singleton
     fun providePrefs(context: Context): Prefs = Prefs(context)
+
+
+    @Provides
+    @Singleton
+    fun provideViewModelStore(): ViewModelStore = ViewModelStore()
 
 }

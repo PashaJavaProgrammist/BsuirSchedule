@@ -7,7 +7,6 @@ import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
-import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import javax.inject.Inject
 
 
@@ -16,10 +15,11 @@ class GroupsViewModelFactory @Inject constructor(
         private var groupStore: GroupStore,
         private var prefs: Prefs,
         private var router: Router,
-        private var restApi: RestApi) : ViewModelProvider.NewInstanceFactory() {
-
+        private var restApi: RestApi,
+        private var viewModelStore: ViewModelStore) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return GroupsViewModel(context, groupStore, prefs, router, restApi) as T
+        return viewModelStore.getGroupsViewModel(context, groupStore, prefs, router, restApi) as T
     }
 }
+

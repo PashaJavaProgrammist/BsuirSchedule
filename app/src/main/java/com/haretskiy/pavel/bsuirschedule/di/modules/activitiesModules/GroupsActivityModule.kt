@@ -11,6 +11,7 @@ import com.haretskiy.pavel.bsuirschedule.utils.Router
 import com.haretskiy.pavel.bsuirschedule.utils.RouterImpl
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import com.haretskiy.pavel.bsuirschedule.viewModels.factories.GroupsViewModelFactory
+import com.haretskiy.pavel.bsuirschedule.viewModels.factories.ViewModelStore
 import dagger.Module
 import dagger.Provides
 
@@ -25,6 +26,6 @@ class GroupsActivityModule {
     fun provideRouter(activity: GroupsActivity): Router = RouterImpl(activity)
 
     @Provides
-    fun provideFactory(context: Context, groupStore: GroupStore, prefs: Prefs, router: Router, restApi: RestApi): GroupsViewModelFactory =
-            GroupsViewModelFactory(context as App, groupStore, prefs, router, restApi)
+    fun provideFactory(context: Context, groupStore: GroupStore, prefs: Prefs, router: Router, restApi: RestApi, viewModelStore: ViewModelStore): GroupsViewModelFactory =
+            GroupsViewModelFactory(context as App, groupStore, prefs, router, restApi, viewModelStore)
 }
