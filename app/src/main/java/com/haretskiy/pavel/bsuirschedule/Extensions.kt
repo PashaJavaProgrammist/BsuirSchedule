@@ -80,3 +80,17 @@ fun String.toPrettyFormat(): String {
         this
     }
 }
+
+fun Date.isToday(todayDate: Date): Boolean {
+    val calendar = Calendar.getInstance()
+    calendar.time = todayDate
+    val todayYear = calendar.get(Calendar.YEAR)
+    val todayMonth = calendar.get(Calendar.MONTH)
+    val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+    calendar.time = this
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+    return day == todayDay && month == todayMonth && year == todayYear
+}

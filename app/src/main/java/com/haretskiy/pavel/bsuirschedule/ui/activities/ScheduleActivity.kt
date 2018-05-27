@@ -85,9 +85,11 @@ class ScheduleActivity : BaseActivity() {
     private fun selectCurrentDay(weekDay: String, position: Int, listSize: Int): TimeState {
 
         try {
-            val scheduleDate = weekDay.toDate()
+            val scheduleDate: Date = weekDay.toDate()
+            val currentDate: Date = calendar.time
+
             return when {
-                scheduleDate < calendar.time -> {
+                scheduleDate.before(currentDate) && !scheduleDate.isToday(currentDate) -> {
                     currentPosition = if (position + 1 <= listSize) {
                         position + 1
                     } else {
@@ -95,7 +97,7 @@ class ScheduleActivity : BaseActivity() {
                     }
                     TimeState.PAST
                 }
-                scheduleDate == calendar.time -> {
+                scheduleDate.isToday(currentDate) -> {
                     currentPosition = position
                     TimeState.PRESENT
                 }
