@@ -36,7 +36,6 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
                 view.card_view.setCardBackgroundColor(Color.GRAY)
             }
             TimeState.PRESENT -> colorViewByTime(scheduleUnit)
-
         }
     }
 
