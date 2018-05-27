@@ -10,27 +10,25 @@ import com.haretskiy.pavel.bsuirschedule.ui.fragments.ScheduleFragment
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import kotlinx.android.synthetic.main.activity_schedule.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 class ScheduleActivity : BaseActivity() {
 
-    private val sdfDate = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
-    private val calendar = Calendar.getInstance()
+    @Inject
+    lateinit var scheduleViewModel: ScheduleViewModel
 
-    override fun getResLayout() = R.layout.activity_schedule
+    private val calendar = Calendar.getInstance()
 
     private var numberOfGroup = EMPTY_STRING
 
     private var currentPosition = 0
 
-    @Inject
-    lateinit var scheduleViewModel: ScheduleViewModel
-
     private val adapter: ScheduleTabFragmentAdapter by lazy {
         ScheduleTabFragmentAdapter(supportFragmentManager)
     }
+
+    override fun getResLayout() = R.layout.activity_schedule
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,7 +83,7 @@ class ScheduleActivity : BaseActivity() {
     private fun selectCurrentDay(weekDay: String, position: Int, listSize: Int) {
 
         try {
-            val scheduleDate = sdfDate.parse(weekDay)
+            val scheduleDate = weekDay.toDate()
             when {
                 scheduleDate < calendar.time -> currentPosition = if (position + 1 <= listSize) {
                     position + 1

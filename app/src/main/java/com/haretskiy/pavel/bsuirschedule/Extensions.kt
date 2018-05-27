@@ -4,6 +4,8 @@ import android.app.Activity
 import android.arch.lifecycle.AndroidViewModel
 import com.haretskiy.pavel.bsuirschedule.di.components.AppComponent
 import com.haretskiy.pavel.bsuirschedule.models.Employee
+import java.text.SimpleDateFormat
+import java.util.*
 
 val Activity.daggerComponent: AppComponent
     get() {
@@ -43,3 +45,5 @@ fun String.toWeekDayNumber(): Int {
         else -> 0
     }
 }
+
+fun String.toDate(): Date = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).parse(this)
