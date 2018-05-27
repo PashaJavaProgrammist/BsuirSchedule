@@ -34,7 +34,7 @@ class ScheduleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initListOfSubjects()
-        initTabHiding()
+        initFabHiding()
     }
 
     private fun initListOfSubjects() {
@@ -49,7 +49,7 @@ class ScheduleFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
-    private fun initTabHiding() {
+    private fun initFabHiding() {
         rv_schedule.addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {

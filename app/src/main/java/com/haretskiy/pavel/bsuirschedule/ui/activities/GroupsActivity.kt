@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.appcompat.R.id.search_src_text
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.View
 import android.widget.TextView
@@ -40,6 +41,10 @@ class GroupsActivity : BaseActivity(), GroupView {
         initSwipeToRefresh()
 
         initSearchView()
+
+        initFabHiding()
+
+        initFab()
     }
 
     override fun getResLayout() = R.layout.activity_groups
@@ -112,5 +117,26 @@ class GroupsActivity : BaseActivity(), GroupView {
                 groupsViewModel.startScheduleActivity(name)
             }
         })
+    }
+
+    private fun initFab() {
+        fab_groups.setOnClickListener {
+            groupsViewModel.startDefaultScheduleActivity()
+        }
+    }
+
+    private fun initFabHiding() {
+        rv_groups.addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        if (fab_groups != null)
+                            if (dy > 0 && fab_groups.visibility == View.VISIBLE) {
+                                fab_groups.hide()
+                            } else if (dy < 0 && fab_groups.visibility != View.VISIBLE) {
+                                fab_groups.show()
+                            }
+                    }
+                })
     }
 }

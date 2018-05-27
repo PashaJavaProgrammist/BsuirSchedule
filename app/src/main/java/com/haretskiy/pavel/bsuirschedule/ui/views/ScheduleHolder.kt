@@ -24,10 +24,10 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             fillWeekNumber(it)
         }
 
-        colorView(timeState)
+        colorViewByDay(timeState)
     }
 
-    private fun colorView(timeState: TimeState) {
+    private fun colorViewByDay(timeState: TimeState) {
         when (timeState) {
             TimeState.FUTURE -> {
                 view.card_view.setCardBackgroundColor(Color.WHITE)
@@ -35,10 +35,17 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             TimeState.PAST -> {
                 view.card_view.setCardBackgroundColor(Color.GRAY)
             }
-            TimeState.PRESENT -> {
-                view.card_view.setCardBackgroundColor(Color.GREEN)
-            }
+            TimeState.PRESENT -> colorViewByTime()
+
         }
+    }
+
+    private fun colorViewByTime() {
+
+        //todo: color by time
+
+        view.card_view.setCardBackgroundColor(Color.GREEN)
+
     }
 
     private fun fillSubject(scheduleUnit: ScheduleUnit) {
