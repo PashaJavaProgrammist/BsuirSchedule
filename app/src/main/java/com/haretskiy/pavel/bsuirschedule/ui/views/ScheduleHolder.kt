@@ -11,15 +11,52 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bindHolder(scheduleUnit: ScheduleUnit) {
 
-        var audStr = EMPTY_STRING
-        for (aud in scheduleUnit.auditory) {
-            val auditory = "$aud, "
-            audStr += auditory
+        fillAuditory(scheduleUnit)
+        fillEmployee(scheduleUnit)
+        fillLessonTime(scheduleUnit)
+        fillLessonType(scheduleUnit)
+        fillNote(scheduleUnit)
+        fillSubGroup(scheduleUnit)
+        fillSubject(scheduleUnit)
+        fillWeekNumber(scheduleUnit)
+    }
+
+
+    private fun fillSubject(scheduleUnit: ScheduleUnit) {
+        view.subject.text = scheduleUnit.subject
+    }
+
+    private fun fillNote(scheduleUnit: ScheduleUnit) {
+        if (scheduleUnit.note.isNotEmpty()) {
+            view.note.text = scheduleUnit.note
+            view.note.visibility = View.VISIBLE
+        } else {
+            view.note.visibility = View.GONE
         }
-        if (audStr.length > 2) {
-            audStr.subSequence(0, audStr.length - 2)
-            view.auditory.text = audStr
+    }
+
+    private fun fillWeekNumber(scheduleUnit: ScheduleUnit) {
+        if (scheduleUnit.weekNumber.isNotEmpty()) {
+            view.week_number.text = scheduleUnit.weekNumber.toString()
         }
+    }
+
+    private fun fillSubGroup(scheduleUnit: ScheduleUnit) {
+        if (!scheduleUnit.numSubgroup.equals(0)) {
+            view.subgroup.text = scheduleUnit.numSubgroup.toString()
+        }
+    }
+
+    private fun fillLessonType(scheduleUnit: ScheduleUnit) {
+        view.type_lesson.text = scheduleUnit.lessonType
+    }
+
+    private fun fillLessonTime(scheduleUnit: ScheduleUnit) {
+        val lessonTime = "${scheduleUnit.startLessonTime} - ${scheduleUnit.endLessonTime}"
+        view.lesson_time.text = lessonTime
+    }
+
+    private fun fillEmployee(scheduleUnit: ScheduleUnit) {
         var empStr = EMPTY_STRING
         if (scheduleUnit.employee.size > 1) {
             for (emp in scheduleUnit.employee) {
@@ -34,29 +71,18 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             view.employee.visibility = View.GONE
         }
         view.employee.text = empStr
+    }
 
-        val lessonTime = "${scheduleUnit.startLessonTime} - ${scheduleUnit.endLessonTime}"
-        view.lesson_time.text = lessonTime
-
-        view.type_lesson.text = scheduleUnit.lessonType
-
-        if (!scheduleUnit.numSubgroup.equals(0)) {
-            view.subgroup.text = scheduleUnit.numSubgroup.toString()
+    private fun fillAuditory(scheduleUnit: ScheduleUnit) {
+        var audStr = EMPTY_STRING
+        for (aud in scheduleUnit.auditory) {
+            val auditory = "$aud, "
+            audStr += auditory
         }
-
-        if (scheduleUnit.weekNumber.isNotEmpty()) {
-            view.week_number.text = scheduleUnit.weekNumber.toString()
+        if (audStr.length > 2) {
+            audStr.subSequence(0, audStr.length - 2)
+            view.auditory.text = audStr
         }
-
-        if (scheduleUnit.note.isNotEmpty()) {
-            view.note.text = scheduleUnit.note
-            view.note.visibility = View.VISIBLE
-        } else {
-            view.note.visibility = View.GONE
-        }
-
-        view.subject.text = scheduleUnit.subject
-
     }
 
 }
