@@ -1,24 +1,44 @@
 package com.haretskiy.pavel.bsuirschedule.ui.views
 
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.haretskiy.pavel.bsuirschedule.EMPTY_STRING
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
 import com.haretskiy.pavel.bsuirschedule.toPrettyFormat
+import com.haretskiy.pavel.bsuirschedule.ui.activities.ScheduleActivity.TimeState
 import kotlinx.android.synthetic.main.item_schedule.view.*
 
 class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bindHolder(scheduleUnit: ScheduleUnit) {
+    fun bindHolder(scheduleUnit: ScheduleUnit, timeState: TimeState) {
 
-        fillAuditory(scheduleUnit)
-        fillEmployee(scheduleUnit)
-        fillLessonTime(scheduleUnit)
-        fillLessonType(scheduleUnit)
-        fillNote(scheduleUnit)
-        fillSubGroup(scheduleUnit)
-        fillSubject(scheduleUnit)
-        fillWeekNumber(scheduleUnit)
+        scheduleUnit.also {
+            fillAuditory(it)
+            fillEmployee(it)
+            fillLessonTime(it)
+            fillLessonType(it)
+            fillNote(it)
+            fillSubGroup(it)
+            fillSubject(it)
+            fillWeekNumber(it)
+        }
+
+        colorView(timeState)
+    }
+
+    private fun colorView(timeState: TimeState) {
+        when (timeState) {
+            TimeState.FUTURE -> {
+                view.card_view.setCardBackgroundColor(Color.WHITE)
+            }
+            TimeState.PAST -> {
+                view.card_view.setCardBackgroundColor(Color.GRAY)
+            }
+            TimeState.PRESENT -> {
+                view.card_view.setCardBackgroundColor(Color.GREEN)
+            }
+        }
     }
 
     private fun fillSubject(scheduleUnit: ScheduleUnit) {

@@ -71,44 +71,59 @@ class ScheduleActivity : BaseActivity() {
     private fun fillViewPagerAdapter(list: List<Schedule>) {
 
         for ((i, schedule) in list.withIndex()) {
+            val timeState = selectCurrentDay(schedule.weekDay, i, list.size)
             val fragment = ScheduleFragment()
+            fragment.timeState = timeState
             fragment.setSchedule(schedule.schedule)
             adapter.addFragment(fragment, schedule.weekDay)
-            selectCurrentDay(schedule.weekDay, i, list.size)
         }
         adapter.notifyDataSetChanged()
         pager.currentItem = currentPosition
     }
 
-    private fun selectCurrentDay(weekDay: String, position: Int, listSize: Int) {
+    private fun selectCurrentDay(weekDay: String, position: Int, listSize: Int): TimeState {
 
         try {
             val scheduleDate = weekDay.toDate()
-            when {
-                scheduleDate < calendar.time -> currentPosition = if (position + 1 <= listSize) {
-                    position + 1
-                } else {
-                    position
+            return when {
+                scheduleDate < calendar.time -> {
+                    currentPosition = if (position + 1 <= listSize) {
+                        position + 1
+                    } else {
+                        position
+                    }
+                    TimeState.PAST
                 }
-                scheduleDate == calendar.time -> currentPosition = position
+                scheduleDate == calendar.time -> {
+                    currentPosition = position
+                    TimeState.PRESENT
+                }
+                else -> TimeState.FUTURE
             }
         } catch (ex: Exception) {
             try {
                 val currentWeekDay = calendar.get(Calendar.DAY_OF_WEEK)
                 val scheduleWeekDay = weekDay.toWeekDayNumber()
-                when {
-                    scheduleWeekDay < currentWeekDay -> currentPosition = if (position + 1 <= listSize) {
-                        position + 1
-                    } else {
-                        position
+                return when {
+                    scheduleWeekDay < currentWeekDay -> {
+                        currentPosition = if (position + 1 <= listSize) {
+                            position + 1
+                        } else {
+                            position
+                        }
+                        TimeState.PAST
                     }
-                    scheduleWeekDay == currentWeekDay -> currentPosition = position
+                    scheduleWeekDay == currentWeekDay -> {
+                        currentPosition = position
+                        TimeState.PRESENT
+                    }
+                    else -> TimeState.FUTURE
                 }
             } catch (ex: Exception) {
                 //sdfDate error
+                return TimeState.FUTURE
             }
         }
-
     }
 
     private fun initViewPager() {
@@ -128,5 +143,9 @@ class ScheduleActivity : BaseActivity() {
             scheduleViewModel.setExam(isChecked)
             scheduleViewModel.startScheduleActivity(numberOfGroup)
         }
+    }
+
+    enum class TimeState {
+        PRESENT, PAST, FUTURE
     }
 }

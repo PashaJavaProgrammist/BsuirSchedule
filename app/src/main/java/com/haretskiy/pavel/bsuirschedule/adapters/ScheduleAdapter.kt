@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
+import com.haretskiy.pavel.bsuirschedule.ui.activities.ScheduleActivity.TimeState
 import com.haretskiy.pavel.bsuirschedule.ui.views.ScheduleHolder
 
 class ScheduleAdapter(var listOfSchedule: List<ScheduleUnit>) : RecyclerView.Adapter<ScheduleHolder>() {
+
+    lateinit var timeState: TimeState
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_schedule, parent, false)
@@ -17,7 +20,7 @@ class ScheduleAdapter(var listOfSchedule: List<ScheduleUnit>) : RecyclerView.Ada
     override fun getItemCount() = listOfSchedule.size
 
     override fun onBindViewHolder(holder: ScheduleHolder, position: Int) {
-        holder.bindHolder(listOfSchedule[position])
+        holder.bindHolder(listOfSchedule[position], timeState)
     }
 
 
