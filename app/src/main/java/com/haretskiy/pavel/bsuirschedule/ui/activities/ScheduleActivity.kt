@@ -2,6 +2,7 @@ package com.haretskiy.pavel.bsuirschedule.ui.activities
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import android.view.View
 import com.haretskiy.pavel.bsuirschedule.*
 import com.haretskiy.pavel.bsuirschedule.adapters.ScheduleTabFragmentAdapter
@@ -129,6 +130,16 @@ class ScheduleActivity : BaseActivity() {
     private fun initViewPager() {
         pager.adapter = adapter
         tabs.setupWithViewPager(pager)
+
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                fab.show()
+            }
+
+            override fun onPageSelected(position: Int) {}
+        })
     }
 
     private fun initFab() {
