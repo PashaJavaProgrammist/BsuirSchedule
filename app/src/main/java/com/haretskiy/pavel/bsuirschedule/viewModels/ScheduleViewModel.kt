@@ -3,13 +3,17 @@ package com.haretskiy.pavel.bsuirschedule.viewModels
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import com.haretskiy.pavel.bsuirschedule.App
+import com.haretskiy.pavel.bsuirschedule.isToday
 import com.haretskiy.pavel.bsuirschedule.models.Schedule
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleResponse
 import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
+import com.haretskiy.pavel.bsuirschedule.toDate
+import com.haretskiy.pavel.bsuirschedule.toWeekDayNumber
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import okhttp3.ResponseBody
+import java.util.*
 import javax.inject.Inject
 
 class ScheduleViewModel @Inject constructor(
@@ -19,6 +23,12 @@ class ScheduleViewModel @Inject constructor(
         private var restApi: RestApi) : AndroidViewModel(application) {
 
     val scheduleLiveData = MutableLiveData<List<Schedule>>()
+
+    val positionLiveData = MutableLiveData<Int>()
+
+    private val calendar = Calendar.getInstance()
+
+    private var currentPosition = 0
 
     fun loadSchedule(name: String) {
         restApi.getGroupScheduleGroupName(name).enqueue(object : BaseCallBack<ScheduleResponse> {
@@ -43,6 +53,61 @@ class ScheduleViewModel @Inject constructor(
         })
     }
 
+    fun selectCurrentDay(weekDay: String, position: Int, listSize: Int): TimeState {
+
+        try {
+            val scheduleDate: Date = weekDay.toDate()
+            val currentDate: Date = calendar.time
+
+            return when {
+                scheduleDate.before(currentDate) && !scheduleDate.isToday(currentDate) -> {
+                    currentPosition = if (position + 1 <= listSize) {
+                        position + 1
+                    } else {
+                        position
+                    }
+                    positionLiveData.postValue(currentPosition)
+                    TimeState.PAST
+                }
+                scheduleDate.isToday(currentDate) -> {
+                    currentPosition = position
+                    positionLiveData.postValue(currentPosition)
+                    TimeState.PRESENT
+                }
+                else -> {
+                    positionLiveData.postValue(currentPosition)
+                    TimeState.FUTURE
+                }
+            }
+        } catch (ex: Exception) {
+            try {
+                val currentWeekDay = calendar.get(Calendar.DAY_OF_WEEK)
+                val scheduleWeekDay = weekDay.toWeekDayNumber()
+                return when {
+                    scheduleWeekDay < currentWeekDay -> {
+                        positionLiveData.postValue(currentPosition)
+                        currentPosition = if (position + 1 <= listSize) {
+                            position + 1
+                        } else {
+                            position
+                        }
+                        TimeState.PAST
+                    }
+                    scheduleWeekDay == currentWeekDay -> {
+                        positionLiveData.postValue(currentPosition)
+                        currentPosition = position
+                        TimeState.PRESENT
+                    }
+                    else -> TimeState.FUTURE
+                }
+            } catch (ex: Exception) {
+                //sdfDate error
+                positionLiveData.postValue(currentPosition)
+                return TimeState.FUTURE
+            }
+        }
+    }
+
     fun startGroupsActivity() {
         router.startGroupsActivity()
     }
@@ -55,6 +120,10 @@ class ScheduleViewModel @Inject constructor(
 
     fun startScheduleActivity(name: String) {
         router.startScheduleActivity(name)
+    }
+
+    enum class TimeState {
+        PRESENT, PAST, FUTURE
     }
 
 }

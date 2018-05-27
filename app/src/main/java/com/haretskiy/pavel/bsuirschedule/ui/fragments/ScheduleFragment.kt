@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.adapters.ScheduleAdapter
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
-import com.haretskiy.pavel.bsuirschedule.ui.activities.ScheduleActivity.TimeState
+import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel.TimeState
 import kotlinx.android.synthetic.main.fragment_schedule.*
 
 class ScheduleFragment : Fragment() {

@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
-import com.haretskiy.pavel.bsuirschedule.ui.activities.ScheduleActivity.TimeState
 import com.haretskiy.pavel.bsuirschedule.ui.views.ScheduleHolder
+import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel.TimeState
 
 class ScheduleAdapter(var listOfSchedule: List<ScheduleUnit>) : RecyclerView.Adapter<ScheduleHolder>() {
 

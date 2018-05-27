@@ -4,14 +4,15 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.view.View
-import com.haretskiy.pavel.bsuirschedule.*
+import com.haretskiy.pavel.bsuirschedule.BUNDLE_KEY_NUMBER_GROUP
+import com.haretskiy.pavel.bsuirschedule.EMPTY_STRING
+import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.adapters.ScheduleTabFragmentAdapter
 import com.haretskiy.pavel.bsuirschedule.models.Schedule
 import com.haretskiy.pavel.bsuirschedule.ui.fragments.ScheduleFragment
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import kotlinx.android.synthetic.main.activity_schedule.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.util.*
 import javax.inject.Inject
 
 class ScheduleActivity : BaseActivity() {
@@ -19,11 +20,7 @@ class ScheduleActivity : BaseActivity() {
     @Inject
     lateinit var scheduleViewModel: ScheduleViewModel
 
-    private val calendar = Calendar.getInstance()
-
     private var numberOfGroup = EMPTY_STRING
-
-    private var currentPosition = 0
 
     private val adapter: ScheduleTabFragmentAdapter by lazy {
         ScheduleTabFragmentAdapter(supportFragmentManager)
@@ -43,6 +40,8 @@ class ScheduleActivity : BaseActivity() {
         initFab()
 
         initExamSwitch()
+
+        initObservers()
 
         setSupportActionBar(toolbar)
 
@@ -69,64 +68,22 @@ class ScheduleActivity : BaseActivity() {
 
     }
 
+    private fun initObservers() {
+        scheduleViewModel.positionLiveData.observe(this, Observer {
+            pager.currentItem = it ?: 0
+        })
+    }
+
     private fun fillViewPagerAdapter(list: List<Schedule>) {
 
         for ((i, schedule) in list.withIndex()) {
-            val timeState = selectCurrentDay(schedule.weekDay, i, list.size)
+            val timeState = scheduleViewModel.selectCurrentDay(schedule.weekDay, i, list.size)
             val fragment = ScheduleFragment()
             fragment.timeState = timeState
             fragment.setSchedule(schedule.schedule)
             adapter.addFragment(fragment, schedule.weekDay)
         }
         adapter.notifyDataSetChanged()
-        pager.currentItem = currentPosition
-    }
-
-    private fun selectCurrentDay(weekDay: String, position: Int, listSize: Int): TimeState {
-
-        try {
-            val scheduleDate: Date = weekDay.toDate()
-            val currentDate: Date = calendar.time
-
-            return when {
-                scheduleDate.before(currentDate) && !scheduleDate.isToday(currentDate) -> {
-                    currentPosition = if (position + 1 <= listSize) {
-                        position + 1
-                    } else {
-                        position
-                    }
-                    TimeState.PAST
-                }
-                scheduleDate.isToday(currentDate) -> {
-                    currentPosition = position
-                    TimeState.PRESENT
-                }
-                else -> TimeState.FUTURE
-            }
-        } catch (ex: Exception) {
-            try {
-                val currentWeekDay = calendar.get(Calendar.DAY_OF_WEEK)
-                val scheduleWeekDay = weekDay.toWeekDayNumber()
-                return when {
-                    scheduleWeekDay < currentWeekDay -> {
-                        currentPosition = if (position + 1 <= listSize) {
-                            position + 1
-                        } else {
-                            position
-                        }
-                        TimeState.PAST
-                    }
-                    scheduleWeekDay == currentWeekDay -> {
-                        currentPosition = position
-                        TimeState.PRESENT
-                    }
-                    else -> TimeState.FUTURE
-                }
-            } catch (ex: Exception) {
-                //sdfDate error
-                return TimeState.FUTURE
-            }
-        }
     }
 
     private fun initViewPager() {
@@ -156,9 +113,5 @@ class ScheduleActivity : BaseActivity() {
             scheduleViewModel.setExam(isChecked)
             scheduleViewModel.startScheduleActivity(numberOfGroup)
         }
-    }
-
-    enum class TimeState {
-        PRESENT, PAST, FUTURE
     }
 }

@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.haretskiy.pavel.bsuirschedule.*
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
-import com.haretskiy.pavel.bsuirschedule.ui.activities.ScheduleActivity.TimeState
+import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel.TimeState
 import kotlinx.android.synthetic.main.item_schedule.view.*
 import java.util.*
 
