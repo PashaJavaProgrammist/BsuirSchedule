@@ -25,7 +25,7 @@ android {
             storePassword '135798642'
         }
         release {
-            keyAlias 'realese.key'
+            keyAlias 'release.key'
             keyPassword '1234re'
             storeFile file('../bsuirScheduleKeyStore')
             storePassword '135798642'
@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:design:27.1.1'
-
+    implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
 
@@ -62,7 +62,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
     implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation 'com.android.support:support-v4:27.1.1'
     kapt "android.arch.lifecycle:compiler:1.1.1"
 
     implementation 'com.google.dagger:dagger:2.15'
