@@ -70,7 +70,7 @@ class ScheduleActivity : BaseActivity() {
 
     private fun initObservers() {
         scheduleViewModel.positionLiveData.observe(this, Observer {
-            pager.currentItem = it ?: 0
+            pager.setCurrentItem(it ?: 0, true)
         })
     }
 
