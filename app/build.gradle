@@ -18,11 +18,17 @@ android {
         experimental = true
     }
     signingConfigs {
+        debug {
+            keyAlias 'debug.key'
+            keyPassword '123456'
+            storeFile file('../bsuirScheduleKeyStore')
+            storePassword '135798642'
+        }
         release {
-            keyAlias 'PublicKey'
-            keyPassword '12344321'
-            storeFile file('/home/pavel/StudioProjects/keyStorePublic.jks')
-            storePassword '12344321'
+            keyAlias 'realese.key'
+            keyPassword '1234re'
+            storeFile file('../bsuirScheduleKeyStore')
+            storePassword '135798642'
         }
     }
     buildTypes {
@@ -30,6 +36,7 @@ android {
             minifyEnabled false
             shrinkResources false
             debuggable = true
+            signingConfig signingConfigs.debug
         }
         release {
             debuggable = false
