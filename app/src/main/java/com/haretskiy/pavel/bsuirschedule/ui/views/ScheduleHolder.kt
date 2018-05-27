@@ -21,7 +21,6 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fillWeekNumber(scheduleUnit)
     }
 
-
     private fun fillSubject(scheduleUnit: ScheduleUnit) {
         view.subject.text = scheduleUnit.subject
     }
@@ -42,7 +41,7 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun fillSubGroup(scheduleUnit: ScheduleUnit) {
-        if (!scheduleUnit.numSubgroup.equals(0)) {
+        if (scheduleUnit.numSubgroup != 0) {
             view.subgroup.text = scheduleUnit.numSubgroup.toString()
         }
     }
@@ -58,17 +57,19 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     private fun fillEmployee(scheduleUnit: ScheduleUnit) {
         var empStr = EMPTY_STRING
-        if (scheduleUnit.employee.size > 1) {
-            for (emp in scheduleUnit.employee) {
-                val employee = "${emp.toPrettyFormat()}\n"
-                empStr += employee
+        when {
+            scheduleUnit.employee.size > 1 -> {
+                for (emp in scheduleUnit.employee) {
+                    val employee = "${emp.toPrettyFormat()}\n"
+                    empStr += employee
+                }
+                view.employee.visibility = View.VISIBLE
             }
-            view.employee.visibility = View.VISIBLE
-        } else if (scheduleUnit.employee.size == 1) {
-            view.employee.visibility = View.VISIBLE
-            empStr = scheduleUnit.employee[0].toPrettyFormat()
-        } else {
-            view.employee.visibility = View.GONE
+            scheduleUnit.employee.size == 1 -> {
+                view.employee.visibility = View.VISIBLE
+                empStr = scheduleUnit.employee[0].toPrettyFormat()
+            }
+            else -> view.employee.visibility = View.GONE
         }
         view.employee.text = empStr
     }
