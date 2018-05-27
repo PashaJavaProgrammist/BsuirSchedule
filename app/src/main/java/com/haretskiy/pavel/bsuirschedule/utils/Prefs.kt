@@ -18,7 +18,7 @@ class Prefs @Inject constructor(context: Context) {
         save(BUNDLE_DEFAULT_GROUP, name)
     }
 
-    fun getDefaultGroup() = getString(BUNDLE_DEFAULT_GROUP, EMPTY_STRING)
+    fun getDefaultGroup(): String = getString(BUNDLE_DEFAULT_GROUP, EMPTY_STRING)
 
     fun getExam() = getBoolean(BUNDLE_KEY_EXAM, true)
 

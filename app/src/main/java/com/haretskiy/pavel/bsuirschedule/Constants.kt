@@ -16,3 +16,5 @@ const val TIME_FORMAT = "hh:mm"
 const val START = "START ->"
 const val END = "END <-"
 const val RESPONSE = "RESPONSE"
+
+const val SPLASH_DELAY = 600L

@@ -15,15 +15,15 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilder {
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [(GroupsActivityModule::class)])
+    @ContributesAndroidInjector(modules = [GroupsActivityModule::class])
     abstract fun providesGroupsActivityInjector(): GroupsActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [(ScheduleActivityModule::class)])
+    @ContributesAndroidInjector(modules = [ScheduleActivityModule::class])
     abstract fun providesScheduleActivityInjector(): ScheduleActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [(SplashActivityModule::class)])
+    @ContributesAndroidInjector(modules = [SplashActivityModule::class])
     abstract fun providesSplashActivityInjector(): SplashActivity
 
 }

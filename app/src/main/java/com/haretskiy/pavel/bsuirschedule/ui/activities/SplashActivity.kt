@@ -3,6 +3,7 @@ package com.haretskiy.pavel.bsuirschedule.ui.activities
 import android.os.Bundle
 import android.os.Handler
 import com.haretskiy.pavel.bsuirschedule.R
+import com.haretskiy.pavel.bsuirschedule.SPLASH_DELAY
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import javax.inject.Inject
@@ -22,7 +23,7 @@ class SplashActivity : BaseActivity() {
 
         Handler().postDelayed({
             startActivity()
-        }, 600)
+        }, SPLASH_DELAY)
     }
 
     private fun startActivity() {
