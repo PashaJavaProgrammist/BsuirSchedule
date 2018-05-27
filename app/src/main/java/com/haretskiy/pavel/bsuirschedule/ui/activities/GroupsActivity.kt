@@ -120,6 +120,7 @@ class GroupsActivity : BaseActivity(), GroupView {
     }
 
     private fun initFab() {
+        fab_groups.visibility = if (groupsViewModel.isDefaultGroupExist()) View.VISIBLE else View.GONE
         fab_groups.setOnClickListener {
             groupsViewModel.startDefaultScheduleActivity()
         }

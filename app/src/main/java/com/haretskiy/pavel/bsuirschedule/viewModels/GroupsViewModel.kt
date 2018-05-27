@@ -71,6 +71,8 @@ class GroupsViewModel @Inject constructor(
         prefs.saveDefaultGroup(name)
     }
 
+    fun isDefaultGroupExist() = prefs.getDefaultGroup().isNotEmpty()
+
     fun startDefaultScheduleActivity() {
         router.startScheduleActivity(prefs.getDefaultGroup())
     }
