@@ -76,8 +76,8 @@ class ScheduleActivity : BaseActivity() {
 
     private fun fillViewPagerAdapter(list: List<Schedule>) {
 
-        for ((i, schedule) in list.withIndex()) {
-            val timeState = scheduleViewModel.selectCurrentDay(schedule.weekDay, i, list.size)
+        for ((position, schedule) in list.withIndex()) {
+            val timeState = scheduleViewModel.selectCurrentDay(schedule.weekDay, position, list.size)
             val fragment = ScheduleFragment()
             fragment.timeState = timeState
             fragment.setSchedule(schedule.schedule)
