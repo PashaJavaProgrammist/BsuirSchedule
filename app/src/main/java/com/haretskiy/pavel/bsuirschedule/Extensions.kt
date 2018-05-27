@@ -23,3 +23,23 @@ fun Employee.toPrettyFormat(): String {
 
     return "$lastName $firstName $middleName"
 }
+
+fun String.toWeekDayNumber(): Int {
+    return when (this.toLowerCase()) {
+        "понедельник" -> 2
+        "вторник" -> 3
+        "среда" -> 4
+        "четверг" -> 5
+        "пятница" -> 6
+        "суббота" -> 7
+        "воскресение" -> 1
+        "sunday" -> 1
+        "monday" -> 2
+        "tuesday" -> 3
+        "wednesday" -> 4
+        "thursday" -> 5
+        "friday" -> 6
+        "saturday" -> 7
+        else -> 0
+    }
+}

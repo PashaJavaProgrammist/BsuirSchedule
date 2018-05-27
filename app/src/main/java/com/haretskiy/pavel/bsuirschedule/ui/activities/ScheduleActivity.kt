@@ -3,9 +3,7 @@ package com.haretskiy.pavel.bsuirschedule.ui.activities
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.view.View
-import com.haretskiy.pavel.bsuirschedule.BUNDLE_KEY_NUMBER_GROUP
-import com.haretskiy.pavel.bsuirschedule.EMPTY_STRING
-import com.haretskiy.pavel.bsuirschedule.R
+import com.haretskiy.pavel.bsuirschedule.*
 import com.haretskiy.pavel.bsuirschedule.adapters.ScheduleTabFragmentAdapter
 import com.haretskiy.pavel.bsuirschedule.models.Schedule
 import com.haretskiy.pavel.bsuirschedule.ui.fragments.ScheduleFragment
@@ -17,6 +15,10 @@ import java.util.*
 import javax.inject.Inject
 
 class ScheduleActivity : BaseActivity() {
+
+    private val sdfDate = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
+    private val calendar = Calendar.getInstance()
+    private val currentDate = Date(System.currentTimeMillis())
 
     override fun getResLayout() = R.layout.activity_schedule
 
@@ -81,35 +83,35 @@ class ScheduleActivity : BaseActivity() {
         pager.currentItem = currentPosition
     }
 
-    val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-    val sdfDay = SimpleDateFormat("EEEE", Locale.getDefault())
-    val currentDate = Date(System.currentTimeMillis())
-
-
     private fun selectCurrentDay(weekDay: String, position: Int, listSize: Int) {
 
         try {
-            val scheduleDate = sdf.parse(weekDay)
-            if (scheduleDate < currentDate) {
-                if (position + 1 <= listSize) {
-                    currentPosition = position + 1
+            val scheduleDate = sdfDate.parse(weekDay)
+            when {
+                scheduleDate < currentDate -> currentPosition = if (position + 1 <= listSize) {
+                    position + 1
                 } else {
-                    currentPosition = position
+                    position
                 }
-            } else if (scheduleDate == currentDate) {
-                currentPosition = position
+                scheduleDate == currentDate -> currentPosition = position
             }
         } catch (ex: Exception) {
-            //sdf error
+            try {
+                val currentWeekDay = calendar.get(Calendar.DAY_OF_WEEK)
+                val scheduleWeekDay = weekDay.toWeekDayNumber()
+                when {
+                    scheduleWeekDay < currentWeekDay -> currentPosition = if (position + 1 <= listSize) {
+                        position + 1
+                    } else {
+                        position
+                    }
+                    scheduleWeekDay == currentWeekDay -> currentPosition = position
+                }
+            } catch (ex: Exception) {
+                //sdfDate error
+            }
         }
 
-
-        try {
-            val scheduleDate = sdfDay.parse(weekDay)
-
-        } catch (ex: Exception) {
-            //sdf error
-        }
     }
 
     private fun initViewPager() {
