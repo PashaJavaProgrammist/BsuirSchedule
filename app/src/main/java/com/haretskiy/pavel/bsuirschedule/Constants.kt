@@ -11,3 +11,5 @@ const val BUNDLE_KEY_EXAM = "BUNDLE_KEY_EXAM"
 const val DIALOG_DEFAULT = "DIALOG_DEFAULT"
 
 const val DATE_FORMAT = "dd.MM.yyyy"
+const val TIME_FORMAT = "hh:mm"
+

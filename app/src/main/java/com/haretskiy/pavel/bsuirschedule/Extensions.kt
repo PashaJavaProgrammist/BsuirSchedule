@@ -47,3 +47,17 @@ fun String.toWeekDayNumber(): Int {
 }
 
 fun String.toDate(): Date = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).parse(this)
+
+fun String.toTime(): Date = SimpleDateFormat(TIME_FORMAT, Locale.getDefault()).parse(this)
+
+fun Date.getH(): Int {
+    val calendar = Calendar.getInstance()
+    calendar.time = this
+    return calendar.get(Calendar.HOUR_OF_DAY)
+}
+
+fun Date.getM(): Int {
+    val calendar = Calendar.getInstance()
+    calendar.time = this
+    return calendar.get(Calendar.MINUTE)
+}

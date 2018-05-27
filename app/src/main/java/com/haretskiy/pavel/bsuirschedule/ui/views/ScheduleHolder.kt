@@ -3,11 +3,11 @@ package com.haretskiy.pavel.bsuirschedule.ui.views
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.haretskiy.pavel.bsuirschedule.EMPTY_STRING
+import com.haretskiy.pavel.bsuirschedule.*
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
-import com.haretskiy.pavel.bsuirschedule.toPrettyFormat
 import com.haretskiy.pavel.bsuirschedule.ui.activities.ScheduleActivity.TimeState
 import kotlinx.android.synthetic.main.item_schedule.view.*
+import java.util.*
 
 class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -22,12 +22,12 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             fillSubGroup(it)
             fillSubject(it)
             fillWeekNumber(it)
-        }
 
-        colorViewByDay(timeState)
+            colorViewByDay(it, timeState)
+        }
     }
 
-    private fun colorViewByDay(timeState: TimeState) {
+    private fun colorViewByDay(scheduleUnit: ScheduleUnit, timeState: TimeState) {
         when (timeState) {
             TimeState.FUTURE -> {
                 view.card_view.setCardBackgroundColor(Color.WHITE)
@@ -35,18 +35,43 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             TimeState.PAST -> {
                 view.card_view.setCardBackgroundColor(Color.GRAY)
             }
-            TimeState.PRESENT -> colorViewByTime()
+            TimeState.PRESENT -> colorViewByTime(scheduleUnit)
 
         }
     }
 
-    private fun colorViewByTime() {
+    private fun colorViewByTime(scheduleUnit: ScheduleUnit) {
 
-        //todo: color by time
+        val scheduleStartDate = scheduleUnit.startLessonTime.toTime()
+        val schStartH = scheduleStartDate.getH()
+        val schStartM = scheduleStartDate.getM()
 
-        view.card_view.setCardBackgroundColor(Color.GREEN)
+        val scheduleEndDate = scheduleUnit.endLessonTime.toTime()
+        val schEndH = scheduleEndDate.getH()
+        val schEndM = scheduleEndDate.getM()
 
+        val curDate = Date(System.currentTimeMillis())
+        val curH = curDate.getH()
+        val curM = curDate.getM()
+
+        val startMinutes = convertToMinutes(schStartH, schStartM)
+        val endMinutes = convertToMinutes(schEndH, schEndM)
+        val curMinutes = convertToMinutes(curH, curM)
+
+        when (true) {
+            curMinutes < startMinutes -> {
+                view.card_view.setCardBackgroundColor(Color.WHITE)
+            }
+            curMinutes > endMinutes -> {
+                view.card_view.setCardBackgroundColor(Color.GRAY)
+            }
+            curMinutes in (startMinutes + 1)..(endMinutes - 1) -> {
+                view.card_view.setCardBackgroundColor(Color.GREEN)
+            }
+        }
     }
+
+    private fun convertToMinutes(h: Int, m: Int) = h * 60 + m
 
     private fun fillSubject(scheduleUnit: ScheduleUnit) {
         view.subject.text = scheduleUnit.subject
