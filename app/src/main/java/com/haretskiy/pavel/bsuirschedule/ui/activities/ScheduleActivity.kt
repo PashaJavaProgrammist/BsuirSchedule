@@ -54,6 +54,13 @@ class ScheduleActivity : BaseActivity() {
 
     private fun getGroupsLiveDataAndSubscribe(nameOfGroup: String) {
         scheduleViewModel.loadSchedule(nameOfGroup)
+    }
+
+    private fun initObservers() {
+        scheduleViewModel.positionLiveData.observe(this, Observer {
+            pager.setCurrentItem(it ?: 0, true)
+            tabs.setScrollPosition(it ?: 0, 0f, true)
+        })
 
         scheduleViewModel.scheduleLiveData.observe(this, Observer {
             if (it != null && it.isNotEmpty()) {
@@ -65,17 +72,10 @@ class ScheduleActivity : BaseActivity() {
                 info.visibility = View.VISIBLE
             }
         })
-
-    }
-
-    private fun initObservers() {
-        scheduleViewModel.positionLiveData.observe(this, Observer {
-            pager.setCurrentItem(it ?: 0, true)
-        })
     }
 
     private fun fillViewPagerAdapter(list: List<Schedule>) {
-
+        adapter.clear()
         for ((position, schedule) in list.withIndex()) {
             val timeState = scheduleViewModel.selectCurrentDay(schedule.weekDay, position, list.size)
             val fragment = ScheduleFragment()

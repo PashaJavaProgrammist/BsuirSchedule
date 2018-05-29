@@ -2,7 +2,6 @@ package com.haretskiy.pavel.bsuirschedule.viewModels
 
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import android.widget.Toast
 import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.isToday
 import com.haretskiy.pavel.bsuirschedule.models.Schedule
@@ -16,6 +15,7 @@ import com.haretskiy.pavel.bsuirschedule.utils.Router
 import okhttp3.ResponseBody
 import java.util.*
 
+
 class ScheduleViewModel(
         application: App,
         private var prefs: Prefs,
@@ -23,17 +23,20 @@ class ScheduleViewModel(
         private var restApi: RestApi) : AndroidViewModel(application) {
 
     val scheduleLiveData = MutableLiveData<List<Schedule>>()
-
     val positionLiveData = MutableLiveData<Int>()
 
-    var x = 0
+
+    private var listExamSchedule = emptyList<Schedule>()
+    private var listSchedule = emptyList<Schedule>()
 
     private val calendar = Calendar.getInstance()
 
     private var currentPosition = 0
 
     fun loadSchedule(name: String) {
-        Toast.makeText(getApplication(), x.toString(), Toast.LENGTH_SHORT).show()
+
+        val exam = getExam()
+
         restApi.getGroupScheduleGroupName(name).enqueue(object : BaseCallBack<ScheduleResponse> {
 
             override fun onError(code: Int?, errorBody: ResponseBody?) {
@@ -43,11 +46,10 @@ class ScheduleViewModel(
             override fun onSuccess(response: ScheduleResponse?) {
                 if (response != null) {
                     scheduleLiveData.postValue(
-                            when (getExam()) {
-                                true -> response.examSchedules
-                                false -> response.schedules
+                            when (exam) {
+                                true -> saveSchedule(true, response.examSchedules)
+                                false -> saveSchedule(false, response.schedules)
                             })
-                    x = 100
                 }
             }
 
@@ -55,6 +57,14 @@ class ScheduleViewModel(
                 scheduleLiveData.postValue(emptyList())
             }
         })
+    }
+
+    fun saveSchedule(exam: Boolean, list: List<Schedule>): List<Schedule> {
+        when (exam) {
+            true -> listExamSchedule = list
+            false -> listSchedule = list
+        }
+        return list
     }
 
     fun selectCurrentDay(weekDay: String, position: Int, listSize: Int): TimeState {

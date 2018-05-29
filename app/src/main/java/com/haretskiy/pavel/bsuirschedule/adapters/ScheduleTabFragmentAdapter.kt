@@ -7,8 +7,8 @@ import java.util.*
 
 class ScheduleTabFragmentAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
 
-    private val mFragmentList = ArrayList<Fragment>()
-    private val mFragmentTitleList = ArrayList<String>()
+    private var mFragmentList = ArrayList<Fragment>()
+    private var mFragmentTitleList = ArrayList<String>()
 
     override fun getItem(position: Int): Fragment? {
         return mFragmentList[position]
@@ -22,5 +22,10 @@ class ScheduleTabFragmentAdapter(manager: FragmentManager) : FragmentPagerAdapte
     }
 
     override fun getPageTitle(position: Int) = mFragmentTitleList[position]
+
+    fun clear() {
+        mFragmentList = ArrayList()
+        mFragmentTitleList = ArrayList()
+    }
 
 }
