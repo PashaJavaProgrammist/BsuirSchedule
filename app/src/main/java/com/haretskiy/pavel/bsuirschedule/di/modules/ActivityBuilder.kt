@@ -12,18 +12,18 @@ import dagger.android.ContributesAndroidInjector
 
 
 @Module
-abstract class ActivityBuilder {
+interface ActivityBuilder {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [GroupsActivityModule::class])
-    abstract fun providesGroupsActivityInjector(): GroupsActivity
+    fun providesGroupsActivityInjector(): GroupsActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [ScheduleActivityModule::class])
-    abstract fun providesScheduleActivityInjector(): ScheduleActivity
+    fun providesScheduleActivityInjector(): ScheduleActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [SplashActivityModule::class])
-    abstract fun providesSplashActivityInjector(): SplashActivity
+    fun providesSplashActivityInjector(): SplashActivity
 
 }
