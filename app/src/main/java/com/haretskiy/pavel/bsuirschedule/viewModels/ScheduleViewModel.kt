@@ -14,9 +14,8 @@ import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import okhttp3.ResponseBody
 import java.util.*
-import javax.inject.Inject
 
-class ScheduleViewModel @Inject constructor(
+class ScheduleViewModel(
         application: App,
         private var prefs: Prefs,
         private var router: Router,

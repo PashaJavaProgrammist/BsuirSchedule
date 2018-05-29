@@ -10,9 +10,8 @@ import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import okhttp3.ResponseBody
-import javax.inject.Inject
 
-class GroupsViewModel @Inject constructor(
+class GroupsViewModel(
         application: App,
         private var groupStore: GroupStore,
         private var prefs: Prefs,

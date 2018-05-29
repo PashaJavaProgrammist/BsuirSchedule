@@ -1,17 +1,11 @@
 package com.haretskiy.pavel.bsuirschedule.di.modules.activitiesModules
 
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
-import com.haretskiy.pavel.bsuirschedule.App
-import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.ui.activities.GroupsActivity
-import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
-import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import com.haretskiy.pavel.bsuirschedule.utils.RouterImpl
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import com.haretskiy.pavel.bsuirschedule.viewModels.factories.GroupsViewModelFactory
-import com.haretskiy.pavel.bsuirschedule.viewModels.factories.ViewModelStore
 import dagger.Module
 import dagger.Provides
 
@@ -25,7 +19,4 @@ class GroupsActivityModule {
     @Provides
     fun provideRouter(activity: GroupsActivity): Router = RouterImpl(activity)
 
-    @Provides
-    fun provideFactory(context: Context, groupStore: GroupStore, prefs: Prefs, router: Router, restApi: RestApi, viewModelStore: ViewModelStore): GroupsViewModelFactory =
-            GroupsViewModelFactory(context as App, groupStore, prefs, router, restApi, viewModelStore)
 }
