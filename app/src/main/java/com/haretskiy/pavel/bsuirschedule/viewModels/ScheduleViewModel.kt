@@ -31,7 +31,7 @@ class ScheduleViewModel(
 
     private val calendar = Calendar.getInstance()
 
-    private var currentPosition = 0
+    private var todayPosition = 0
 
     fun loadSchedule(name: String) {
 
@@ -75,21 +75,21 @@ class ScheduleViewModel(
 
             return when {
                 scheduleDate.before(currentDate) && !scheduleDate.isToday(currentDate) -> {
-                    currentPosition = if (position + 1 <= listSize) {
+                    todayPosition = if (position + 1 <= listSize) {
                         position + 1
                     } else {
                         position
                     }
-                    positionLiveData.postValue(currentPosition)
+                    positionLiveData.postValue(todayPosition)
                     TimeState.PAST
                 }
                 scheduleDate.isToday(currentDate) -> {
-                    currentPosition = position
-                    positionLiveData.postValue(currentPosition)
+                    todayPosition = position
+                    positionLiveData.postValue(todayPosition)
                     TimeState.PRESENT
                 }
                 else -> {
-                    positionLiveData.postValue(currentPosition)
+                    positionLiveData.postValue(todayPosition)
                     TimeState.FUTURE
                 }
             }
@@ -99,8 +99,8 @@ class ScheduleViewModel(
                 val scheduleWeekDay = weekDay.toWeekDayNumber()
                 return when {
                     scheduleWeekDay < currentWeekDay -> {
-                        positionLiveData.postValue(currentPosition)
-                        currentPosition = if (position + 1 <= listSize) {
+                        positionLiveData.postValue(todayPosition)
+                        todayPosition = if (position + 1 <= listSize) {
                             position + 1
                         } else {
                             position
@@ -108,15 +108,15 @@ class ScheduleViewModel(
                         TimeState.PAST
                     }
                     scheduleWeekDay == currentWeekDay -> {
-                        positionLiveData.postValue(currentPosition)
-                        currentPosition = position
+                        positionLiveData.postValue(todayPosition)
+                        todayPosition = position
                         TimeState.PRESENT
                     }
                     else -> TimeState.FUTURE
                 }
             } catch (ex: Exception) {
                 //sdfDate error
-                positionLiveData.postValue(currentPosition)
+                positionLiveData.postValue(todayPosition)
                 return TimeState.FUTURE
             }
         }
