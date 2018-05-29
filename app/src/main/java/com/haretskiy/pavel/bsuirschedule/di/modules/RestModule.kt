@@ -21,7 +21,7 @@ class RestModule {
 
     @Provides
     @Singleton
-    fun provideBuilder(client: OkHttpClient, factory: GsonConverterFactory): Retrofit =
+    fun provideRetrofit(client: OkHttpClient, factory: GsonConverterFactory): Retrofit =
             Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(client)
