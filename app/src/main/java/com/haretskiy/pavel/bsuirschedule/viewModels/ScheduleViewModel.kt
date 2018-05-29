@@ -132,10 +132,6 @@ class ScheduleViewModel(
 
     fun getExam() = prefs.getExam()
 
-    fun startScheduleActivity(name: String) {
-        router.startScheduleActivity(name)
-    }
-
     enum class TimeState {
         PRESENT, PAST, FUTURE
     }

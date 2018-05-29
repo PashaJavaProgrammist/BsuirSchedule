@@ -26,6 +26,7 @@ class ScheduleTabFragmentAdapter(manager: FragmentManager) : FragmentPagerAdapte
     fun clear() {
         mFragmentList = ArrayList()
         mFragmentTitleList = ArrayList()
+        notifyDataSetChanged()
     }
 
 }

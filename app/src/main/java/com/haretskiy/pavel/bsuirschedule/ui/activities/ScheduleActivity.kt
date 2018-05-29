@@ -63,14 +63,16 @@ class ScheduleActivity : BaseActivity() {
         })
 
         scheduleViewModel.scheduleLiveData.observe(this, Observer {
-            if (it != null && it.isNotEmpty()) {
+            if (it != null) {
                 fillViewPagerAdapter(it)
                 progress_schedule.visibility = View.GONE
                 info.visibility = View.GONE
-            } else {
-                progress_schedule.visibility = View.GONE
-                info.visibility = View.VISIBLE
+                if (it.isEmpty()) {
+                    progress_schedule.visibility = View.GONE
+                    info.visibility = View.VISIBLE
+                }
             }
+
         })
     }
 
@@ -111,7 +113,7 @@ class ScheduleActivity : BaseActivity() {
         exam_switch.isChecked = scheduleViewModel.getExam()
         exam_switch.setOnCheckedChangeListener { _, isChecked ->
             scheduleViewModel.setExam(isChecked)
-            scheduleViewModel.startScheduleActivity(numberOfGroup)
+            scheduleViewModel.loadSchedule(numberOfGroup)
         }
     }
 }
