@@ -1,8 +1,9 @@
 package com.haretskiy.pavel.bsuirschedule.utils
 
 import com.haretskiy.pavel.bsuirschedule.models.Group
+import javax.inject.Inject
 
-class GroupStoreImpl : GroupStore {
+class GroupStoreImpl @Inject constructor() : GroupStore {
 
     private var listOfGroups: List<Group> = emptyList()
 

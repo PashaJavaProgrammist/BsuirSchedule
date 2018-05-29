@@ -6,8 +6,11 @@ import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ViewModelStore {
+@Singleton
+class ViewModelStore @Inject constructor() {
 
     private var groupsViewModel: GroupsViewModel? = null
 

@@ -7,8 +7,9 @@ import com.haretskiy.pavel.bsuirschedule.BUNDLE_DEFAULT_GROUP
 import com.haretskiy.pavel.bsuirschedule.BUNDLE_KEY_EXAM
 import com.haretskiy.pavel.bsuirschedule.EMPTY_STRING
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
+@Singleton
 class Prefs @Inject constructor(context: Context) {
 
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
