@@ -6,6 +6,7 @@ import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
+import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,6 +25,20 @@ class ViewModelStore @Inject constructor() {
             return groupsViewModel as GroupsViewModel
         } else {
             return groupsViewModel as GroupsViewModel
+        }
+    }
+
+    private var scheduleViewModel: ScheduleViewModel? = null
+
+    fun getScheduleViewModel(context: App,
+                             prefs: Prefs,
+                             router: Router,
+                             restApi: RestApi): ScheduleViewModel {
+        if (scheduleViewModel == null) {
+            scheduleViewModel = ScheduleViewModel(context, prefs, router, restApi)
+            return scheduleViewModel as ScheduleViewModel
+        } else {
+            return scheduleViewModel as ScheduleViewModel
         }
     }
 

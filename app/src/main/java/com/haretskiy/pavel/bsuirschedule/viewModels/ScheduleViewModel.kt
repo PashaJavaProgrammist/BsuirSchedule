@@ -2,6 +2,7 @@ package com.haretskiy.pavel.bsuirschedule.viewModels
 
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.widget.Toast
 import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.isToday
 import com.haretskiy.pavel.bsuirschedule.models.Schedule
@@ -25,11 +26,14 @@ class ScheduleViewModel(
 
     val positionLiveData = MutableLiveData<Int>()
 
+    var x = 0
+
     private val calendar = Calendar.getInstance()
 
     private var currentPosition = 0
 
     fun loadSchedule(name: String) {
+        Toast.makeText(getApplication(), x.toString(), Toast.LENGTH_SHORT).show()
         restApi.getGroupScheduleGroupName(name).enqueue(object : BaseCallBack<ScheduleResponse> {
 
             override fun onError(code: Int?, errorBody: ResponseBody?) {
@@ -43,6 +47,7 @@ class ScheduleViewModel(
                                 true -> response.examSchedules
                                 false -> response.schedules
                             })
+                    x = 100
                 }
             }
 
