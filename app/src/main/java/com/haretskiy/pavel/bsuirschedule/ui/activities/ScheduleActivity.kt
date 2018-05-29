@@ -64,12 +64,16 @@ class ScheduleActivity : BaseActivity() {
 
         scheduleViewModel.scheduleLiveData.observe(this, Observer {
             if (it != null) {
-                fillViewPagerAdapter(it)
-                progress_schedule.visibility = View.GONE
-                info.visibility = View.GONE
                 if (it.isEmpty()) {
+                    clearViewPagerAdapter()
                     progress_schedule.visibility = View.GONE
                     info.visibility = View.VISIBLE
+                    pager.visibility = View.GONE
+                } else {
+                    pager.visibility = View.VISIBLE
+                    fillViewPagerAdapter(it)
+                    progress_schedule.visibility = View.GONE
+                    info.visibility = View.GONE
                 }
             }
 
@@ -86,6 +90,10 @@ class ScheduleActivity : BaseActivity() {
             adapter.addFragment(fragment, schedule.weekDay)
         }
         adapter.notifyDataSetChanged()
+    }
+
+    private fun clearViewPagerAdapter() {
+        adapter.clear()
     }
 
     private fun initViewPager() {
