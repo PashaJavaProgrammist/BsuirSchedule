@@ -47,12 +47,11 @@ class ScheduleActivity : BaseActivity() {
 
         toolbar_schedule.text = numberOfGroup
 
-        getGroupsLiveDataAndSubscribe(numberOfGroup)
-
-        progress_schedule.visibility = View.VISIBLE
+        loadSchedule(numberOfGroup)
     }
 
-    private fun getGroupsLiveDataAndSubscribe(nameOfGroup: String) {
+    private fun loadSchedule(nameOfGroup: String) {
+        progress_schedule.visibility = View.VISIBLE
         scheduleViewModel.loadSchedule(nameOfGroup)
     }
 
@@ -121,7 +120,7 @@ class ScheduleActivity : BaseActivity() {
         exam_switch.isChecked = scheduleViewModel.getExam()
         exam_switch.setOnCheckedChangeListener { _, isChecked ->
             scheduleViewModel.setExam(isChecked)
-            scheduleViewModel.loadSchedule(numberOfGroup)
+            loadSchedule(numberOfGroup)
         }
     }
 }
