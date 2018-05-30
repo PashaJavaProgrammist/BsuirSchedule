@@ -31,21 +31,13 @@ class GroupsActivity : BaseActivity(), GroupView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setSupportActionBar(toolbar_search)
+        initViews()
 
-        setRecyclerView()
+        setSupportActionBar(toolbar_search)
 
         initObservers()
 
         loadGroups()
-
-        initSwipeToRefresh(swipe_to_refresh)
-
-        initSearchView()
-
-        initFabHiding()
-
-        initFab()
     }
 
     override fun getResLayout() = R.layout.activity_groups
@@ -66,6 +58,19 @@ class GroupsActivity : BaseActivity(), GroupView {
                 groupsViewModel.startScheduleActivity(name)
             }
         })
+    }
+
+    private fun initViews() {
+
+        setRecyclerView()
+
+        initSwipeToRefresh(swipe_to_refresh)
+
+        initSearchView()
+
+        initFabHiding()
+
+        initFab()
     }
 
     private fun setProgressVisibility(visible: Any) {
