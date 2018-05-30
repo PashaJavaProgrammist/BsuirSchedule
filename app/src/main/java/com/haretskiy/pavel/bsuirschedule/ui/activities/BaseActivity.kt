@@ -30,6 +30,10 @@ abstract class BaseActivity : AppCompatActivity() {
         swipeRefreshLayout.isRefreshing = false
     }
 
+    protected fun swipeAnimStart(swipeRefreshLayout: SwipeRefreshLayout) {
+        swipeRefreshLayout.isRefreshing = true
+    }
+
     abstract fun getResLayout(): Int
 
     abstract fun onSwipeToRefresh()

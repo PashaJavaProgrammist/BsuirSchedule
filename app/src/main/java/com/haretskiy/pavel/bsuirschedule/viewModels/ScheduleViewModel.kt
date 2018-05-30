@@ -26,13 +26,15 @@ class ScheduleViewModel(
     val positionLiveData = MutableLiveData<Int>()
     val progressLiveData = MutableLiveData<Boolean>()
     val infoLiveData = MutableLiveData<Boolean>()
+    val swipeLiveData = MutableLiveData<Boolean>()
 
     private val calendar = Calendar.getInstance()
 
     private var todayPosition = 0
 
-    fun loadSchedule(name: String) {
+    fun loadSchedule(name: String, bySwipe: Boolean) {
         progressLiveData.postValue(true)
+        swipeLiveData.postValue(bySwipe)
 
         val exam = getExam()
 
@@ -41,6 +43,7 @@ class ScheduleViewModel(
             override fun onError(code: Int?, errorBody: ResponseBody?) {
                 scheduleLiveData.postValue(emptyList())
                 progressLiveData.postValue(false)
+                swipeLiveData.postValue(false)
                 infoLiveData.postValue(false)
             }
 
@@ -55,6 +58,7 @@ class ScheduleViewModel(
                     scheduleLiveData.postValue(list)
                     infoLiveData.postValue(list.isEmpty())
                 }
+                swipeLiveData.postValue(false)
                 progressLiveData.postValue(false)
             }
 
@@ -62,6 +66,7 @@ class ScheduleViewModel(
                 infoLiveData.postValue(false)
                 scheduleLiveData.postValue(emptyList())
                 progressLiveData.postValue(false)
+                swipeLiveData.postValue(false)
             }
         })
     }

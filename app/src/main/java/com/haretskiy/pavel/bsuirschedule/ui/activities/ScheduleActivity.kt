@@ -26,7 +26,7 @@ class ScheduleActivity : BaseActivity() {
     override fun getResLayout() = R.layout.activity_schedule
 
     override fun onSwipeToRefresh() {
-        loadSchedule(numberOfGroup)
+        loadSchedule(numberOfGroup, true)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,12 +48,12 @@ class ScheduleActivity : BaseActivity() {
 
         toolbar_schedule.text = numberOfGroup
 
-        loadSchedule(numberOfGroup)
+        loadSchedule(numberOfGroup, false)
 
     }
 
-    private fun loadSchedule(nameOfGroup: String) {
-        scheduleViewModel.loadSchedule(nameOfGroup)
+    private fun loadSchedule(nameOfGroup: String, bySwipe: Boolean) {
+        scheduleViewModel.loadSchedule(nameOfGroup, bySwipe)
     }
 
     private fun initObservers() {
@@ -74,6 +74,16 @@ class ScheduleActivity : BaseActivity() {
         scheduleViewModel.infoLiveData.observe(this, Observer {
             setInfoVisibility(it ?: false)
         })
+        scheduleViewModel.swipeLiveData.observe(this, Observer {
+            setSwipeAnimVisibility(it ?: false)
+        })
+    }
+
+    private fun setSwipeAnimVisibility(visible: Boolean) {
+        when (visible) {
+            true -> swipeAnimStart(swipe_to_refresh_sch)
+            false -> swipeAnimFinish(swipe_to_refresh_sch)
+        }
     }
 
     private fun setInfoVisibility(visible: Boolean) {
@@ -93,7 +103,6 @@ class ScheduleActivity : BaseActivity() {
             false -> View.GONE
         }
     }
-
 
     private fun fillViewPagerAdapter(list: List<Schedule>) {
 
@@ -119,9 +128,7 @@ class ScheduleActivity : BaseActivity() {
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                fab.show()
-            }
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int): Unit = fab.show()
 
             override fun onPageSelected(position: Int) {}
         })
@@ -137,7 +144,7 @@ class ScheduleActivity : BaseActivity() {
         exam_switch.isChecked = scheduleViewModel.getExam()
         exam_switch.setOnCheckedChangeListener { _, isChecked ->
             scheduleViewModel.setExam(isChecked)
-            loadSchedule(numberOfGroup)
+            loadSchedule(numberOfGroup, false)
         }
     }
 }
