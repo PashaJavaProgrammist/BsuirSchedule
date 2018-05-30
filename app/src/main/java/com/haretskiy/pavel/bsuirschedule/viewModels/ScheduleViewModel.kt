@@ -2,14 +2,11 @@ package com.haretskiy.pavel.bsuirschedule.viewModels
 
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import com.haretskiy.pavel.bsuirschedule.App
-import com.haretskiy.pavel.bsuirschedule.isToday
+import com.haretskiy.pavel.bsuirschedule.*
 import com.haretskiy.pavel.bsuirschedule.models.Schedule
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleResponse
 import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
-import com.haretskiy.pavel.bsuirschedule.toDate
-import com.haretskiy.pavel.bsuirschedule.toWeekDayNumber
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import okhttp3.ResponseBody
@@ -29,6 +26,8 @@ class ScheduleViewModel(
     private var listExamSchedule = emptyList<Schedule>()
     private var listSchedule = emptyList<Schedule>()
 
+    private var nameOfGroup = EMPTY_STRING
+
     private val calendar = Calendar.getInstance()
 
     private var todayPosition = 0
@@ -37,26 +36,36 @@ class ScheduleViewModel(
 
         val exam = getExam()
 
-        restApi.getGroupScheduleGroupName(name).enqueue(object : BaseCallBack<ScheduleResponse> {
+        if (name != nameOfGroup) {
 
-            override fun onError(code: Int?, errorBody: ResponseBody?) {
-                scheduleLiveData.postValue(emptyList())
-            }
+            restApi.getGroupScheduleGroupName(name).enqueue(object : BaseCallBack<ScheduleResponse> {
 
-            override fun onSuccess(response: ScheduleResponse?) {
-                if (response != null) {
-                    scheduleLiveData.postValue(
-                            when (exam) {
-                                true -> saveSchedule(true, response.examSchedules)
-                                false -> saveSchedule(false, response.schedules)
-                            })
+                override fun onError(code: Int?, errorBody: ResponseBody?) {
+                    scheduleLiveData.postValue(emptyList())
                 }
-            }
 
-            override fun onFailure(t: Throwable) {
-                scheduleLiveData.postValue(emptyList())
-            }
-        })
+                override fun onSuccess(response: ScheduleResponse?) {
+                    if (response != null) {
+                        scheduleLiveData.postValue(
+                                when (exam) {
+                                    true -> saveSchedule(true, response.examSchedules)
+                                    false -> saveSchedule(false, response.schedules)
+                                })
+                    }
+                    nameOfGroup = name
+                }
+
+                override fun onFailure(t: Throwable) {
+                    scheduleLiveData.postValue(emptyList())
+                }
+            })
+        } else {
+            scheduleLiveData.postValue(
+                    when (exam) {
+                        true -> listExamSchedule
+                        false -> listSchedule
+                    })
+        }
     }
 
     fun saveSchedule(exam: Boolean, list: List<Schedule>): List<Schedule> {
