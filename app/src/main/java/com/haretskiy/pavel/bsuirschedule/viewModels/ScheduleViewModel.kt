@@ -48,24 +48,28 @@ class ScheduleViewModel(
         if (scheduleStore.isContains(nameOfGroup) && !bySwipe) {
             onSuccessLoadingGroup(exam, scheduleStore.getGroupSchedule(nameOfGroup))
         } else {
-            restApi.getGroupScheduleGroupName(nameOfGroup).enqueue(object : BaseCallBack<ScheduleResponse> {
-
-                override fun onError(code: Int?, errorBody: ResponseBody?) {
-                    onFailureLoadingGroup()
-                }
-
-                override fun onSuccess(response: ScheduleResponse?) {
-                    onSuccessLoadingGroup(exam, response)
-                    if (!scheduleStore.isContains(nameOfGroup) && response != null || bySwipe && response != null) {
-                        scheduleStore.addGroupSchedule(nameOfGroup, response)
-                    }
-                }
-
-                override fun onFailure(t: Throwable) {
-                    onFailureLoadingGroup()
-                }
-            })
+            loadFromServer(nameOfGroup, exam, bySwipe)
         }
+    }
+
+    private fun loadFromServer(nameOfGroup: String, exam: Boolean, bySwipe: Boolean) {
+        restApi.getGroupScheduleGroupName(nameOfGroup).enqueue(object : BaseCallBack<ScheduleResponse> {
+
+            override fun onError(code: Int?, errorBody: ResponseBody?) {
+                onFailureLoadingGroup()
+            }
+
+            override fun onSuccess(response: ScheduleResponse?) {
+                onSuccessLoadingGroup(exam, response)
+                if (!scheduleStore.isContains(nameOfGroup) && response != null || bySwipe && response != null) {
+                    scheduleStore.addGroupSchedule(nameOfGroup, response)
+                }
+            }
+
+            override fun onFailure(t: Throwable) {
+                onFailureLoadingGroup()
+            }
+        })
     }
 
     private fun onSuccessLoadingGroup(exam: Boolean, response: ScheduleResponse?) {
