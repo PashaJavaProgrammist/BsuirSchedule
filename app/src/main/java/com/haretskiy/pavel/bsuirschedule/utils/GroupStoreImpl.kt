@@ -18,4 +18,8 @@ class GroupStoreImpl @Inject constructor() : GroupStore {
     }
 
     override fun getList() = listOfGroups
+
+    override fun isEmpty() = listOfGroups.isEmpty()
+
+    override fun isNotEmpty() = listOfGroups.isNotEmpty()
 }

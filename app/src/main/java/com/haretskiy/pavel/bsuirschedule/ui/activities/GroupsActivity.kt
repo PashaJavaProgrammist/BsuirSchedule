@@ -37,7 +37,7 @@ class GroupsActivity : BaseActivity(), GroupView {
 
         initObservers()
 
-        getGroupsLiveDataAndSubscribe()
+        loadGroups()
 
         initSwipeToRefresh(swipe_to_refresh)
 
@@ -81,7 +81,7 @@ class GroupsActivity : BaseActivity(), GroupView {
         rv_groups.adapter = adapter
     }
 
-    private fun getGroupsLiveDataAndSubscribe() {
+    private fun loadGroups() {
         groupsViewModel.loadGroupsList(false)
     }
 

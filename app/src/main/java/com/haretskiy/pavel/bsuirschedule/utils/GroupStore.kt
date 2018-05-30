@@ -8,4 +8,6 @@ interface GroupStore {
     fun clearList()
     fun getList(): List<Group>
     fun getListSize(): Int
+    fun isEmpty(): Boolean
+    fun isNotEmpty(): Boolean
 }

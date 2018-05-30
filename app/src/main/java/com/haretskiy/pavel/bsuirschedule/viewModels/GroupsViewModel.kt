@@ -25,10 +25,11 @@ class GroupsViewModel(
 
         progressLiveDataLiveData.postValue(true)
 
-        if (groupStore.getListSize() != 0 && !bySwipe) {
+        if (groupStore.isNotEmpty() && !bySwipe) {
             groupsLiveData.postValue(groupStore.getList())
             progressLiveDataLiveData.postValue(false)
         } else {
+            groupStore.clearList()
             restApi.allGroupsList.enqueue(object : BaseCallBack<List<Group>> {
                 override fun onError(code: Int?, errorBody: ResponseBody?) {
                     groupsLiveData.postValue(emptyList())
