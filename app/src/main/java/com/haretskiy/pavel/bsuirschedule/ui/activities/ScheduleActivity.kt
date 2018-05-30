@@ -53,7 +53,7 @@ class ScheduleActivity : BaseActivity() {
     }
 
     private fun loadSchedule(nameOfGroup: String, bySwipe: Boolean) {
-        scheduleViewModel.loadSchedule(nameOfGroup, bySwipe)
+        if (!scheduleViewModel.isLoadingInProgress) scheduleViewModel.loadSchedule(nameOfGroup, bySwipe)
     }
 
     private fun initObservers() {

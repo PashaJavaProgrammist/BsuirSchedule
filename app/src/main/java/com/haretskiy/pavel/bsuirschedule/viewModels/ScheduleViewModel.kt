@@ -32,8 +32,13 @@ class ScheduleViewModel(
 
     private var todayPosition = 0
 
+    var isLoadingInProgress = false
+
     fun loadSchedule(name: String, bySwipe: Boolean) {
-        progressLiveData.postValue(true)
+
+        isLoadingInProgress = true
+
+        progressLiveData.postValue(!bySwipe)
         swipeLiveData.postValue(bySwipe)
 
         val exam = getExam()
@@ -45,6 +50,7 @@ class ScheduleViewModel(
                 progressLiveData.postValue(false)
                 swipeLiveData.postValue(false)
                 infoLiveData.postValue(false)
+                isLoadingInProgress = false
             }
 
             override fun onSuccess(response: ScheduleResponse?) {
@@ -60,6 +66,7 @@ class ScheduleViewModel(
                 }
                 swipeLiveData.postValue(false)
                 progressLiveData.postValue(false)
+                isLoadingInProgress = false
             }
 
             override fun onFailure(t: Throwable) {
@@ -67,6 +74,7 @@ class ScheduleViewModel(
                 scheduleLiveData.postValue(emptyList())
                 progressLiveData.postValue(false)
                 swipeLiveData.postValue(false)
+                isLoadingInProgress = false
             }
         })
     }

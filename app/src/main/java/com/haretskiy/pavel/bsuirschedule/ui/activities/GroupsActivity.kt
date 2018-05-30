@@ -37,7 +37,7 @@ class GroupsActivity : BaseActivity(), GroupView {
 
         initObservers()
 
-        if (!groupsViewModel.isLoadingInProgress) loadGroups()
+        loadGroups()
     }
 
     override fun getResLayout() = R.layout.activity_groups
@@ -83,7 +83,7 @@ class GroupsActivity : BaseActivity(), GroupView {
     }
 
     private fun loadGroups() {
-        groupsViewModel.loadGroupsList(false)
+        if (!groupsViewModel.isLoadingInProgress) groupsViewModel.loadGroupsList(false)
     }
 
     private fun initObservers() {
