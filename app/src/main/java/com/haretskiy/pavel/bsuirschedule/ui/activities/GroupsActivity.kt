@@ -28,7 +28,6 @@ class GroupsActivity : BaseActivity(), GroupView {
     @Inject
     lateinit var groupsViewModel: GroupsViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,6 +48,24 @@ class GroupsActivity : BaseActivity(), GroupView {
 
     override fun getResLayout() = R.layout.activity_groups
 
+    override fun onSwipeToRefresh() {
+        groupsViewModel.loadGroupsList(true)
+    }
+
+    override fun onClickGroup(name: String) {
+        GroupDefaultDialog().show(supportFragmentManager, object : GroupDefaultDialog.DefaultGroupListener {
+            override fun onClickSave() {
+                groupsViewModel.saveGroupAsDefault(name)
+            }
+
+            override fun onClickDismiss() {}
+
+            override fun onDismiss() {
+                groupsViewModel.startScheduleActivity(name)
+            }
+        })
+    }
+
     private fun setRecyclerView() {
         rv_groups.layoutManager = LinearLayoutManager(this)
         rv_groups.adapter = adapter
@@ -65,10 +82,6 @@ class GroupsActivity : BaseActivity(), GroupView {
             swipeAnimFinish(swipe_to_refresh)
         })
         groupsViewModel.loadGroupsList(false)
-    }
-
-    override fun onSwipeToRefresh() {
-        groupsViewModel.loadGroupsList(true)
     }
 
     private fun initSearchView() {
@@ -88,21 +101,6 @@ class GroupsActivity : BaseActivity(), GroupView {
                 }
 
                 return true
-            }
-        })
-    }
-
-
-    override fun onClickGroup(name: String) {
-        GroupDefaultDialog().show(supportFragmentManager, object : GroupDefaultDialog.DefaultGroupListener {
-            override fun onClickSave() {
-                groupsViewModel.saveGroupAsDefault(name)
-            }
-
-            override fun onClickDismiss() {}
-
-            override fun onDismiss() {
-                groupsViewModel.startScheduleActivity(name)
             }
         })
     }
