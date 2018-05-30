@@ -10,11 +10,11 @@ import javax.inject.Inject
 
 
 class ScheduleViewModelFactory @Inject constructor(
-        private var context: App,
-        private var prefs: Prefs,
-        private var router: Router,
-        private var restApi: RestApi,
-        private var viewModelStore: ViewModelStore) : ViewModelProvider.NewInstanceFactory() {
+        private val context: App,
+        private val prefs: Prefs,
+        private val router: Router,
+        private val restApi: RestApi,
+        private val viewModelStore: ViewModelStore) : ViewModelProvider.NewInstanceFactory() {
 
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

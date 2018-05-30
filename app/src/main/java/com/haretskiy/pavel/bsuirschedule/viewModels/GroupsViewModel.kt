@@ -13,10 +13,10 @@ import okhttp3.ResponseBody
 
 class GroupsViewModel(
         application: App,
-        private var groupStore: GroupStore,
-        private var prefs: Prefs,
-        private var router: Router,
-        private var restApi: RestApi) : AndroidViewModel(application) {
+        private val groupStore: GroupStore,
+        private val prefs: Prefs,
+        private val router: Router,
+        private val restApi: RestApi) : AndroidViewModel(application) {
 
     val groupsLiveData = MutableLiveData<List<Group>>()
 

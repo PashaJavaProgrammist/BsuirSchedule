@@ -18,9 +18,9 @@ import java.util.*
 
 class ScheduleViewModel(
         application: App,
-        private var prefs: Prefs,
-        private var router: Router,
-        private var restApi: RestApi) : AndroidViewModel(application) {
+        private val prefs: Prefs,
+        private val router: Router,
+        private val restApi: RestApi) : AndroidViewModel(application) {
 
     val scheduleLiveData = MutableLiveData<List<Schedule>>()
     val positionLiveData = MutableLiveData<Int>()
