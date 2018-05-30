@@ -10,6 +10,8 @@ import javax.inject.Inject
 
 class SplashActivity : BaseActivity() {
 
+    override fun onSwipeToRefresh() {}
+
     @Inject
     lateinit var prefs: Prefs
 

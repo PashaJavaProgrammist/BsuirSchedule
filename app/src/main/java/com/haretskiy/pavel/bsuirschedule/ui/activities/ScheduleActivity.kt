@@ -28,6 +28,12 @@ class ScheduleActivity : BaseActivity() {
 
     override fun getResLayout() = R.layout.activity_schedule
 
+    override fun onSwipeToRefresh() {
+        val gr = scheduleViewModel.nameOfGroup
+        scheduleViewModel.nameOfGroup = EMPTY_STRING
+        loadSchedule(gr)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,6 +48,8 @@ class ScheduleActivity : BaseActivity() {
         initExamSwitch()
 
         initObservers()
+
+        initSwipeToRefresh(swipe_to_refresh_sch)
 
         setSupportActionBar(toolbar)
 
@@ -75,7 +83,7 @@ class ScheduleActivity : BaseActivity() {
                     info.visibility = View.GONE
                 }
             }
-
+            swipeAnimFinish(swipe_to_refresh_sch)
         })
     }
 

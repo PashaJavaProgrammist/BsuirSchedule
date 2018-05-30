@@ -38,7 +38,7 @@ class GroupsActivity : BaseActivity(), GroupView {
 
         getGroupsLiveDataAndSubscribe()
 
-        initSwipeToRefresh()
+        initSwipeToRefresh(swipe_to_refresh)
 
         initSearchView()
 
@@ -62,25 +62,13 @@ class GroupsActivity : BaseActivity(), GroupView {
                 adapter.notifyDataSetChanged()
             }
             progress.visibility = View.GONE
-            swipeAnimFinish()
+            swipeAnimFinish(swipe_to_refresh)
         })
         groupsViewModel.loadGroupsList(false)
     }
 
-    private fun initSwipeToRefresh() {
-        swipe_to_refresh.setOnRefreshListener({ onSwipeToRefresh() })
-        swipe_to_refresh.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light)
-    }
-
-    private fun onSwipeToRefresh() {
+    override fun onSwipeToRefresh() {
         groupsViewModel.loadGroupsList(true)
-    }
-
-    private fun swipeAnimFinish() {
-        swipe_to_refresh.isRefreshing = false
     }
 
     private fun initSearchView() {

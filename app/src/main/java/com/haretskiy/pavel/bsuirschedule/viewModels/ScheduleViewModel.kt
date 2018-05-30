@@ -26,7 +26,7 @@ class ScheduleViewModel(
     private var listExamSchedule = emptyList<Schedule>()
     private var listSchedule = emptyList<Schedule>()
 
-    private var nameOfGroup = EMPTY_STRING
+    var nameOfGroup = EMPTY_STRING
 
     private val calendar = Calendar.getInstance()
 
