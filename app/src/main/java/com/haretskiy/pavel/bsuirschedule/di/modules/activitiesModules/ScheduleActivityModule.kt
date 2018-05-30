@@ -1,5 +1,6 @@
 package com.haretskiy.pavel.bsuirschedule.di.modules.activitiesModules
 
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import com.haretskiy.pavel.bsuirschedule.di.modules.AppModule
 import com.haretskiy.pavel.bsuirschedule.di.scopes.ActivityScope
@@ -14,7 +15,10 @@ class ScheduleActivityModule {
 
     @Provides
     @ActivityScope
-    fun provideViewModel(activity: ScheduleActivity, factory: ScheduleViewModelFactory): ScheduleViewModel =
-            ViewModelProviders.of(activity, factory).get(ScheduleViewModel::class.java)
+    fun provideViewModel(provider: ViewModelProvider): ScheduleViewModel = provider.get(ScheduleViewModel::class.java)
+
+    @Provides
+    @ActivityScope
+    fun provideViewModelProvider(activity: ScheduleActivity, factory: ScheduleViewModelFactory): ViewModelProvider = ViewModelProviders.of(activity, factory)
 
 }

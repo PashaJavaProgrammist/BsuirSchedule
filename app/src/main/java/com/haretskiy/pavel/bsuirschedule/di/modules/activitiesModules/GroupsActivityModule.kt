@@ -1,5 +1,6 @@
 package com.haretskiy.pavel.bsuirschedule.di.modules.activitiesModules
 
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import com.haretskiy.pavel.bsuirschedule.di.modules.AppModule
 import com.haretskiy.pavel.bsuirschedule.di.scopes.ActivityScope
@@ -14,7 +15,10 @@ class GroupsActivityModule {
 
     @Provides
     @ActivityScope
-    fun provideViewModel(activity: GroupsActivity, factory: GroupsViewModelFactory): GroupsViewModel =
-            ViewModelProviders.of(activity, factory).get(GroupsViewModel::class.java)
+    fun provideViewModel(provider: ViewModelProvider): GroupsViewModel = provider.get(GroupsViewModel::class.java)
+
+    @Provides
+    @ActivityScope
+    fun provideViewModelProvider(activity: GroupsActivity, factory: GroupsViewModelFactory): ViewModelProvider = ViewModelProviders.of(activity, factory)
 
 }
