@@ -5,12 +5,11 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
 import com.haretskiy.pavel.bsuirschedule.ui.fragments.ScheduleFragment
-import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel.TimeState
 
 class ScheduleTabFragmentAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {
 
-    private var timeStateList = mutableListOf<ScheduleViewModel.TimeState>()
+    private var timeStateList = mutableListOf<TimeState>()
     private var scheduleList = mutableListOf<List<ScheduleUnit>>()
     private var weekDayList = mutableListOf<String>()
 
