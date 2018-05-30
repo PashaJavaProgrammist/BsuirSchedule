@@ -22,10 +22,6 @@ class ScheduleViewModel(
     val scheduleLiveData = MutableLiveData<List<Schedule>>()
     val positionLiveData = MutableLiveData<Int>()
 
-
-    private var listExamSchedule = emptyList<Schedule>()
-    private var listSchedule = emptyList<Schedule>()
-
     var nameOfGroup = EMPTY_STRING
 
     private val calendar = Calendar.getInstance()
@@ -36,44 +32,27 @@ class ScheduleViewModel(
 
         val exam = getExam()
 
-        if (name != nameOfGroup) {
+        restApi.getGroupScheduleGroupName(name).enqueue(object : BaseCallBack<ScheduleResponse> {
 
-            restApi.getGroupScheduleGroupName(name).enqueue(object : BaseCallBack<ScheduleResponse> {
+            override fun onError(code: Int?, errorBody: ResponseBody?) {
+                scheduleLiveData.postValue(emptyList())
+            }
 
-                override fun onError(code: Int?, errorBody: ResponseBody?) {
-                    scheduleLiveData.postValue(emptyList())
+            override fun onSuccess(response: ScheduleResponse?) {
+                if (response != null) {
+                    scheduleLiveData.postValue(
+                            when (exam) {
+                                true -> response.examSchedules
+                                false -> response.schedules
+                            })
                 }
+                nameOfGroup = name
+            }
 
-                override fun onSuccess(response: ScheduleResponse?) {
-                    if (response != null) {
-                        scheduleLiveData.postValue(
-                                when (exam) {
-                                    true -> saveSchedule(true, response.examSchedules)
-                                    false -> saveSchedule(false, response.schedules)
-                                })
-                    }
-                    nameOfGroup = name
-                }
-
-                override fun onFailure(t: Throwable) {
-                    scheduleLiveData.postValue(emptyList())
-                }
-            })
-        } else {
-            scheduleLiveData.postValue(
-                    when (exam) {
-                        true -> listExamSchedule
-                        false -> listSchedule
-                    })
-        }
-    }
-
-    fun saveSchedule(exam: Boolean, list: List<Schedule>): List<Schedule> {
-        when (exam) {
-            true -> listExamSchedule = list
-            false -> listSchedule = list
-        }
-        return list
+            override fun onFailure(t: Throwable) {
+                scheduleLiveData.postValue(emptyList())
+            }
+        })
     }
 
     fun selectCurrentDay(weekDay: String, position: Int, listSize: Int): TimeState {

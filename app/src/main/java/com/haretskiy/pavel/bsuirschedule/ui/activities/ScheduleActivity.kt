@@ -57,6 +57,8 @@ class ScheduleActivity : BaseActivity() {
         toolbar_schedule.text = numberOfGroup
 
         loadSchedule(numberOfGroup)
+
+        adapter.notifyDataSetChanged()
     }
 
     private fun loadSchedule(nameOfGroup: String) {
@@ -85,6 +87,7 @@ class ScheduleActivity : BaseActivity() {
                 }
             }
             swipeAnimFinish(swipe_to_refresh_sch)
+            adapter.notifyDataSetChanged()
         })
     }
 
