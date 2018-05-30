@@ -19,14 +19,20 @@ class GroupsViewModel(
         private val restApi: RestApi) : AndroidViewModel(application) {
 
     val groupsLiveData = MutableLiveData<List<Group>>()
+    val progressLiveDataLiveData = MutableLiveData<Boolean>()
 
     fun loadGroupsList(bySwipe: Boolean) {
+
+        progressLiveDataLiveData.postValue(true)
+
         if (groupStore.getListSize() != 0 && !bySwipe) {
             groupsLiveData.postValue(groupStore.getList())
+            progressLiveDataLiveData.postValue(false)
         } else {
             restApi.allGroupsList.enqueue(object : BaseCallBack<List<Group>> {
                 override fun onError(code: Int?, errorBody: ResponseBody?) {
                     groupsLiveData.postValue(emptyList())
+                    progressLiveDataLiveData.postValue(false)
                 }
 
                 override fun onSuccess(response: List<Group>?) {
@@ -36,10 +42,12 @@ class GroupsViewModel(
                     } else {
                         groupsLiveData.postValue(emptyList())
                     }
+                    progressLiveDataLiveData.postValue(false)
                 }
 
                 override fun onFailure(t: Throwable) {
                     groupsLiveData.postValue(emptyList())
+                    progressLiveDataLiveData.postValue(false)
                 }
             })
         }

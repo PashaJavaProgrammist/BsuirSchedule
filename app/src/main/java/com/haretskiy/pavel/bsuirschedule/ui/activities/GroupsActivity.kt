@@ -35,6 +35,8 @@ class GroupsActivity : BaseActivity(), GroupView {
 
         setRecyclerView()
 
+        initObservers()
+
         getGroupsLiveDataAndSubscribe()
 
         initSwipeToRefresh(swipe_to_refresh)
@@ -66,22 +68,35 @@ class GroupsActivity : BaseActivity(), GroupView {
         })
     }
 
+    private fun setProgressVisibility(visible: Any) {
+        progress.visibility = when (visible) {
+            true -> View.VISIBLE
+            false -> View.GONE
+            else -> View.GONE
+        }
+    }
+
     private fun setRecyclerView() {
         rv_groups.layoutManager = LinearLayoutManager(this)
         rv_groups.adapter = adapter
     }
 
     private fun getGroupsLiveDataAndSubscribe() {
-        progress.visibility = View.VISIBLE
+        groupsViewModel.loadGroupsList(false)
+    }
+
+    private fun initObservers() {
         groupsViewModel.groupsLiveData.observe(this, Observer {
             if (it != null) {
                 adapter.listOfGroups = it
                 adapter.notifyDataSetChanged()
             }
-            progress.visibility = View.GONE
             swipeAnimFinish(swipe_to_refresh)
         })
-        groupsViewModel.loadGroupsList(false)
+        groupsViewModel.progressLiveDataLiveData.observe(this, Observer {
+            setProgressVisibility(it ?: false)
+        })
+
     }
 
     private fun initSearchView() {
