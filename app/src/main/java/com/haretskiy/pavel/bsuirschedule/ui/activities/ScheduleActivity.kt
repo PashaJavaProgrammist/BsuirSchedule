@@ -9,8 +9,9 @@ import com.haretskiy.pavel.bsuirschedule.EMPTY_STRING
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.adapters.ScheduleTabFragmentAdapter
 import com.haretskiy.pavel.bsuirschedule.models.Schedule
-import com.haretskiy.pavel.bsuirschedule.ui.fragments.ScheduleFragment
+import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
+import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel.TimeState
 import kotlinx.android.synthetic.main.activity_schedule.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -89,14 +90,17 @@ class ScheduleActivity : BaseActivity() {
 
     private fun fillViewPagerAdapter(list: List<Schedule>) {
         adapter.clear()
+        val timeStateList = mutableListOf<TimeState>()
+        val scheduleList = mutableListOf<List<ScheduleUnit>>()
+        val weekDayList = mutableListOf<String>()
+
         for ((position, schedule) in list.withIndex()) {
-            val timeState = scheduleViewModel.selectCurrentDay(schedule.weekDay, position, list.size)
-            val fragment = ScheduleFragment()
-            fragment.timeState = timeState
-            fragment.setSchedule(schedule.schedule)
-            adapter.addFragment(fragment, schedule.weekDay)
+            timeStateList.add(scheduleViewModel.selectCurrentDay(schedule.weekDay, position, list.size))
+            scheduleList.add(schedule.schedule)
+            weekDayList.add(schedule.weekDay)
         }
-        adapter.notifyDataSetChanged()
+
+        adapter.setContent(timeStateList, scheduleList, weekDayList)
     }
 
     private fun clearViewPagerAdapter() {

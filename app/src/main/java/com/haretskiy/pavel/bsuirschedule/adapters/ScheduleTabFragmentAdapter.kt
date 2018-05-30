@@ -2,30 +2,40 @@ package com.haretskiy.pavel.bsuirschedule.adapters
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import java.util.*
+import android.support.v4.app.FragmentStatePagerAdapter
+import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
+import com.haretskiy.pavel.bsuirschedule.ui.fragments.ScheduleFragment
+import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
+import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel.TimeState
 
-class ScheduleTabFragmentAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+class ScheduleTabFragmentAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {
 
-    private var mFragmentList = ArrayList<Fragment>()
-    private var mFragmentTitleList = ArrayList<String>()
+    private var timeStateList = mutableListOf<ScheduleViewModel.TimeState>()
+    private var scheduleList = mutableListOf<List<ScheduleUnit>>()
+    private var weekDayList = mutableListOf<String>()
 
-    override fun getItem(position: Int): Fragment? {
-        return mFragmentList[position]
+    override fun getItem(position: Int): Fragment {
+        val fragment = ScheduleFragment()
+        fragment.timeState = timeStateList[position]
+        fragment.setSchedule(scheduleList[position])
+        return fragment
     }
 
-    override fun getCount() = mFragmentList.size
+    override fun getCount() = scheduleList.size
 
-    fun addFragment(fragment: Fragment, title: String) {
-        mFragmentList.add(fragment)
-        mFragmentTitleList.add(title)
-    }
-
-    override fun getPageTitle(position: Int) = mFragmentTitleList[position]
+    override fun getPageTitle(position: Int) = weekDayList[position]
 
     fun clear() {
-        mFragmentList = ArrayList()
-        mFragmentTitleList = ArrayList()
+        timeStateList.clear()
+        scheduleList.clear()
+        weekDayList.clear()
+        notifyDataSetChanged()
+    }
+
+    fun setContent(timeStateList: MutableList<TimeState>, scheduleList: MutableList<List<ScheduleUnit>>, weekDayList: MutableList<String>) {
+        this.timeStateList = timeStateList
+        this.scheduleList = scheduleList
+        this.weekDayList = weekDayList
         notifyDataSetChanged()
     }
 
