@@ -7,11 +7,10 @@ import com.haretskiy.pavel.bsuirschedule.models.ScheduleUnit
 import com.haretskiy.pavel.bsuirschedule.ui.fragments.ScheduleFragment
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel.TimeState
 
-class ScheduleTabFragmentAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {
-
-    private var timeStateList = mutableListOf<TimeState>()
-    private var scheduleList = mutableListOf<List<ScheduleUnit>>()
-    private var weekDayList = mutableListOf<String>()
+class ScheduleTabFragmentAdapter(manager: FragmentManager,
+                                 private var weekDayList: MutableList<String> = mutableListOf(),
+                                 private var timeStateList: MutableList<TimeState> = mutableListOf(),
+                                 private var scheduleList: MutableList<List<ScheduleUnit>> = mutableListOf()) : FragmentStatePagerAdapter(manager) {
 
     override fun getItem(position: Int): Fragment {
         val fragment = ScheduleFragment()
@@ -23,19 +22,5 @@ class ScheduleTabFragmentAdapter(manager: FragmentManager) : FragmentStatePagerA
     override fun getCount() = scheduleList.size
 
     override fun getPageTitle(position: Int) = weekDayList[position]
-
-    fun clear() {
-        timeStateList.clear()
-        scheduleList.clear()
-        weekDayList.clear()
-        notifyDataSetChanged()
-    }
-
-    fun setContent(timeStateList: MutableList<TimeState>, scheduleList: MutableList<List<ScheduleUnit>>, weekDayList: MutableList<String>) {
-        this.timeStateList = timeStateList
-        this.scheduleList = scheduleList
-        this.weekDayList = weekDayList
-        notifyDataSetChanged()
-    }
 
 }

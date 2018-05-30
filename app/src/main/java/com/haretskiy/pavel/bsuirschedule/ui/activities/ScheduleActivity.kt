@@ -23,10 +23,6 @@ class ScheduleActivity : BaseActivity() {
 
     private var numberOfGroup = EMPTY_STRING
 
-    private val adapter: ScheduleTabFragmentAdapter by lazy {
-        ScheduleTabFragmentAdapter(supportFragmentManager)
-    }
-
     override fun getResLayout() = R.layout.activity_schedule
 
     override fun onSwipeToRefresh() {
@@ -58,7 +54,6 @@ class ScheduleActivity : BaseActivity() {
 
         loadSchedule(numberOfGroup)
 
-        adapter.notifyDataSetChanged()
     }
 
     private fun loadSchedule(nameOfGroup: String) {
@@ -75,24 +70,22 @@ class ScheduleActivity : BaseActivity() {
         scheduleViewModel.scheduleLiveData.observe(this, Observer {
             if (it != null) {
                 if (it.isEmpty()) {
-                    clearViewPagerAdapter()
                     progress_schedule.visibility = View.GONE
                     info.visibility = View.VISIBLE
                     pager.visibility = View.GONE
                 } else {
                     pager.visibility = View.VISIBLE
-                    fillViewPagerAdapter(it)
                     progress_schedule.visibility = View.GONE
                     info.visibility = View.GONE
                 }
+                fillViewPagerAdapter(it)
             }
             swipeAnimFinish(swipe_to_refresh_sch)
-            adapter.notifyDataSetChanged()
         })
     }
 
     private fun fillViewPagerAdapter(list: List<Schedule>) {
-        adapter.clear()
+
         val timeStateList = mutableListOf<TimeState>()
         val scheduleList = mutableListOf<List<ScheduleUnit>>()
         val weekDayList = mutableListOf<String>()
@@ -103,15 +96,10 @@ class ScheduleActivity : BaseActivity() {
             weekDayList.add(schedule.weekDay)
         }
 
-        adapter.setContent(timeStateList, scheduleList, weekDayList)
-    }
-
-    private fun clearViewPagerAdapter() {
-        adapter.clear()
+        pager.adapter = ScheduleTabFragmentAdapter(supportFragmentManager, weekDayList, timeStateList, scheduleList)
     }
 
     private fun initViewPager() {
-        pager.adapter = adapter
         tabs.setupWithViewPager(pager)
 
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {

@@ -18,13 +18,8 @@ class ScheduleFragment : Fragment() {
 
     var timeState: TimeState = TimeState.FUTURE
 
-    val adapter: ScheduleAdapter by lazy {
+    private val adapter: ScheduleAdapter by lazy {
         ScheduleAdapter(emptyList())
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
