@@ -73,11 +73,10 @@ class GroupsActivity : BaseActivity(), GroupView {
         initFab()
     }
 
-    private fun setProgressVisibility(visible: Any) {
+    private fun setProgressVisibility(visible: Boolean) {
         progress.visibility = when (visible) {
             true -> View.VISIBLE
             false -> View.GONE
-            else -> View.GONE
         }
     }
 

@@ -2,11 +2,14 @@ package com.haretskiy.pavel.bsuirschedule.viewModels
 
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import com.haretskiy.pavel.bsuirschedule.*
+import com.haretskiy.pavel.bsuirschedule.App
+import com.haretskiy.pavel.bsuirschedule.isToday
 import com.haretskiy.pavel.bsuirschedule.models.Schedule
 import com.haretskiy.pavel.bsuirschedule.models.ScheduleResponse
 import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
+import com.haretskiy.pavel.bsuirschedule.toDate
+import com.haretskiy.pavel.bsuirschedule.toWeekDayNumber
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import okhttp3.ResponseBody
@@ -21,14 +24,15 @@ class ScheduleViewModel(
 
     val scheduleLiveData = MutableLiveData<List<Schedule>>()
     val positionLiveData = MutableLiveData<Int>()
-
-    var nameOfGroup = EMPTY_STRING
+    val progressLiveData = MutableLiveData<Boolean>()
+    val infoLiveData = MutableLiveData<Boolean>()
 
     private val calendar = Calendar.getInstance()
 
     private var todayPosition = 0
 
     fun loadSchedule(name: String) {
+        progressLiveData.postValue(true)
 
         val exam = getExam()
 
@@ -36,21 +40,28 @@ class ScheduleViewModel(
 
             override fun onError(code: Int?, errorBody: ResponseBody?) {
                 scheduleLiveData.postValue(emptyList())
+                progressLiveData.postValue(false)
+                infoLiveData.postValue(false)
             }
 
             override fun onSuccess(response: ScheduleResponse?) {
                 if (response != null) {
-                    scheduleLiveData.postValue(
-                            when (exam) {
-                                true -> response.examSchedules
-                                false -> response.schedules
-                            })
+
+                    val list = when (exam) {
+                        true -> response.examSchedules
+                        false -> response.schedules
+                    }
+
+                    scheduleLiveData.postValue(list)
+                    infoLiveData.postValue(list.isEmpty())
                 }
-                nameOfGroup = name
+                progressLiveData.postValue(false)
             }
 
             override fun onFailure(t: Throwable) {
+                infoLiveData.postValue(false)
                 scheduleLiveData.postValue(emptyList())
+                progressLiveData.postValue(false)
             }
         })
     }

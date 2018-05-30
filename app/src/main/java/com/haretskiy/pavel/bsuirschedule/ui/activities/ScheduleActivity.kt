@@ -26,15 +26,11 @@ class ScheduleActivity : BaseActivity() {
     override fun getResLayout() = R.layout.activity_schedule
 
     override fun onSwipeToRefresh() {
-        val gr = scheduleViewModel.nameOfGroup
-        scheduleViewModel.nameOfGroup = EMPTY_STRING
-        loadSchedule(gr)
+        loadSchedule(numberOfGroup)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        info.visibility = View.GONE
 
         numberOfGroup = intent.getStringExtra(BUNDLE_KEY_NUMBER_GROUP)
 
@@ -57,7 +53,6 @@ class ScheduleActivity : BaseActivity() {
     }
 
     private fun loadSchedule(nameOfGroup: String) {
-        progress_schedule.visibility = View.VISIBLE
         scheduleViewModel.loadSchedule(nameOfGroup)
     }
 
@@ -68,21 +63,37 @@ class ScheduleActivity : BaseActivity() {
         })
 
         scheduleViewModel.scheduleLiveData.observe(this, Observer {
-            if (it != null) {
-                if (it.isEmpty()) {
-                    progress_schedule.visibility = View.GONE
-                    info.visibility = View.VISIBLE
-                    pager.visibility = View.GONE
-                } else {
-                    pager.visibility = View.VISIBLE
-                    progress_schedule.visibility = View.GONE
-                    info.visibility = View.GONE
-                }
-                fillViewPagerAdapter(it)
-            }
+            fillViewPagerAdapter(it ?: emptyList())
             swipeAnimFinish(swipe_to_refresh_sch)
         })
+
+        scheduleViewModel.progressLiveData.observe(this, Observer {
+            setProgressVisibility(it ?: false)
+        })
+
+        scheduleViewModel.infoLiveData.observe(this, Observer {
+            setInfoVisibility(it ?: false)
+        })
     }
+
+    private fun setInfoVisibility(visible: Boolean) {
+        info.visibility = when (visible) {
+            true -> View.VISIBLE
+            false -> View.GONE
+        }
+        pager.visibility = when (visible) {
+            true -> View.GONE
+            false -> View.VISIBLE
+        }
+    }
+
+    private fun setProgressVisibility(visible: Boolean) {
+        progress_schedule.visibility = when (visible) {
+            true -> View.VISIBLE
+            false -> View.GONE
+        }
+    }
+
 
     private fun fillViewPagerAdapter(list: List<Schedule>) {
 
@@ -100,6 +111,9 @@ class ScheduleActivity : BaseActivity() {
     }
 
     private fun initViewPager() {
+
+        setInfoVisibility(false)
+
         tabs.setupWithViewPager(pager)
 
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
