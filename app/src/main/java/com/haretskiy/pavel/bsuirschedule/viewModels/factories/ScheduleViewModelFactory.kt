@@ -4,10 +4,10 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
-import com.haretskiy.pavel.bsuirschedule.utils.NetConnectivityManager
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
-import com.haretskiy.pavel.bsuirschedule.utils.Router
-import com.haretskiy.pavel.bsuirschedule.utils.ScheduleStore
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.NetConnectivityManager
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.Router
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.ScheduleStore
 import javax.inject.Inject
 
 

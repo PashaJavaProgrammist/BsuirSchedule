@@ -5,7 +5,7 @@ import android.os.Handler
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.SPLASH_DELAY
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
-import com.haretskiy.pavel.bsuirschedule.utils.Router
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.Router
 import javax.inject.Inject
 
 class SplashActivity : BaseActivity() {

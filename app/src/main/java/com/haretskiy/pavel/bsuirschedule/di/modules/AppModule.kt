@@ -2,7 +2,12 @@ package com.haretskiy.pavel.bsuirschedule.di.modules
 
 import android.content.Context
 import com.haretskiy.pavel.bsuirschedule.App
-import com.haretskiy.pavel.bsuirschedule.utils.*
+import com.haretskiy.pavel.bsuirschedule.utils.implementations.GroupStoreImpl
+import com.haretskiy.pavel.bsuirschedule.utils.implementations.NetConnectivityManagerImpl
+import com.haretskiy.pavel.bsuirschedule.utils.implementations.ScheduleStoreImpl
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.GroupStore
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.NetConnectivityManager
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.ScheduleStore
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton

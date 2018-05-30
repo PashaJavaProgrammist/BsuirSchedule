@@ -2,7 +2,11 @@ package com.haretskiy.pavel.bsuirschedule.viewModels.factories
 
 import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
-import com.haretskiy.pavel.bsuirschedule.utils.*
+import com.haretskiy.pavel.bsuirschedule.utils.Prefs
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.GroupStore
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.NetConnectivityManager
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.Router
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.ScheduleStore
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import javax.inject.Inject

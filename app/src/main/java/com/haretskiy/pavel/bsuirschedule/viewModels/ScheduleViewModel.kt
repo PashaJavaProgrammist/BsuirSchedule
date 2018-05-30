@@ -10,10 +10,10 @@ import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.toDate
 import com.haretskiy.pavel.bsuirschedule.toWeekDayNumber
-import com.haretskiy.pavel.bsuirschedule.utils.NetConnectivityManager
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
-import com.haretskiy.pavel.bsuirschedule.utils.Router
-import com.haretskiy.pavel.bsuirschedule.utils.ScheduleStore
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.NetConnectivityManager
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.Router
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.ScheduleStore
 import okhttp3.ResponseBody
 import java.util.*
 

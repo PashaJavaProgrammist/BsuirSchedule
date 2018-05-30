@@ -6,10 +6,10 @@ import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.models.Group
 import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
-import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
-import com.haretskiy.pavel.bsuirschedule.utils.NetConnectivityManager
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
-import com.haretskiy.pavel.bsuirschedule.utils.Router
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.GroupStore
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.NetConnectivityManager
+import com.haretskiy.pavel.bsuirschedule.utils.interfaces.Router
 import okhttp3.ResponseBody
 
 class GroupsViewModel(
