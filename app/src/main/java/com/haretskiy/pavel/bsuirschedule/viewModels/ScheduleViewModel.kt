@@ -12,6 +12,7 @@ import com.haretskiy.pavel.bsuirschedule.toDate
 import com.haretskiy.pavel.bsuirschedule.toWeekDayNumber
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
+import com.haretskiy.pavel.bsuirschedule.utils.ScheduleStore
 import okhttp3.ResponseBody
 import java.util.*
 
@@ -20,7 +21,8 @@ class ScheduleViewModel(
         application: App,
         private val prefs: Prefs,
         private val router: Router,
-        private val restApi: RestApi) : AndroidViewModel(application) {
+        private val restApi: RestApi,
+        private val scheduleStore: ScheduleStore) : AndroidViewModel(application) {
 
     val scheduleLiveData = MutableLiveData<List<Schedule>>()
     val positionLiveData = MutableLiveData<Int>()
@@ -34,7 +36,7 @@ class ScheduleViewModel(
 
     var isLoadingInProgress = false
 
-    fun loadSchedule(name: String, bySwipe: Boolean) {
+    fun loadSchedule(nameOfGroup: String, bySwipe: Boolean) {
 
         isLoadingInProgress = true
 
@@ -43,40 +45,51 @@ class ScheduleViewModel(
 
         val exam = getExam()
 
-        restApi.getGroupScheduleGroupName(name).enqueue(object : BaseCallBack<ScheduleResponse> {
+        if (scheduleStore.isContains(nameOfGroup) && !bySwipe) {
+            onSuccessLoadingGroup(exam, scheduleStore.getGroupSchedule(nameOfGroup))
+        } else {
+            restApi.getGroupScheduleGroupName(nameOfGroup).enqueue(object : BaseCallBack<ScheduleResponse> {
 
-            override fun onError(code: Int?, errorBody: ResponseBody?) {
-                scheduleLiveData.postValue(emptyList())
-                progressLiveData.postValue(false)
-                swipeLiveData.postValue(false)
-                infoLiveData.postValue(false)
-                isLoadingInProgress = false
-            }
-
-            override fun onSuccess(response: ScheduleResponse?) {
-                if (response != null) {
-
-                    val list = when (exam) {
-                        true -> response.examSchedules
-                        false -> response.schedules
-                    }
-
-                    scheduleLiveData.postValue(list)
-                    infoLiveData.postValue(list.isEmpty())
+                override fun onError(code: Int?, errorBody: ResponseBody?) {
+                    onFailureLoadingGroup()
                 }
-                swipeLiveData.postValue(false)
-                progressLiveData.postValue(false)
-                isLoadingInProgress = false
+
+                override fun onSuccess(response: ScheduleResponse?) {
+                    onSuccessLoadingGroup(exam, response)
+                    if (!scheduleStore.isContains(nameOfGroup) && response != null || bySwipe && response != null) {
+                        scheduleStore.addGroupSchedule(nameOfGroup, response)
+                    }
+                }
+
+                override fun onFailure(t: Throwable) {
+                    onFailureLoadingGroup()
+                }
+            })
+        }
+    }
+
+    private fun onSuccessLoadingGroup(exam: Boolean, response: ScheduleResponse?) {
+        if (response != null) {
+
+            val list = when (exam) {
+                true -> response.examSchedules
+                false -> response.schedules
             }
 
-            override fun onFailure(t: Throwable) {
-                infoLiveData.postValue(false)
-                scheduleLiveData.postValue(emptyList())
-                progressLiveData.postValue(false)
-                swipeLiveData.postValue(false)
-                isLoadingInProgress = false
-            }
-        })
+            scheduleLiveData.postValue(list)
+            infoLiveData.postValue(list.isEmpty())
+        }
+        swipeLiveData.postValue(false)
+        progressLiveData.postValue(false)
+        isLoadingInProgress = false
+    }
+
+    private fun onFailureLoadingGroup() {
+        infoLiveData.postValue(false)
+        scheduleLiveData.postValue(emptyList())
+        progressLiveData.postValue(false)
+        swipeLiveData.postValue(false)
+        isLoadingInProgress = false
     }
 
     fun selectCurrentDay(weekDay: String, position: Int, listSize: Int): TimeState {

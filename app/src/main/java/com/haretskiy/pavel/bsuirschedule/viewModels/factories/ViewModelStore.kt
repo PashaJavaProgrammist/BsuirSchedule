@@ -5,6 +5,7 @@ import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
+import com.haretskiy.pavel.bsuirschedule.utils.ScheduleStore
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import javax.inject.Inject
@@ -33,9 +34,10 @@ class ViewModelStore @Inject constructor() {
     fun getScheduleViewModel(context: App,
                              prefs: Prefs,
                              router: Router,
-                             restApi: RestApi): ScheduleViewModel {
+                             restApi: RestApi,
+                             scheduleStore: ScheduleStore): ScheduleViewModel {
         if (scheduleViewModel == null) {
-            scheduleViewModel = ScheduleViewModel(context, prefs, router, restApi)
+            scheduleViewModel = ScheduleViewModel(context, prefs, router, restApi, scheduleStore)
             return scheduleViewModel as ScheduleViewModel
         } else {
             return scheduleViewModel as ScheduleViewModel
