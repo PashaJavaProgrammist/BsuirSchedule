@@ -99,12 +99,22 @@ class GroupsActivity : BaseActivity(), GroupView {
         groupsViewModel.swipeLiveData.observe(this, Observer {
             setSwipeAnim(it ?: false)
         })
+        groupsViewModel.connectionLiveData.observe(this, Observer {
+            setNoInternetVisible(it ?: false)
+        })
     }
 
     private fun setSwipeAnim(visible: Boolean) {
         when (visible) {
             true -> swipeAnimStart(swipe_to_refresh)
             false -> swipeAnimFinish(swipe_to_refresh)
+        }
+    }
+
+    private fun setNoInternetVisible(visible: Boolean) {
+        when (visible) {
+            true -> no_internet_image.visibility = View.GONE
+            false -> no_internet_image.visibility = View.VISIBLE
         }
     }
 

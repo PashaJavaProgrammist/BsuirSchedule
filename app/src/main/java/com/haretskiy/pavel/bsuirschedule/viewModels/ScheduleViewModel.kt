@@ -10,6 +10,7 @@ import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.toDate
 import com.haretskiy.pavel.bsuirschedule.toWeekDayNumber
+import com.haretskiy.pavel.bsuirschedule.utils.NetConnectivityManager
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import com.haretskiy.pavel.bsuirschedule.utils.ScheduleStore
@@ -22,13 +23,15 @@ class ScheduleViewModel(
         private val prefs: Prefs,
         private val router: Router,
         private val restApi: RestApi,
-        private val scheduleStore: ScheduleStore) : AndroidViewModel(application) {
+        private val scheduleStore: ScheduleStore,
+        private val netConnectivityManager: NetConnectivityManager) : AndroidViewModel(application) {
 
     val scheduleLiveData = MutableLiveData<List<Schedule>>()
     val positionLiveData = MutableLiveData<Int>()
     val progressLiveData = MutableLiveData<Boolean>()
     val infoLiveData = MutableLiveData<Boolean>()
     val swipeLiveData = MutableLiveData<Boolean>()
+    val connectionLiveData = MutableLiveData<Boolean>()
 
     private val calendar = Calendar.getInstance()
 
@@ -50,6 +53,7 @@ class ScheduleViewModel(
         } else {
             loadFromServer(nameOfGroup, exam, bySwipe)
         }
+        connectionLiveData.postValue(netConnectivityManager.hasConnection())
     }
 
     private fun loadFromServer(nameOfGroup: String, exam: Boolean, bySwipe: Boolean) {

@@ -2,10 +2,7 @@ package com.haretskiy.pavel.bsuirschedule.viewModels.factories
 
 import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
-import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
-import com.haretskiy.pavel.bsuirschedule.utils.Prefs
-import com.haretskiy.pavel.bsuirschedule.utils.Router
-import com.haretskiy.pavel.bsuirschedule.utils.ScheduleStore
+import com.haretskiy.pavel.bsuirschedule.utils.*
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import javax.inject.Inject
@@ -20,12 +17,13 @@ class ViewModelStore @Inject constructor() {
                            groupStore: GroupStore,
                            prefs: Prefs,
                            router: Router,
-                           restApi: RestApi): GroupsViewModel {
-        if (groupsViewModel == null) {
-            groupsViewModel = GroupsViewModel(context, groupStore, prefs, router, restApi)
-            return groupsViewModel as GroupsViewModel
+                           restApi: RestApi,
+                           netConnectivityManager: NetConnectivityManager): GroupsViewModel {
+        return if (groupsViewModel == null) {
+            groupsViewModel = GroupsViewModel(context, groupStore, prefs, router, restApi, netConnectivityManager)
+            groupsViewModel as GroupsViewModel
         } else {
-            return groupsViewModel as GroupsViewModel
+            groupsViewModel as GroupsViewModel
         }
     }
 
@@ -35,12 +33,13 @@ class ViewModelStore @Inject constructor() {
                              prefs: Prefs,
                              router: Router,
                              restApi: RestApi,
-                             scheduleStore: ScheduleStore): ScheduleViewModel {
-        if (scheduleViewModel == null) {
-            scheduleViewModel = ScheduleViewModel(context, prefs, router, restApi, scheduleStore)
-            return scheduleViewModel as ScheduleViewModel
+                             scheduleStore: ScheduleStore,
+                             netConnectivityManager: NetConnectivityManager): ScheduleViewModel {
+        return if (scheduleViewModel == null) {
+            scheduleViewModel = ScheduleViewModel(context, prefs, router, restApi, scheduleStore, netConnectivityManager)
+            scheduleViewModel as ScheduleViewModel
         } else {
-            return scheduleViewModel as ScheduleViewModel
+            scheduleViewModel as ScheduleViewModel
         }
     }
 

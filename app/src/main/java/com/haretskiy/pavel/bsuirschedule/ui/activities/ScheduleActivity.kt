@@ -49,7 +49,6 @@ class ScheduleActivity : BaseActivity() {
         toolbar_schedule.text = numberOfGroup
 
         loadSchedule(numberOfGroup, false)
-
     }
 
     private fun loadSchedule(nameOfGroup: String, bySwipe: Boolean) {
@@ -74,9 +73,21 @@ class ScheduleActivity : BaseActivity() {
         scheduleViewModel.infoLiveData.observe(this, Observer {
             setInfoVisibility(it ?: false)
         })
+
         scheduleViewModel.swipeLiveData.observe(this, Observer {
             setSwipeAnimVisibility(it ?: false)
         })
+
+        scheduleViewModel.connectionLiveData.observe(this, Observer {
+            setNoInternetVisible(it ?: false)
+        })
+    }
+
+    private fun setNoInternetVisible(visible: Boolean) {
+        when (visible) {
+            true -> no_internet_image_sc.visibility = View.GONE
+            false -> no_internet_image_sc.visibility = View.VISIBLE
+        }
     }
 
     private fun setSwipeAnimVisibility(visible: Boolean) {

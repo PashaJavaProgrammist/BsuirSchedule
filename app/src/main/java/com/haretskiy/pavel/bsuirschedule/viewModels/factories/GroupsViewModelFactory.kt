@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProvider
 import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
+import com.haretskiy.pavel.bsuirschedule.utils.NetConnectivityManager
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import javax.inject.Inject
@@ -16,10 +17,11 @@ class GroupsViewModelFactory @Inject constructor(
         private val prefs: Prefs,
         private val router: Router,
         private val restApi: RestApi,
-        private val viewModelStore: ViewModelStore) : ViewModelProvider.NewInstanceFactory() {
+        private val viewModelStore: ViewModelStore,
+        private val netConnectivityManager: NetConnectivityManager) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return viewModelStore.getGroupsViewModel(context, groupStore, prefs, router, restApi) as T
+        return viewModelStore.getGroupsViewModel(context, groupStore, prefs, router, restApi, netConnectivityManager) as T
     }
 }
 

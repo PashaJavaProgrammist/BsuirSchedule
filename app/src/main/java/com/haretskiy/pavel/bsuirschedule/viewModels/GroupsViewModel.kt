@@ -7,6 +7,7 @@ import com.haretskiy.pavel.bsuirschedule.models.Group
 import com.haretskiy.pavel.bsuirschedule.rest.BaseCallBack
 import com.haretskiy.pavel.bsuirschedule.rest.RestApi
 import com.haretskiy.pavel.bsuirschedule.utils.GroupStore
+import com.haretskiy.pavel.bsuirschedule.utils.NetConnectivityManager
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.Router
 import okhttp3.ResponseBody
@@ -16,11 +17,13 @@ class GroupsViewModel(
         private val groupStore: GroupStore,
         private val prefs: Prefs,
         private val router: Router,
-        private val restApi: RestApi) : AndroidViewModel(application) {
+        private val restApi: RestApi,
+        private val netConnectivityManager: NetConnectivityManager) : AndroidViewModel(application) {
 
     val groupsLiveData = MutableLiveData<List<Group>>()
     val progressLiveData = MutableLiveData<Boolean>()
     val swipeLiveData = MutableLiveData<Boolean>()
+    val connectionLiveData = MutableLiveData<Boolean>()
 
     var isLoadingInProgress = false
 
@@ -65,6 +68,7 @@ class GroupsViewModel(
                 }
             })
         }
+        connectionLiveData.postValue(netConnectivityManager.hasConnection())
     }
 
     fun startScheduleActivity(name: String) {
