@@ -37,7 +37,7 @@ class GroupsActivity : BaseActivity(), GroupView {
 
         initObservers()
 
-        loadGroups()
+        if (!groupsViewModel.isLoadingInProgress) loadGroups()
     }
 
     override fun getResLayout() = R.layout.activity_groups
@@ -95,12 +95,20 @@ class GroupsActivity : BaseActivity(), GroupView {
                 adapter.listOfGroups = it
                 adapter.notifyDataSetChanged()
             }
-            swipeAnimFinish(swipe_to_refresh)
         })
-        groupsViewModel.progressLiveDataLiveData.observe(this, Observer {
+        groupsViewModel.progressLiveData.observe(this, Observer {
             setProgressVisibility(it ?: false)
         })
+        groupsViewModel.swipeLiveData.observe(this, Observer {
+            setSwipeAnim(it ?: false)
+        })
+    }
 
+    private fun setSwipeAnim(visible: Boolean) {
+        when (visible) {
+            true -> swipeAnimStart(swipe_to_refresh)
+            false -> swipeAnimFinish(swipe_to_refresh)
+        }
     }
 
     private fun initSearchView() {

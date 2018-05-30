@@ -19,21 +19,30 @@ class GroupsViewModel(
         private val restApi: RestApi) : AndroidViewModel(application) {
 
     val groupsLiveData = MutableLiveData<List<Group>>()
-    val progressLiveDataLiveData = MutableLiveData<Boolean>()
+    val progressLiveData = MutableLiveData<Boolean>()
+    val swipeLiveData = MutableLiveData<Boolean>()
+
+    var isLoadingInProgress = false
 
     fun loadGroupsList(bySwipe: Boolean) {
 
-        progressLiveDataLiveData.postValue(true)
+        isLoadingInProgress = true
+        swipeLiveData.postValue(bySwipe)
+        progressLiveData.postValue(!bySwipe)
 
         if (groupStore.isNotEmpty() && !bySwipe) {
             groupsLiveData.postValue(groupStore.getList())
-            progressLiveDataLiveData.postValue(false)
+            progressLiveData.postValue(false)
+            swipeLiveData.postValue(false)
+            isLoadingInProgress = false
         } else {
             groupStore.clearList()
             restApi.allGroupsList.enqueue(object : BaseCallBack<List<Group>> {
                 override fun onError(code: Int?, errorBody: ResponseBody?) {
                     groupsLiveData.postValue(emptyList())
-                    progressLiveDataLiveData.postValue(false)
+                    swipeLiveData.postValue(false)
+                    progressLiveData.postValue(false)
+                    isLoadingInProgress = false
                 }
 
                 override fun onSuccess(response: List<Group>?) {
@@ -43,12 +52,16 @@ class GroupsViewModel(
                     } else {
                         groupsLiveData.postValue(emptyList())
                     }
-                    progressLiveDataLiveData.postValue(false)
+                    swipeLiveData.postValue(false)
+                    progressLiveData.postValue(false)
+                    isLoadingInProgress = false
                 }
 
                 override fun onFailure(t: Throwable) {
                     groupsLiveData.postValue(emptyList())
-                    progressLiveDataLiveData.postValue(false)
+                    swipeLiveData.postValue(false)
+                    progressLiveData.postValue(false)
+                    isLoadingInProgress = false
                 }
             })
         }
