@@ -48,15 +48,12 @@ class GroupsActivity : BaseActivity(), GroupView {
 
     override fun onClickGroup(name: String) {
         GroupDefaultDialog().show(supportFragmentManager, object : GroupDefaultDialog.DefaultGroupListener {
-            override fun onClickSave() {
-                groupsViewModel.saveGroupAsDefault(name)
-            }
+            override fun onClickSave(): Unit = groupsViewModel.saveGroupAsDefault(name)
 
             override fun onClickDismiss() {}
 
-            override fun onDismiss() {
-                groupsViewModel.startScheduleActivity(name)
-            }
+            override fun onDismiss(): Unit = groupsViewModel.startScheduleActivity(name)
+
         })
     }
 
@@ -144,6 +141,7 @@ class GroupsActivity : BaseActivity(), GroupView {
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)
+
                         if (fab_groups != null)
                             if (dy > 0 && fab_groups.visibility == View.VISIBLE) {
                                 fab_groups.hide()
