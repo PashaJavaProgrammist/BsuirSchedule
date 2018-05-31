@@ -23,8 +23,6 @@ class ScheduleActivity : BaseActivity() {
 
     private var numberOfGroup = EMPTY_STRING
 
-    private var scheduleIsLoadingInProgress = false
-
     override fun getResLayout() = R.layout.activity_schedule
 
     override fun onSwipeToRefresh() {
@@ -54,7 +52,7 @@ class ScheduleActivity : BaseActivity() {
     }
 
     private fun loadSchedule(nameOfGroup: String, bySwipe: Boolean) {
-        if (!scheduleIsLoadingInProgress) {
+        if (!scheduleViewModel.getScheduleLoadingInProgress()) {
             scheduleViewModel.loadSchedule(nameOfGroup, bySwipe)
         }
     }
@@ -84,9 +82,6 @@ class ScheduleActivity : BaseActivity() {
 
         scheduleViewModel.scheduleConnectionLiveData.observe(this, Observer {
             setNoInternetVisible(it ?: false)
-        })
-        scheduleViewModel.scheduleLoadingInProgressLiveData.observe(this, Observer {
-            scheduleIsLoadingInProgress = it ?: false
         })
     }
 

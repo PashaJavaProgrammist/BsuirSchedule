@@ -16,7 +16,6 @@ class GroupsViewModel(
     val groupsProgressLiveData = repository.groupsProgressLiveData
     val groupsSwipeLiveData = repository.groupsSwipeLiveData
     val groupsConnectionLiveData = repository.groupsConnectionLiveData
-    val groupsLoadingInProgressLiveData = repository.groupsLoadingInProgressLiveData
 
     fun loadGroupsList(bySwipe: Boolean) {
         repository.loadGroupsList(bySwipe)
@@ -39,5 +38,7 @@ class GroupsViewModel(
     fun startDefaultScheduleActivity() {
         router.startScheduleActivity(prefs.getDefaultGroup())
     }
+
+    fun getGroupsLoadingInProgress() = repository.groupsLoadingInProgress
 
 }

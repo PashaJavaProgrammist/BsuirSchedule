@@ -10,7 +10,8 @@ interface Repository {
     val groupsProgressLiveData: MutableLiveData<Boolean>
     val groupsSwipeLiveData: MutableLiveData<Boolean>
     val groupsConnectionLiveData: MutableLiveData<Boolean>
-    val groupsLoadingInProgressLiveData: MutableLiveData<Boolean>
+
+    var groupsLoadingInProgress: Boolean
 
     val scheduleScheduleLiveData: MutableLiveData<List<Schedule>>
     val schedulePositionLiveData: MutableLiveData<Int>
@@ -18,7 +19,8 @@ interface Repository {
     val scheduleInfoLiveData: MutableLiveData<Boolean>
     val scheduleSwipeLiveData: MutableLiveData<Boolean>
     val scheduleConnectionLiveData: MutableLiveData<Boolean>
-    val scheduleLoadingInProgressLiveData: MutableLiveData<Boolean>
+
+    var scheduleLoadingInProgress: Boolean
 
     fun loadGroupsList(bySwipe: Boolean)
 

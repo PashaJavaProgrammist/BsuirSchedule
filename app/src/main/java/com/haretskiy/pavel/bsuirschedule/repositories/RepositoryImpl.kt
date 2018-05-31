@@ -23,7 +23,8 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
     override val groupsProgressLiveData = MutableLiveData<Boolean>()
     override val groupsSwipeLiveData = MutableLiveData<Boolean>()
     override val groupsConnectionLiveData = MutableLiveData<Boolean>()
-    override val groupsLoadingInProgressLiveData = MutableLiveData<Boolean>()
+
+    override var groupsLoadingInProgress = false
 
     override val scheduleScheduleLiveData = MutableLiveData<List<Schedule>>()
     override val schedulePositionLiveData = MutableLiveData<Int>()
@@ -31,11 +32,12 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
     override val scheduleInfoLiveData = MutableLiveData<Boolean>()
     override val scheduleSwipeLiveData = MutableLiveData<Boolean>()
     override val scheduleConnectionLiveData = MutableLiveData<Boolean>()
-    override val scheduleLoadingInProgressLiveData = MutableLiveData<Boolean>()
+
+    override var scheduleLoadingInProgress = false
 
     override fun loadGroupsList(bySwipe: Boolean) {
 
-        groupsLoadingInProgressLiveData.postValue(true)
+        groupsLoadingInProgress = true
         groupsSwipeLiveData.postValue(bySwipe)
         groupsProgressLiveData.postValue(!bySwipe)
 
@@ -43,7 +45,7 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
             groupsGroupsLiveData.postValue(groupStore.getList())
             groupsProgressLiveData.postValue(false)
             groupsSwipeLiveData.postValue(false)
-            groupsLoadingInProgressLiveData.postValue(false)
+            groupsLoadingInProgress = false
         } else {
             groupStore.clearList()
             restApi.allGroupsList.enqueue(object : BaseCallBack<List<Group>> {
@@ -51,7 +53,7 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
                     groupsGroupsLiveData.postValue(emptyList())
                     groupsSwipeLiveData.postValue(false)
                     groupsProgressLiveData.postValue(false)
-                    groupsLoadingInProgressLiveData.postValue(false)
+                    groupsLoadingInProgress = false
                 }
 
                 override fun onSuccess(response: List<Group>?) {
@@ -63,14 +65,14 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
                     }
                     groupsSwipeLiveData.postValue(false)
                     groupsProgressLiveData.postValue(false)
-                    groupsLoadingInProgressLiveData.postValue(false)
+                    groupsLoadingInProgress = false
                 }
 
                 override fun onFailure(t: Throwable) {
                     groupsGroupsLiveData.postValue(emptyList())
                     groupsSwipeLiveData.postValue(false)
                     groupsProgressLiveData.postValue(false)
-                    groupsLoadingInProgressLiveData.postValue(false)
+                    groupsLoadingInProgress = false
                 }
             })
         }
@@ -78,7 +80,7 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
     }
 
     override fun search(searchText: String) {
-        groupsLoadingInProgressLiveData.postValue(true)
+        groupsLoadingInProgress = true
         val list = arrayListOf<Group>()
 
         for (group in groupStore.getList()) {
@@ -87,11 +89,11 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
             }
         }
         groupsGroupsLiveData.postValue(list)
-        groupsLoadingInProgressLiveData.postValue(false)
+        groupsLoadingInProgress = false
     }
 
     override fun loadSchedule(nameOfGroup: String, bySwipe: Boolean, exam: Boolean) {
-        scheduleLoadingInProgressLiveData.postValue(true)
+        scheduleLoadingInProgress = true
 
         scheduleProgressLiveData.postValue(!bySwipe)
         scheduleSwipeLiveData.postValue(bySwipe)
@@ -137,7 +139,7 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
         }
         scheduleSwipeLiveData.postValue(false)
         scheduleProgressLiveData.postValue(false)
-        scheduleLoadingInProgressLiveData.postValue(false)
+        scheduleLoadingInProgress = false
     }
 
     private fun onFailureLoadingGroup() {
@@ -145,6 +147,6 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
         scheduleScheduleLiveData.postValue(emptyList())
         scheduleProgressLiveData.postValue(false)
         scheduleSwipeLiveData.postValue(false)
-        scheduleLoadingInProgressLiveData.postValue(false)
+        scheduleLoadingInProgress = false
     }
 }

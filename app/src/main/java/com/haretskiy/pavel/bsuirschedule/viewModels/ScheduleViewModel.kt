@@ -22,7 +22,6 @@ class ScheduleViewModel(
     val scheduleInfoLiveData = repository.scheduleInfoLiveData
     val scheduleSwipeLiveData = repository.scheduleSwipeLiveData
     val scheduleConnectionLiveData = repository.scheduleConnectionLiveData
-    val scheduleLoadingInProgressLiveData = repository.scheduleLoadingInProgressLiveData
 
     private val calendar = Calendar.getInstance()
 
@@ -96,6 +95,8 @@ class ScheduleViewModel(
     }
 
     fun getExam() = prefs.getExam()
+
+    fun getScheduleLoadingInProgress() = repository.scheduleLoadingInProgress
 
     enum class TimeState {
         PRESENT, PAST, FUTURE
