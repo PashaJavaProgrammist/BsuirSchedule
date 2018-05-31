@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.adapters.GroupsAdapter
 import com.haretskiy.pavel.bsuirschedule.ui.dialogs.GroupDefaultDialog
@@ -86,9 +85,6 @@ class GroupsActivity : BaseActivity(), GroupView {
     private fun loadGroups() {
         if (!groupsViewModel.getGroupsLoadingInProgress()) {
             groupsViewModel.loadGroupsList(false)
-            Toast.makeText(this, "new Loading", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "old Loading", Toast.LENGTH_SHORT).show()
         }
     }
 
