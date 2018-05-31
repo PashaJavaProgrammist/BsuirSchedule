@@ -27,7 +27,6 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
     override var groupsLoadingInProgress = false
 
     override val scheduleScheduleLiveData = MutableLiveData<List<Schedule>>()
-    override val schedulePositionLiveData = MutableLiveData<Int>()
     override val scheduleProgressLiveData = MutableLiveData<Boolean>()
     override val scheduleInfoLiveData = MutableLiveData<Boolean>()
     override val scheduleSwipeLiveData = MutableLiveData<Boolean>()

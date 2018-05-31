@@ -12,10 +12,10 @@ class GroupsViewModel(
         private val router: Router,
         private val repository: Repository) : AndroidViewModel(application) {
 
-    val groupsGroupsLiveData = repository.groupsGroupsLiveData
-    val groupsProgressLiveData = repository.groupsProgressLiveData
-    val groupsSwipeLiveData = repository.groupsSwipeLiveData
-    val groupsConnectionLiveData = repository.groupsConnectionLiveData
+    fun getGroupsGroupsLiveData() = repository.groupsGroupsLiveData
+    fun getGroupsProgressLiveData() = repository.groupsProgressLiveData
+    fun getGroupsSwipeLiveData() = repository.groupsSwipeLiveData
+    fun getGroupsConnectionLiveData() = repository.groupsConnectionLiveData
 
     fun loadGroupsList(bySwipe: Boolean) {
         repository.loadGroupsList(bySwipe)

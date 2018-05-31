@@ -63,24 +63,24 @@ class ScheduleActivity : BaseActivity() {
             tabs.setScrollPosition(it ?: 0, 0f, true)
         })
 
-        scheduleViewModel.scheduleScheduleLiveData.observe(this, Observer {
+        scheduleViewModel.getScheduleScheduleLiveData().observe(this, Observer {
             fillViewPagerAdapter(it ?: emptyList())
             swipeAnimFinish(swipe_to_refresh_sch)
         })
 
-        scheduleViewModel.scheduleProgressLiveData.observe(this, Observer {
+        scheduleViewModel.getScheduleProgressLiveData().observe(this, Observer {
             setProgressVisibility(it ?: false)
         })
 
-        scheduleViewModel.scheduleInfoLiveData.observe(this, Observer {
+        scheduleViewModel.getScheduleInfoLiveData().observe(this, Observer {
             setInfoVisibility(it ?: false)
         })
 
-        scheduleViewModel.scheduleSwipeLiveData.observe(this, Observer {
+        scheduleViewModel.getScheduleSwipeLiveData().observe(this, Observer {
             setSwipeAnimVisibility(it ?: false)
         })
 
-        scheduleViewModel.scheduleConnectionLiveData.observe(this, Observer {
+        scheduleViewModel.getScheduleConnectionLiveData().observe(this, Observer {
             setNoInternetVisible(it ?: false)
         })
     }

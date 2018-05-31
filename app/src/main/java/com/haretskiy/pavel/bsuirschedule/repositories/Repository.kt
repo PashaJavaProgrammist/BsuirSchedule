@@ -14,7 +14,6 @@ interface Repository {
     var groupsLoadingInProgress: Boolean
 
     val scheduleScheduleLiveData: MutableLiveData<List<Schedule>>
-    val schedulePositionLiveData: MutableLiveData<Int>
     val scheduleProgressLiveData: MutableLiveData<Boolean>
     val scheduleInfoLiveData: MutableLiveData<Boolean>
     val scheduleSwipeLiveData: MutableLiveData<Boolean>

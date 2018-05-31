@@ -1,6 +1,7 @@
 package com.haretskiy.pavel.bsuirschedule.viewModels
 
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.MutableLiveData
 import com.haretskiy.pavel.bsuirschedule.App
 import com.haretskiy.pavel.bsuirschedule.isToday
 import com.haretskiy.pavel.bsuirschedule.repositories.Repository
@@ -16,12 +17,12 @@ class ScheduleViewModel(
         private val router: Router,
         private val repository: Repository) : AndroidViewModel(application) {
 
-    val scheduleScheduleLiveData = repository.scheduleScheduleLiveData
-    val schedulePositionLiveData = repository.schedulePositionLiveData
-    val scheduleProgressLiveData = repository.scheduleProgressLiveData
-    val scheduleInfoLiveData = repository.scheduleInfoLiveData
-    val scheduleSwipeLiveData = repository.scheduleSwipeLiveData
-    val scheduleConnectionLiveData = repository.scheduleConnectionLiveData
+    fun getScheduleScheduleLiveData() = repository.scheduleScheduleLiveData
+    val schedulePositionLiveData = MutableLiveData<Int>()
+    fun getScheduleProgressLiveData() = repository.scheduleProgressLiveData
+    fun getScheduleInfoLiveData() = repository.scheduleInfoLiveData
+    fun getScheduleSwipeLiveData() = repository.scheduleSwipeLiveData
+    fun getScheduleConnectionLiveData() = repository.scheduleConnectionLiveData
 
     private val calendar = Calendar.getInstance()
 

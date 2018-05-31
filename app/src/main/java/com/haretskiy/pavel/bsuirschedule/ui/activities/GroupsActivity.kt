@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.haretskiy.pavel.bsuirschedule.R
 import com.haretskiy.pavel.bsuirschedule.adapters.GroupsAdapter
 import com.haretskiy.pavel.bsuirschedule.ui.dialogs.GroupDefaultDialog
@@ -85,23 +86,26 @@ class GroupsActivity : BaseActivity(), GroupView {
     private fun loadGroups() {
         if (!groupsViewModel.getGroupsLoadingInProgress()) {
             groupsViewModel.loadGroupsList(false)
+            Toast.makeText(this, "new Loading", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "old Loading", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun initObservers() {
-        groupsViewModel.groupsGroupsLiveData.observe(this, Observer {
+        groupsViewModel.getGroupsGroupsLiveData().observe(this, Observer {
             if (it != null) {
                 adapter.listOfGroups = it
                 adapter.notifyDataSetChanged()
             }
         })
-        groupsViewModel.groupsProgressLiveData.observe(this, Observer {
+        groupsViewModel.getGroupsProgressLiveData().observe(this, Observer {
             setProgressVisibility(it ?: false)
         })
-        groupsViewModel.groupsSwipeLiveData.observe(this, Observer {
+        groupsViewModel.getGroupsSwipeLiveData().observe(this, Observer {
             setSwipeAnim(it ?: false)
         })
-        groupsViewModel.groupsConnectionLiveData.observe(this, Observer {
+        groupsViewModel.getGroupsConnectionLiveData().observe(this, Observer {
             setNoInternetVisible(it ?: false)
         })
     }
