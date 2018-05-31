@@ -79,7 +79,6 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
     }
 
     override fun search(searchText: String) {
-        groupsLoadingInProgress = true
         val list = arrayListOf<Group>()
 
         for (group in groupStore.getList()) {
@@ -88,7 +87,6 @@ class RepositoryImpl @Inject constructor(private val restApi: RestApi,
             }
         }
         groupsGroupsLiveData.postValue(list)
-        groupsLoadingInProgress = false
     }
 
     override fun loadSchedule(nameOfGroup: String, bySwipe: Boolean, exam: Boolean) {
