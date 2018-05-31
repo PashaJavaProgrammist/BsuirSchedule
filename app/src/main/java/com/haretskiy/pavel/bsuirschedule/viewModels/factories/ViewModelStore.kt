@@ -1,12 +1,9 @@
 package com.haretskiy.pavel.bsuirschedule.viewModels.factories
 
 import com.haretskiy.pavel.bsuirschedule.App
-import com.haretskiy.pavel.bsuirschedule.rest.RestApi
+import com.haretskiy.pavel.bsuirschedule.repositories.Repository
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
-import com.haretskiy.pavel.bsuirschedule.utils.interfaces.GroupStore
-import com.haretskiy.pavel.bsuirschedule.utils.interfaces.NetConnectivityManager
 import com.haretskiy.pavel.bsuirschedule.utils.interfaces.Router
-import com.haretskiy.pavel.bsuirschedule.utils.interfaces.ScheduleStore
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
 import com.haretskiy.pavel.bsuirschedule.viewModels.ScheduleViewModel
 import javax.inject.Inject
@@ -18,13 +15,11 @@ class ViewModelStore @Inject constructor() {
     private var groupsViewModel: GroupsViewModel? = null
 
     fun getGroupsViewModel(context: App,
-                           groupStore: GroupStore,
                            prefs: Prefs,
                            router: Router,
-                           restApi: RestApi,
-                           netConnectivityManager: NetConnectivityManager): GroupsViewModel {
+                           repository: Repository): GroupsViewModel {
         return if (groupsViewModel == null) {
-            groupsViewModel = GroupsViewModel(context, groupStore, prefs, router, restApi, netConnectivityManager)
+            groupsViewModel = GroupsViewModel(context, prefs, router, repository)
             groupsViewModel as GroupsViewModel
         } else {
             groupsViewModel as GroupsViewModel
@@ -36,11 +31,9 @@ class ViewModelStore @Inject constructor() {
     fun getScheduleViewModel(context: App,
                              prefs: Prefs,
                              router: Router,
-                             restApi: RestApi,
-                             scheduleStore: ScheduleStore,
-                             netConnectivityManager: NetConnectivityManager): ScheduleViewModel {
+                             repository: Repository): ScheduleViewModel {
         return if (scheduleViewModel == null) {
-            scheduleViewModel = ScheduleViewModel(context, prefs, router, restApi, scheduleStore, netConnectivityManager)
+            scheduleViewModel = ScheduleViewModel(context, prefs, router, repository)
             scheduleViewModel as ScheduleViewModel
         } else {
             scheduleViewModel as ScheduleViewModel

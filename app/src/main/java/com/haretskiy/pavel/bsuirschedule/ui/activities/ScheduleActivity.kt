@@ -23,6 +23,8 @@ class ScheduleActivity : BaseActivity() {
 
     private var numberOfGroup = EMPTY_STRING
 
+    private var scheduleIsLoadingInProgress = false
+
     override fun getResLayout() = R.layout.activity_schedule
 
     override fun onSwipeToRefresh() {
@@ -52,34 +54,39 @@ class ScheduleActivity : BaseActivity() {
     }
 
     private fun loadSchedule(nameOfGroup: String, bySwipe: Boolean) {
-        if (!scheduleViewModel.isLoadingInProgress) scheduleViewModel.loadSchedule(nameOfGroup, bySwipe)
+        if (!scheduleIsLoadingInProgress) {
+            scheduleViewModel.loadSchedule(nameOfGroup, bySwipe)
+        }
     }
 
     private fun initObservers() {
-        scheduleViewModel.positionLiveData.observe(this, Observer {
+        scheduleViewModel.schedulePositionLiveData.observe(this, Observer {
             pager.setCurrentItem(it ?: 0, true)
             tabs.setScrollPosition(it ?: 0, 0f, true)
         })
 
-        scheduleViewModel.scheduleLiveData.observe(this, Observer {
+        scheduleViewModel.scheduleScheduleLiveData.observe(this, Observer {
             fillViewPagerAdapter(it ?: emptyList())
             swipeAnimFinish(swipe_to_refresh_sch)
         })
 
-        scheduleViewModel.progressLiveData.observe(this, Observer {
+        scheduleViewModel.scheduleProgressLiveData.observe(this, Observer {
             setProgressVisibility(it ?: false)
         })
 
-        scheduleViewModel.infoLiveData.observe(this, Observer {
+        scheduleViewModel.scheduleInfoLiveData.observe(this, Observer {
             setInfoVisibility(it ?: false)
         })
 
-        scheduleViewModel.swipeLiveData.observe(this, Observer {
+        scheduleViewModel.scheduleSwipeLiveData.observe(this, Observer {
             setSwipeAnimVisibility(it ?: false)
         })
 
-        scheduleViewModel.connectionLiveData.observe(this, Observer {
+        scheduleViewModel.scheduleConnectionLiveData.observe(this, Observer {
             setNoInternetVisible(it ?: false)
+        })
+        scheduleViewModel.scheduleLoadingInProgressLiveData.observe(this, Observer {
+            scheduleIsLoadingInProgress = it ?: false
         })
     }
 

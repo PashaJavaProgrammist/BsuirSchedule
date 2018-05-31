@@ -25,6 +25,8 @@ class GroupsActivity : BaseActivity(), GroupView {
         GroupsAdapter(emptyList(), this)
     }
 
+    private var groupsIsLoadingInProgress = false
+
     @Inject
     lateinit var groupsViewModel: GroupsViewModel
 
@@ -83,24 +85,29 @@ class GroupsActivity : BaseActivity(), GroupView {
     }
 
     private fun loadGroups() {
-        if (!groupsViewModel.isLoadingInProgress) groupsViewModel.loadGroupsList(false)
+        if (!groupsIsLoadingInProgress) {
+            groupsViewModel.loadGroupsList(false)
+        }
     }
 
     private fun initObservers() {
-        groupsViewModel.groupsLiveData.observe(this, Observer {
+        groupsViewModel.groupsGroupsLiveData.observe(this, Observer {
             if (it != null) {
                 adapter.listOfGroups = it
                 adapter.notifyDataSetChanged()
             }
         })
-        groupsViewModel.progressLiveData.observe(this, Observer {
+        groupsViewModel.groupsProgressLiveData.observe(this, Observer {
             setProgressVisibility(it ?: false)
         })
-        groupsViewModel.swipeLiveData.observe(this, Observer {
+        groupsViewModel.groupsSwipeLiveData.observe(this, Observer {
             setSwipeAnim(it ?: false)
         })
-        groupsViewModel.connectionLiveData.observe(this, Observer {
+        groupsViewModel.groupsConnectionLiveData.observe(this, Observer {
             setNoInternetVisible(it ?: false)
+        })
+        groupsViewModel.groupsLoadingInProgressLiveData.observe(this, Observer {
+            groupsIsLoadingInProgress = it ?: false
         })
     }
 

@@ -2,6 +2,8 @@ package com.haretskiy.pavel.bsuirschedule.di.modules
 
 import android.content.Context
 import com.haretskiy.pavel.bsuirschedule.App
+import com.haretskiy.pavel.bsuirschedule.repositories.Repository
+import com.haretskiy.pavel.bsuirschedule.repositories.RepositoryImpl
 import com.haretskiy.pavel.bsuirschedule.utils.implementations.GroupStoreImpl
 import com.haretskiy.pavel.bsuirschedule.utils.implementations.NetConnectivityManagerImpl
 import com.haretskiy.pavel.bsuirschedule.utils.implementations.ScheduleStoreImpl
@@ -30,4 +32,8 @@ interface AppModule {
     @Binds
     @Singleton
     fun provideNetConnectivityManagerImpl(netConnectivityManager: NetConnectivityManagerImpl): NetConnectivityManager
+
+    @Binds
+    @Singleton
+    fun provideRepository(repositoryImpl: RepositoryImpl): Repository
 }
