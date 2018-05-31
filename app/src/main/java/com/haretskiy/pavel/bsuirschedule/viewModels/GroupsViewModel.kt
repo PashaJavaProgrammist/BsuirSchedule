@@ -18,8 +18,6 @@ class GroupsViewModel(
     val groupsConnectionLiveData = repository.groupsConnectionLiveData
     val groupsLoadingInProgressLiveData = repository.groupsLoadingInProgressLiveData
 
-    var groupsIsLoadingInProgress = false
-
     fun loadGroupsList(bySwipe: Boolean) {
         repository.loadGroupsList(bySwipe)
     }
