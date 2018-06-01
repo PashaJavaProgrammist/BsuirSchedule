@@ -2,7 +2,7 @@ package com.haretskiy.pavel.bsuirschedule.viewModels
 
 import android.arch.lifecycle.AndroidViewModel
 import com.haretskiy.pavel.bsuirschedule.App
-import com.haretskiy.pavel.bsuirschedule.repositories.Repository
+import com.haretskiy.pavel.bsuirschedule.interactors.GroupsInteractor
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.interfaces.Router
 
@@ -10,19 +10,19 @@ class GroupsViewModel(
         application: App,
         private val prefs: Prefs,
         private val router: Router,
-        private val repository: Repository) : AndroidViewModel(application) {
+        private val groupsInteractor: GroupsInteractor) : AndroidViewModel(application) {
 
-    fun getGroupsGroupsLiveData() = repository.groupsGroupsLiveData
-    fun getGroupsProgressLiveData() = repository.groupsProgressLiveData
-    fun getGroupsSwipeLiveData() = repository.groupsSwipeLiveData
-    fun getGroupsConnectionLiveData() = repository.groupsConnectionLiveData
+    fun getGroupsGroupsLiveData() = groupsInteractor.getGroupsGroupsLiveData()
+    fun getGroupsProgressLiveData() = groupsInteractor.getGroupsProgressLiveData()
+    fun getGroupsSwipeLiveData() = groupsInteractor.getGroupsSwipeLiveData()
+    fun getGroupsConnectionLiveData() = groupsInteractor.getGroupsConnectionLiveData()
 
     fun loadGroupsList(bySwipe: Boolean) {
-        repository.loadGroupsList(bySwipe)
+        groupsInteractor.loadGroupsList(bySwipe)
     }
 
     fun search(searchText: String) {
-        repository.search(searchText)
+        groupsInteractor.search(searchText)
     }
 
     fun startScheduleActivity(name: String) {
@@ -39,6 +39,6 @@ class GroupsViewModel(
         router.startScheduleActivity(prefs.getDefaultGroup())
     }
 
-    fun getGroupsLoadingInProgress() = repository.groupsLoadingInProgress
+    fun getGroupsLoadingInProgress() = groupsInteractor.getGroupsLoadingInProgress()
 
 }

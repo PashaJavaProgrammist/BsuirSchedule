@@ -1,7 +1,8 @@
 package com.haretskiy.pavel.bsuirschedule.viewModels.factories
 
 import com.haretskiy.pavel.bsuirschedule.App
-import com.haretskiy.pavel.bsuirschedule.repositories.Repository
+import com.haretskiy.pavel.bsuirschedule.interactors.GroupsInteractor
+import com.haretskiy.pavel.bsuirschedule.interactors.ScheduleInteractor
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
 import com.haretskiy.pavel.bsuirschedule.utils.interfaces.Router
 import com.haretskiy.pavel.bsuirschedule.viewModels.GroupsViewModel
@@ -17,9 +18,9 @@ class ViewModelStore @Inject constructor() {
     fun getGroupsViewModel(context: App,
                            prefs: Prefs,
                            router: Router,
-                           repository: Repository): GroupsViewModel {
+                           groupsInteractor: GroupsInteractor): GroupsViewModel {
         return if (groupsViewModel == null) {
-            groupsViewModel = GroupsViewModel(context, prefs, router, repository)
+            groupsViewModel = GroupsViewModel(context, prefs, router, groupsInteractor)
             groupsViewModel as GroupsViewModel
         } else {
             groupsViewModel as GroupsViewModel
@@ -31,9 +32,9 @@ class ViewModelStore @Inject constructor() {
     fun getScheduleViewModel(context: App,
                              prefs: Prefs,
                              router: Router,
-                             repository: Repository): ScheduleViewModel {
+                             scheduleInteractor: ScheduleInteractor): ScheduleViewModel {
         return if (scheduleViewModel == null) {
-            scheduleViewModel = ScheduleViewModel(context, prefs, router, repository)
+            scheduleViewModel = ScheduleViewModel(context, prefs, router, scheduleInteractor)
             scheduleViewModel as ScheduleViewModel
         } else {
             scheduleViewModel as ScheduleViewModel

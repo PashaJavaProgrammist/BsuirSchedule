@@ -3,8 +3,8 @@ package com.haretskiy.pavel.bsuirschedule.viewModels
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import com.haretskiy.pavel.bsuirschedule.App
+import com.haretskiy.pavel.bsuirschedule.interactors.ScheduleInteractor
 import com.haretskiy.pavel.bsuirschedule.isToday
-import com.haretskiy.pavel.bsuirschedule.repositories.Repository
 import com.haretskiy.pavel.bsuirschedule.toDate
 import com.haretskiy.pavel.bsuirschedule.toWeekDayNumber
 import com.haretskiy.pavel.bsuirschedule.utils.Prefs
@@ -15,21 +15,21 @@ class ScheduleViewModel(
         application: App,
         private val prefs: Prefs,
         private val router: Router,
-        private val repository: Repository) : AndroidViewModel(application) {
+        private val scheduleInteractor: ScheduleInteractor) : AndroidViewModel(application) {
 
-    fun getScheduleScheduleLiveData() = repository.scheduleScheduleLiveData
     val schedulePositionLiveData = MutableLiveData<Int>()
-    fun getScheduleProgressLiveData() = repository.scheduleProgressLiveData
-    fun getScheduleInfoLiveData() = repository.scheduleInfoLiveData
-    fun getScheduleSwipeLiveData() = repository.scheduleSwipeLiveData
-    fun getScheduleConnectionLiveData() = repository.scheduleConnectionLiveData
+    fun getScheduleScheduleLiveData() = scheduleInteractor.getScheduleScheduleLiveData()
+    fun getScheduleProgressLiveData() = scheduleInteractor.getScheduleProgressLiveData()
+    fun getScheduleInfoLiveData() = scheduleInteractor.getScheduleInfoLiveData()
+    fun getScheduleSwipeLiveData() = scheduleInteractor.getScheduleSwipeLiveData()
+    fun getScheduleConnectionLiveData() = scheduleInteractor.getScheduleConnectionLiveData()
 
     private val calendar = Calendar.getInstance()
 
     private var todayPosition = 0
 
     fun loadSchedule(nameOfGroup: String, bySwipe: Boolean) {
-        repository.loadSchedule(nameOfGroup, bySwipe, getExam())
+        scheduleInteractor.loadSchedule(nameOfGroup, bySwipe, getExam())
     }
 
     fun selectCurrentDay(weekDay: String, position: Int, listSize: Int): TimeState {
@@ -97,7 +97,7 @@ class ScheduleViewModel(
 
     fun getExam() = prefs.getExam()
 
-    fun getScheduleLoadingInProgress() = repository.scheduleLoadingInProgress
+    fun getScheduleLoadingInProgress() = scheduleInteractor.getScheduleLoadingInProgress()
 
     enum class TimeState {
         PRESENT, PAST, FUTURE
