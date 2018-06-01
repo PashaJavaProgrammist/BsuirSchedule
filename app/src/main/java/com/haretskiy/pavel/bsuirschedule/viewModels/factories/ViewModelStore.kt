@@ -11,14 +11,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ViewModelStore @Inject constructor() {
+class ViewModelStore @Inject constructor(private val context: App,
+                                         private val prefs: Prefs,
+                                         private val groupsInteractor: GroupsInteractor,
+                                         private val scheduleInteractor: ScheduleInteractor) {
 
     private var groupsViewModel: GroupsViewModel? = null
 
-    fun getGroupsViewModel(context: App,
-                           prefs: Prefs,
-                           router: Router,
-                           groupsInteractor: GroupsInteractor): GroupsViewModel {
+    fun getGroupsViewModel(router: Router): GroupsViewModel {
         return if (groupsViewModel == null) {
             groupsViewModel = GroupsViewModel(context, prefs, router, groupsInteractor)
             groupsViewModel as GroupsViewModel
@@ -29,10 +29,7 @@ class ViewModelStore @Inject constructor() {
 
     private var scheduleViewModel: ScheduleViewModel? = null
 
-    fun getScheduleViewModel(context: App,
-                             prefs: Prefs,
-                             router: Router,
-                             scheduleInteractor: ScheduleInteractor): ScheduleViewModel {
+    fun getScheduleViewModel(router: Router): ScheduleViewModel {
         return if (scheduleViewModel == null) {
             scheduleViewModel = ScheduleViewModel(context, prefs, router, scheduleInteractor)
             scheduleViewModel as ScheduleViewModel
