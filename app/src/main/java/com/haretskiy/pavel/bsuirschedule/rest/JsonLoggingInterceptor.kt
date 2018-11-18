@@ -14,7 +14,7 @@ class JsonLoggingInterceptor @Inject constructor() : Interceptor {
         try {
             val t1 = System.nanoTime()
 
-            Log.d(START, "Sending request ${request.url()} Headers: ${request.headers()}")
+            Log.d(INTERCEPTOR_TAG, "Sending request ${request.url()} Headers: ${request.headers()}")
 
             val response = chain.proceed(request)
 
@@ -29,18 +29,18 @@ class JsonLoggingInterceptor @Inject constructor() : Interceptor {
                 for (i in 0..chunkCount) {
                     val max = 4000 * (i + 1)
                     if (max >= length) {
-                        Log.d(RESPONSE, "chunk $i of $chunkCount:")
-                        Log.e(RESPONSE, prettyString.substring(4000 * i))
+                        Log.d(INTERCEPTOR_TAG, "chunk $i of $chunkCount:")
+                        Log.e(INTERCEPTOR_TAG, prettyString.substring(4000 * i))
                     } else {
-                        Log.d(RESPONSE, "chunk $i of $chunkCount:")
-                        Log.e(RESPONSE, prettyString.substring(4000 * i, max))
+                        Log.d(INTERCEPTOR_TAG, "chunk $i of $chunkCount:")
+                        Log.e(INTERCEPTOR_TAG, prettyString.substring(4000 * i, max))
                     }
                 }
             } else {
-                Log.e(RESPONSE, prettyString)
+                Log.e(INTERCEPTOR_TAG, prettyString)
             }
 
-            Log.d(END, "Received response for ${response.request().url()} for ${(t2 - t1) / 1e6} milliseconds ")
+            Log.d(INTERCEPTOR_TAG, "Received response for ${response.request().url()} for ${(t2 - t1) / 1e6} milliseconds ")
 
             val responseBody = response.body()
 

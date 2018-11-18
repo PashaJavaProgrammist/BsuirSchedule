@@ -1,6 +1,6 @@
 package com.haretskiy.pavel.bsuirschedule
 
-const val BASE_URL = "http://students.bsuir.by/api/v1/"
+const val BASE_URL = "https://journal.bsuir.by/api/v1/"
 const val EMPTY_STRING = ""
 const val SUCCESS_CODE = 200
 
@@ -13,8 +13,6 @@ const val DIALOG_DEFAULT = "DIALOG_DEFAULT"
 const val DATE_FORMAT = "dd.MM.yyyy"
 const val TIME_FORMAT = "hh:mm"
 
-const val START = "START ->"
-const val END = "END <-"
-const val RESPONSE = "RESPONSE"
+const val INTERCEPTOR_TAG = "INTERCEPTOR_TAG"
 
 const val SPLASH_DELAY = 600L
