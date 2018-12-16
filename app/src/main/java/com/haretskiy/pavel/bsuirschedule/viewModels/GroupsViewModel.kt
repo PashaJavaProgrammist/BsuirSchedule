@@ -30,13 +30,13 @@ class GroupsViewModel(
     }
 
     fun saveGroupAsDefault(name: String) {
-        prefs.saveDefaultGroup(name)
+        prefs.defaultGroupName = name
     }
 
-    fun isDefaultGroupExist() = prefs.getDefaultGroup().isNotEmpty()
+    fun isDefaultGroupExist() = prefs.defaultGroupName.isNotEmpty()
 
     fun startDefaultScheduleActivity() {
-        router.startScheduleActivity(prefs.getDefaultGroup())
+        router.startScheduleActivity(prefs.defaultGroupName)
     }
 
     fun getGroupsLoadingInProgress() = groupsInteractor.getGroupsLoadingInProgress()

@@ -47,7 +47,7 @@ class ScheduleFragment : Fragment() {
     private fun initFabHiding() {
         rv_schedule.addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)
                         val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
                         if (fab != null)

@@ -151,14 +151,14 @@ class GroupsActivity : BaseActivity(), GroupView {
     private fun initFabHiding() {
         rv_groups.addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)
 
                         if (fab_groups != null)
                             if (dy > 0 && fab_groups.visibility == View.VISIBLE) {
                                 fab_groups.hide()
-                            } else if (dy < 0 && fab_groups.visibility != View.VISIBLE) {
-                                if (groupsViewModel.isDefaultGroupExist()) fab_groups.show()
+                            } else if (dy < 0 && fab_groups.visibility != View.VISIBLE && groupsViewModel.isDefaultGroupExist()) {
+                                fab_groups.show()
                             }
                     }
                 })

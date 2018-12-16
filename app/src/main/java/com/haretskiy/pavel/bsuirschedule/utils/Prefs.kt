@@ -15,17 +15,13 @@ class Prefs @Inject constructor(context: Context) {
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     private val editor: SharedPreferences.Editor = preferences.edit()
 
-    fun saveDefaultGroup(name: String) {
-        save(BUNDLE_DEFAULT_GROUP, name)
-    }
+    var exam: Boolean
+        get() = getBoolean(BUNDLE_KEY_EXAM, true)
+        set(value) = save(BUNDLE_KEY_EXAM, value)
 
-    fun getDefaultGroup(): String = getString(BUNDLE_DEFAULT_GROUP, EMPTY_STRING)
-
-    fun getExam() = getBoolean(BUNDLE_KEY_EXAM, true)
-
-    fun setExam(exam: Boolean) {
-        save(BUNDLE_KEY_EXAM, exam)
-    }
+    var defaultGroupName: String
+        get() = getString(BUNDLE_DEFAULT_GROUP, EMPTY_STRING)
+        set(value) = save(BUNDLE_DEFAULT_GROUP, value)
 
     //Prefs methods
     private fun save(key: String, value: Boolean) {
@@ -54,21 +50,15 @@ class Prefs @Inject constructor(context: Context) {
 
     private fun getBoolean(key: String, defValue: Boolean) = preferences.getBoolean(key, defValue)
 
-
     private fun getString(key: String, defValue: String) = preferences.getString(key, defValue)
-
 
     private fun getInt(key: String, defValue: Int) = preferences.getInt(key, defValue)
 
-
     private fun getFloat(key: String, defValue: Float) = preferences.getFloat(key, defValue)
-
 
     private fun getLong(key: String, defValue: Long) = preferences.getLong(key, defValue)
 
-
     private fun getStringSet(key: String, defValue: Set<String>) = preferences.getStringSet(key, defValue)
-
 
     private fun getAll(): Map<String, *> = preferences.all
 

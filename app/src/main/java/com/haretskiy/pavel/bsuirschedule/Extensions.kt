@@ -25,10 +25,10 @@ fun Employee.toPrettyFormat(): String {
     val firstName = this.firstName
     val middleName = this.middleName
 
-    if (this.rank.isNullOrEmpty()) {
-        return "$lastName $firstName $middleName"
+    return if (this.rank.isNullOrEmpty()) {
+        "$lastName $firstName $middleName"
     } else {
-        return "$lastName $firstName $middleName ($rank)"
+        "$lastName $firstName $middleName ($rank)"
     }
 }
 
@@ -49,6 +49,19 @@ fun String.toWeekDayNumber(): Int {
         "friday" -> 6
         "saturday" -> 7
         else -> 0
+    }
+}
+
+fun Int.toDayOfWeekName(): String{
+    return when (this) {
+        1 -> "ПН"
+        2 -> "ВТ"
+        3 -> "СР"
+        4 -> "ЧТ"
+        5 -> "ПТ"
+        6 -> "СБ"
+        7 -> "ВС"
+        else -> ""
     }
 }
 

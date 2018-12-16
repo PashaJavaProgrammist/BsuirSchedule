@@ -92,10 +92,10 @@ class ScheduleViewModel(
     }
 
     fun setExam(exam: Boolean) {
-        prefs.setExam(exam)
+        prefs.exam = exam
     }
 
-    fun getExam() = prefs.getExam()
+    fun getExam() = prefs.exam
 
     fun getScheduleLoadingInProgress() = scheduleInteractor.getScheduleLoadingInProgress()
 

@@ -29,7 +29,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun startActivity() {
-        val group = prefs.getDefaultGroup()
+        val group = prefs.defaultGroupName
 
         if (group.isNotEmpty()) {
             router.startScheduleActivity(group)
