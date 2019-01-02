@@ -1,7 +1,6 @@
 package com.haretskiy.pavel.bsuirschedule
 
 import android.app.Activity
-import android.arch.lifecycle.AndroidViewModel
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.haretskiy.pavel.bsuirschedule.di.components.AppComponent
@@ -54,13 +53,13 @@ fun String.toWeekDayNumber(): Int {
 
 fun Int.toDayOfWeekName(): String{
     return when (this) {
-        1 -> "ПН"
-        2 -> "ВТ"
-        3 -> "СР"
-        4 -> "ЧТ"
-        5 -> "ПТ"
-        6 -> "СБ"
-        7 -> "ВС"
+        1 -> "ВС"
+        2 -> "ПН"
+        3 -> "ВТ"
+        4 -> "СР"
+        5 -> "ЧТ"
+        6 -> "ПТ"
+        7 -> "СБ"
         else -> ""
     }
 }
