@@ -2,6 +2,7 @@ package com.haretskiy.pavel.bsuirschedule
 
 import android.app.Activity
 import com.google.gson.GsonBuilder
+import android.arch.lifecycle.AndroidViewModel
 import com.google.gson.JsonParser
 import com.haretskiy.pavel.bsuirschedule.di.components.AppComponent
 import com.haretskiy.pavel.bsuirschedule.models.Employee
