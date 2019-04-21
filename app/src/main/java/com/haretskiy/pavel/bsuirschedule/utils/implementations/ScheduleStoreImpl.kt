@@ -9,7 +9,7 @@ class ScheduleStoreImpl @Inject constructor() : ScheduleStore {
     private val scheduleMap = HashMap<String, ScheduleResponse>()
 
     override fun addGroupSchedule(name: String, schedule: ScheduleResponse) {
-        scheduleMap.put(name, schedule)
+        scheduleMap[name] = schedule
     }
 
     override fun getGroupSchedule(name: String) = scheduleMap[name]

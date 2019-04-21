@@ -77,7 +77,7 @@ class ScheduleHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun fillNote(scheduleUnit: ScheduleUnit) {
-        if (scheduleUnit.note.isNotEmpty()) {
+        if (scheduleUnit.note?.isNotEmpty() == true) {
             view.note.text = scheduleUnit.note
             view.note.visibility = View.VISIBLE
         } else {

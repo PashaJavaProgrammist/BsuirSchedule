@@ -11,14 +11,14 @@ class NetConnectivityManagerImpl @Inject constructor(private val context: Contex
     override fun hasConnection(): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
-        when {
+        return when {
             activeNetwork != null -> // connected to the internet
                 when {
-                    activeNetwork.type == ConnectivityManager.TYPE_WIFI -> return true
-                    activeNetwork.type == ConnectivityManager.TYPE_MOBILE -> return true
-                    else -> return false
+                    activeNetwork.type == ConnectivityManager.TYPE_WIFI -> true
+                    activeNetwork.type == ConnectivityManager.TYPE_MOBILE -> true
+                    else -> false
                 }
-            else -> return false
+            else -> false
         }
     }
 

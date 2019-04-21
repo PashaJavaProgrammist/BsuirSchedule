@@ -33,7 +33,7 @@ data class ScheduleUnit(
         var subject: String = EMPTY_STRING,
         @SerializedName("note")
         @Expose
-        var note: String = EMPTY_STRING,
+        var note: String? = EMPTY_STRING,
         @SerializedName("lessonType")
         @Expose
         var lessonType: String = EMPTY_STRING,
