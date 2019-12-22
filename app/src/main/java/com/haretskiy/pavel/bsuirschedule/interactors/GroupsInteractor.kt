@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class GroupsInteractor @Inject constructor(private val repository: Repository) {
+class GroupsInteractor @Inject constructor(private val repository: Repository):Interactor {
 
     fun getGroupsGroupsLiveData() = repository.groupsGroupsLiveData
     fun getGroupsProgressLiveData() = repository.groupsProgressLiveData

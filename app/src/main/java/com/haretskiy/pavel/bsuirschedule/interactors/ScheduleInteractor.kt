@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ScheduleInteractor @Inject constructor(private val repository: Repository) {
+class ScheduleInteractor @Inject constructor(private val repository: Repository) : Interactor {
 
     fun getScheduleScheduleLiveData() = repository.scheduleScheduleLiveData
     fun getScheduleProgressLiveData() = repository.scheduleProgressLiveData
